@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="94ca7546d7144aa699dde68875aa3ade" Name="Diagram1">
+      <Diagram DiagramId="94ca7546d7144aa699dde68875aa3ade" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="VolunteerModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Address" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Audit" Width="1.5" PointX="7.5" PointY="14" IsExpanded="true" />
