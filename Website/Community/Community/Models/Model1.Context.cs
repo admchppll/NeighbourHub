@@ -25,7 +25,6 @@ namespace Community.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Audit> Audits { get; set; }
         public virtual DbSet<Event> Events { get; set; }
@@ -39,7 +38,6 @@ namespace Community.Models
         public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<User> Users { get; set; }

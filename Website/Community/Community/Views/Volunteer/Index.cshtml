@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Community.Models.Volunteer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Confirmed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rejected)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Withdrawn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Event.HostID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Confirmed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rejected)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Withdrawn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Event.HostID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Email)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

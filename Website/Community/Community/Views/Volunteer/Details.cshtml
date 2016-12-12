@@ -1,0 +1,58 @@
+﻿@model Community.Models.Volunteer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Volunteer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Confirmed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Confirmed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rejected)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rejected)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Withdrawn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Withdrawn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.HostID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.HostID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

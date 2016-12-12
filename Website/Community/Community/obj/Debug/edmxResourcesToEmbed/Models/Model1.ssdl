@@ -1,32 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="VolunteerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="__MigrationHistory">
-    <Key>
-      <PropertyRef Name="MigrationId" />
-      <PropertyRef Name="ContextKey" />
-    </Key>
-    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-  </EntityType>
   <EntityType Name="Address">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserID" Type="nvarchar" MaxLength="128" />
-    <Property Name="Name" Type="nchar" MaxLength="10" />
-    <Property Name="Address1" Type="nvarchar" MaxLength="50" />
-    <Property Name="Address2" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Address1" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address2" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="County" Type="nvarchar" MaxLength="50" />
-    <Property Name="Country" Type="nvarchar" MaxLength="50" />
-    <Property Name="Postcode" Type="nvarchar" MaxLength="15" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Postcode" Type="nvarchar" MaxLength="15" Nullable="false" />
     <Property Name="Notes" Type="nvarchar(max)" />
-    <Property Name="Long" Type="float" Nullable="false" />
-    <Property Name="Lat" Type="float" Nullable="false" />
-    <Property Name="GeoLocation" Type="geography" />
+    <Property Name="Long" Type="float" />
+    <Property Name="Lat" Type="float" />
     <Property Name="Default" Type="bit" />
   </EntityType>
   <EntityType Name="Audit">
@@ -198,16 +187,6 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Label" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
   <EntityType Name="Tag">
     <Key>
       <PropertyRef Name="ID" />
@@ -306,7 +285,7 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
     <Property Name="Withdrawn" Type="bit" Nullable="false" />
   </EntityType>
   <Association Name="FK_Address_User">
-    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Address" Type="Self.Address" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
@@ -620,7 +599,6 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="VolunteerModelStoreContainer">
-    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
@@ -634,7 +612,6 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
     <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />

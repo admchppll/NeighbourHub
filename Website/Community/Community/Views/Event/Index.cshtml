@@ -1,0 +1,195 @@
+﻿@model IEnumerable<Community.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HostID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LongDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Published)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Edited)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Repeated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RepeatIncrement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Length)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AM1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AM2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AM3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AM4)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AM5)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AM6)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AM7)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PM1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PM2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PM3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PM4)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PM5)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PM6)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PM7)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateInfo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Suspended)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address.UserID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShortDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LongDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Published)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Edited)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Repeated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RepeatIncrement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Length)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AM1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AM2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AM3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AM4)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AM5)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AM6)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AM7)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PM1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PM2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PM3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PM4)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PM5)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PM6)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PM7)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateInfo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Suspended)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.UserID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

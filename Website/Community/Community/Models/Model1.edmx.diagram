@@ -4,13 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="94ca7546d7144aa699dde68875aa3ade" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="VolunteerModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="86a236ad9d0343e387178cc45542f31b" Name="Diagram1">
         <EntityTypeShape EntityType="VolunteerModel.Address" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Audit" Width="1.5" PointX="7.5" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Event" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.EventTag" Width="1.5" PointX="7.5" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="VolunteerModel.Information" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerModel.Information" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Interest" Width="1.5" PointX="6.75" PointY="32.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Message" Width="1.5" PointX="3" PointY="21.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Notification" Width="1.5" PointX="3" PointY="25.75" IsExpanded="true" />
@@ -19,7 +18,6 @@
         <EntityTypeShape EntityType="VolunteerModel.Report" Width="1.5" PointX="10.5" PointY="18.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Role" Width="1.5" PointX="0.75" PointY="29.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Skill" Width="1.5" PointX="7.75" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="VolunteerModel.sysdiagram" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Tag" Width="1.5" PointX="5.25" PointY="22" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Transaction" Width="1.5" PointX="7.5" PointY="23.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.User" Width="1.5" PointX="0.75" PointY="20.25" IsExpanded="true" />
