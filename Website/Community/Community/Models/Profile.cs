@@ -11,7 +11,9 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Profile
     {
         public int ID { get; set; }
@@ -19,17 +21,22 @@ namespace Community.Models
         public Nullable<short> OrganisationID { get; set; }
         public short Balance { get; set; }
         public string Title { get; set; }
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
         public string Surname { get; set; }
-        public Nullable<bool> Gender { get; set; }
-        public Nullable<System.DateTime> BirthDate { get; set; }
+        [UIHint("Gender")]
+        public bool Gender { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Phone { get; set; }
         public string Biography { get; set; }
         public string PictureURL { get; set; }
-        public Nullable<bool> Active { get; set; }
-        public Nullable<bool> Suspended { get; set; }
-    
+        [UIHint("YesNo")]
+        public bool Active { get; set; }
+        [UIHint("YesNo")]
+        public bool Suspended { get; set; }
+
         public virtual Organisation Organisation { get; set; }
         public virtual User User { get; set; }
     }
+
 }

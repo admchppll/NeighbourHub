@@ -6,6 +6,9 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Community.Models;
+using Microsoft.Owin.Security.Facebook;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Community
 {
@@ -54,15 +57,40 @@ namespace Community
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
+            var facebookOptions = new FacebookAuthenticationOptions() {
+                AppId = "360676600940973",
+                AppSecret = "ca35e86ab325af4b69adefe0c1f7fe13",
+                SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie,
+                BackchannelHttpHandler = new FacebookBackChannelHandler(),
+                UserInformationEndpoint = "https://graph.facebook.com/v2.7/me?fields=id,name,email"
+            };
+            facebookOptions.Scope.Add("email");
+            facebookOptions.Scope.Add("public_profile");
+
+            app.UseFacebookAuthentication(facebookOptions);
+
+            /*app.UseFacebookAuthentication(
                appId: "360676600940973",
-               appSecret: "ca35e86ab325af4b69adefe0c1f7fe13");
+               appSecret: "ca35e86ab325af4b69adefe0c1f7fe13");*/
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+        }
+    }
+
+    public class FacebookBackChannelHandler : HttpClientHandler
+    {
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        {
+            if (!request.RequestUri.AbsolutePath.Contains("/oauth"))
+            {
+                request.RequestUri = new Uri(request.RequestUri.AbsoluteUri.Replace("?access_token", "&access_token"));
+            }
+
+            return await base.SendAsync(request, cancellationToken);
         }
     }
 }

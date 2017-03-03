@@ -1,13 +1,33 @@
 ﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
 @{
-    ViewBag.Title = "Add New Role";
+    ViewBag.Title = "Create";
 }
-<h2>Add New User Role:</h2>
 
-@using (Html.BeginForm())
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
 {
-    <p> Enter User Role Name:</p>
+    @Html.AntiForgeryToken()
 
-    @Html.EditorFor(m => m.Name)
-    <input type="submit" value="Create Role" />
+    <div class="form-horizontal">
+        <h4>Role</h4>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
 }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

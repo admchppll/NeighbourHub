@@ -15,12 +15,8 @@ namespace Community.Controllers
     [Authorize]
     public class RoleController : Controller
     {
-        ApplicationDbContext context;
-
-        public RoleController()
-        {
-            context = new ApplicationDbContext();
-        }
+        ApplicationDbContext context = new ApplicationDbContext();
+        private VolunteerEntities db = new VolunteerEntities();
 
         /// <summary>
         /// Get All Roles
@@ -28,94 +24,66 @@ namespace Community.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-
-            if (User.Identity.IsAuthenticated)
-            {
-
-
-                if (!isAdminUser())
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             var Roles = context.Roles.ToList();
             return View(Roles);
+        }
 
-        }
-        public Boolean isAdminUser()
-        {
-            //try
-            //{
-            //    if (User.Identity.IsAuthenticated)
-            //    {
-            //        var user = User.Identity;
-            //        var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            //        var s = UserManager.GetRoles(user.GetUserId());
-            //        if (s[0].ToString() == "Admin")
-            //        {
-            //            return true;
-            //        }
-            //        else
-            //        {
-            //            return false;
-            //        }
-            //    }
-            //}
-            //catch (ArgumentOutOfRangeException) { };
-            return true;
-        }
         /// <summary>
         /// Create  a New role
         /// </summary>
         /// <returns></returns>
         public ActionResult Create()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-
-
-                if (!isAdminUser())
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             var Role = new IdentityRole();
             return View(Role);
         }
 
         /// <summary>
-        /// Create a New Role
-        /// </summary>
-        /// <param name="Role"></param>
-        /// <returns></returns>
-        [HttpPost]
+		/// Create a New Role
+		/// </summary>
+		/// <param name="Role"></param>
+		/// <returns></returns>
+		[HttpPost]
         public ActionResult Create(IdentityRole Role)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                if (!isAdminUser())
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             context.Roles.Add(Role);
             context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // GET: Role/Delete/5
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Role role = db.Roles.Find(id);
+            if (role == null)
+            {
+                return HttpNotFound();
+            }
+            return View(role);
+        }
+
+        // POST: Role/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            Role role = db.Roles.Find(id);
+            db.Roles.Remove(role);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

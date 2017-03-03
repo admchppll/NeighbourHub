@@ -42,7 +42,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.Title, new SelectList(
+                        new List<SelectListItem> {
+                            new SelectListItem { Text = "Mr" , Value = "Mr"},
+                            new SelectListItem { Text = "Mrs", Value = "Mrs" },
+                            new SelectListItem { Text = "Miss", Value = "Miss" },
+                            new SelectListItem { Text = "Ms", Value = "Ms" },
+                            new SelectListItem { Text = "Dr", Value = "Dr" }
+                        }, "Value", "Text", "True"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -67,7 +74,11 @@
             @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.Gender)
+                    @Html.DropDownListFor(model => model.Gender, new SelectList(
+                        new List<SelectListItem> {
+                            new SelectListItem { Text = "Male" , Value = "True"},
+                            new SelectListItem { Text = "Female", Value = "False" }
+                        },"Value", "Text", "True"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -109,7 +120,11 @@
             @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.Active)
+                    @Html.DropDownListFor(model => model.Active, new SelectList(
+                        new List<SelectListItem> {
+                            new SelectListItem { Text = "Yes" , Value = "True"},
+                            new SelectListItem { Text = "No", Value = "False" }
+                        }, "Value", "Text", "True"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -119,7 +134,11 @@
             @Html.LabelFor(model => model.Suspended, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.Suspended)
+                    @Html.DropDownListFor(model => model.Suspended, new SelectList(
+                        new List<SelectListItem> {
+                            new SelectListItem { Text = "Yes" , Value = "True"},
+                            new SelectListItem { Text = "No", Value = "False" }
+                        }, "Value", "Text", "True"), new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Suspended, "", new { @class = "text-danger" })
                 </div>
             </div>

@@ -86,6 +86,11 @@ namespace Community
             }
             return manager;
         }
+
+        internal Task CreateIdentityAsync(User user, string applicationCookie)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     // Configure the application sign-in manager which is used in this application.

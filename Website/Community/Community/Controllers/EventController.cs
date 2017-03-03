@@ -7,13 +7,36 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Community.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Community.Controllers
 {
+    [Authorize]
     public class EventController : Controller
     {
         private VolunteerEntities db = new VolunteerEntities();
 
+        public bool ProfileExists()
+        {
+            try
+            {
+                var userID = User.Identity.GetUserId();
+                var count = db.Profiles.Where(p => p.UserID == userID).Count();
+
+                if (count == 0)
+                    return false;
+                else
+                    return true;
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
+        }
+
+        private Profile profile = new Profile();
+
+        [AllowAnonymous]
         // GET: Event
         public ActionResult Index()
         {
@@ -21,6 +44,7 @@ namespace Community.Controllers
             return View(events.ToList());
         }
 
+        [AllowAnonymous]
         // GET: Event/Details/5
         public ActionResult Details(int? id)
         {
@@ -39,6 +63,11 @@ namespace Community.Controllers
         // GET: Event/Create
         public ActionResult Create()
         {
+            if (ProfileExists() == false)
+            {
+                return RedirectToAction("Create", "Profile");
+            }
+
             ViewBag.AddressID = new SelectList(db.Addresses, "ID", "UserID");
             return View();
         }

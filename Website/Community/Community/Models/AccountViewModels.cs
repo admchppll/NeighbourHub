@@ -7,7 +7,12 @@ namespace Community.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        public string UserName { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -43,6 +48,7 @@ namespace Community.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
     }
 
@@ -67,7 +73,13 @@ namespace Community.Models
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        [DataType(DataType.Text)]
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

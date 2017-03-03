@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Community.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Community.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private VolunteerEntities db = new VolunteerEntities();
@@ -21,6 +23,7 @@ namespace Community.Controllers
             return View(profiles.ToList());
         }
 
+        [AllowAnonymous]
         // GET: Profile/Details/5
         public ActionResult Details(int? id)
         {
@@ -39,9 +42,15 @@ namespace Community.Controllers
         // GET: Profile/Create
         public ActionResult Create()
         {
-            ViewBag.OrganisationID = new SelectList(db.Organisations, "ID", "Name");
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Email");
-            return View();
+            if (ProfileExists() == false)
+            {
+                ViewBag.OrganisationID = new SelectList(db.Organisations, "ID", "Name");
+                ViewBag.UserID = new SelectList(db.Users, "ID", "Email");
+                return View();
+            }
+            else {
+                return RedirectToAction("Edit", new { id = CurrentProfileID() });
+            }
         }
 
         // POST: Profile/Create
@@ -122,6 +131,41 @@ namespace Community.Controllers
             db.Profiles.Remove(profile);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// Checks if current user has created a profile yet
+        /// </summary>
+        /// <returns>True if a profile exists, otherwise False</returns>
+        public bool ProfileExists() {
+            try
+            {
+                var userID = User.Identity.GetUserId();
+                var count = db.Profiles.Where(p => p.UserID == userID).Count();
+
+                if (count == 0)
+                    return false;
+                else
+                    return true;
+            }
+            catch (NullReferenceException) {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Finds the profile id of current users
+        /// </summary>
+        /// <returns></returns>
+        public int CurrentProfileID() {
+            var userID = User.Identity.GetUserId();
+
+            var profileID = db.Profiles
+                .Where(p => p.UserID == userID)
+                .Select(p => p.ID)
+                .FirstOrDefault();
+
+            return profileID;
         }
 
         protected override void Dispose(bool disposing)
