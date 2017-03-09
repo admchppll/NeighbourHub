@@ -10,6 +10,7 @@ using Community.Models;
 
 namespace Community.Controllers
 {
+    [Authorize]
     public class InterestController : Controller
     {
         private VolunteerEntities db = new VolunteerEntities();

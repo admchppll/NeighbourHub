@@ -34,7 +34,23 @@ namespace Community.Controllers
             }
         }
 
-        private Profile profile = new Profile();
+        public bool AddressExists()
+        {
+            try
+            {
+                var userID = User.Identity.GetUserId();
+                var count = db.Addresses.Where(p => p.UserID == userID).Count();
+
+                if (count == 0)
+                    return false;
+                else
+                    return true;
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
+        }
 
         [AllowAnonymous]
         // GET: Event
@@ -66,6 +82,9 @@ namespace Community.Controllers
             if (ProfileExists() == false)
             {
                 return RedirectToAction("Create", "Profile");
+            }
+            else if (AddressExists() == false){
+                return RedirectToAction("Create", "Address");
             }
 
             ViewBag.AddressID = new SelectList(db.Addresses, "ID", "UserID");
