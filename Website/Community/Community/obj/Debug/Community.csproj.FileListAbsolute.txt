@@ -77,7 +77,6 @@ F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\Microsoft.O
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\Microsoft.Owin.Security.Google.xml
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\Microsoft.Owin.Security.Twitter.xml
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-F:\Documents\GitHub\Volunteering-App\Website\Community\Community\obj\Debug\Community.csprojResolveAssemblyReference.cache
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\obj\Debug\Community.dll
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\obj\Debug\Community.pdb
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\roslyn\csc.exe.config

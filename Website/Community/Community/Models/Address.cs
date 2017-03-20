@@ -30,9 +30,9 @@ namespace Community.Models
         public string Country { get; set; }
         public string Postcode { get; set; }
         public string Notes { get; set; }
-        public Nullable<double> Long { get; set; }
-        public Nullable<double> Lat { get; set; }
-        public Nullable<bool> Default { get; set; }
+        public double? Long { get; set; }
+        public double? Lat { get; set; }
+        public bool Default { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

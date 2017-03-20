@@ -21,7 +21,9 @@ namespace Community.Controllers
             try
             {
                 var userID = User.Identity.GetUserId();
-                var count = db.Profiles.Where(p => p.UserID == userID).Count();
+                var count = db.Profiles
+                    .Where(p => p.UserID == userID)
+                    .Count();
 
                 if (count == 0)
                     return false;
@@ -79,6 +81,15 @@ namespace Community.Controllers
         // GET: Event/Create
         public ActionResult Create()
         {
+            var userID = User.Identity.GetUserId();
+            var addresses = db.Addresses
+                .Where(a => a.UserID == userID)
+                .Select(a => new {
+                    AddressID = a.ID,
+                    Label = a.Name + " (" + a.Address1 + ")"
+                })
+                .ToList();
+
             if (ProfileExists() == false)
             {
                 return RedirectToAction("Create", "Profile");
@@ -87,7 +98,7 @@ namespace Community.Controllers
                 return RedirectToAction("Create", "Address");
             }
 
-            ViewBag.AddressID = new SelectList(db.Addresses, "ID", "UserID");
+            ViewBag.AddressID = new SelectList(addresses, "AddressID", "Label");
             return View();
         }
 
@@ -96,8 +107,9 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,HostID,Title,ShortDescription,LongDescription,AddressID,Created,Published,Edited,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,Suspended")] Event @event)
+        public ActionResult Create([Bind(Include = "ID,Title,ShortDescription,LongDescription,AddressID,Created,Published,Edited,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,Suspended")] Event @event)
         {
+            @event.HostID = User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
                 db.Events.Add(@event);
@@ -105,7 +117,7 @@ namespace Community.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AddressID = new SelectList(db.Addresses, "ID", "UserID", @event.AddressID);
+            ViewBag.AddressID = new SelectList(db.Addresses, "ID", "Name", @event.AddressID);
             return View(@event);
         }
 
@@ -121,7 +133,7 @@ namespace Community.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AddressID = new SelectList(db.Addresses, "ID", "UserID", @event.AddressID);
+            ViewBag.AddressID = new SelectList(db.Addresses, "ID", "Name", @event.AddressID);
             return View(@event);
         }
 

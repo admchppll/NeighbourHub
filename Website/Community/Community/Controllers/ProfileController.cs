@@ -58,8 +58,9 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserID,OrganisationID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography,PictureURL,Active,Suspended")] Profile profile)
+        public ActionResult Create([Bind(Include = "ID,OrganisationID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography,PictureURL,Active,Suspended")] Profile profile)
         {
+            profile.UserID = User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
                 db.Profiles.Add(profile);
@@ -68,7 +69,6 @@ namespace Community.Controllers
             }
 
             ViewBag.OrganisationID = new SelectList(db.Organisations, "ID", "Name", profile.OrganisationID);
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Email", profile.UserID);
             return View(profile);
         }
 
@@ -85,7 +85,6 @@ namespace Community.Controllers
                 return HttpNotFound();
             }
             ViewBag.OrganisationID = new SelectList(db.Organisations, "ID", "Name", profile.OrganisationID);
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Email", profile.UserID);
             return View(profile);
         }
 
@@ -103,7 +102,6 @@ namespace Community.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.OrganisationID = new SelectList(db.Organisations, "ID", "Name", profile.OrganisationID);
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Email", profile.UserID);
             return View(profile);
         }
 

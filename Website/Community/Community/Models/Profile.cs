@@ -26,6 +26,8 @@ namespace Community.Models
         public string Surname { get; set; }
         [UIHint("Gender")]
         public bool Gender { get; set; }
+        [DisplayName("Date of Birth")]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}")]
         public DateTime BirthDate { get; set; }
         public string Phone { get; set; }
         public string Biography { get; set; }

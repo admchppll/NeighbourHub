@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Community.Models;
+using Microsoft.AspNet.Identity;
+using Community.Helpers;
 
 namespace Community.Controllers
 {
@@ -49,8 +51,14 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserID,Name,Address1,Address2,City,County,Country,Postcode,Notes,Long,Lat,Default")] Address address)
+        public ActionResult Create([Bind(Include = "ID,Name,Address1,Address2,City,County,Country,Postcode,Notes,Default")] Address address)
         {
+            address.UserID = User.Identity.GetUserId();
+
+            Postcode postcode = new Postcode(address.Postcode);
+            address.Long = postcode.longitude;
+            address.Lat = postcode.latitude;
+
             if (ModelState.IsValid)
             {
                 db.Addresses.Add(address);
