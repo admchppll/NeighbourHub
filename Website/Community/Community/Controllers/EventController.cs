@@ -107,9 +107,16 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,ShortDescription,LongDescription,AddressID,Created,Published,Edited,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,Suspended")] Event @event)
+        public ActionResult Create([Bind(Include = "ID,Title,ShortDescription,LongDescription,AddressID,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo")] Event @event)
         {
+            DateTime current_date = DateTime.Now;
+
             @event.HostID = User.Identity.GetUserId();
+            @event.Suspended = false;
+            @event.Published = true;
+            @event.Created = current_date;
+            @event.Edited = current_date;
+
             if (ModelState.IsValid)
             {
                 db.Events.Add(@event);
@@ -142,8 +149,13 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,HostID,Title,ShortDescription,LongDescription,AddressID,Created,Published,Edited,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,Suspended")] Event @event)
+        public ActionResult Edit([Bind(Include = "ID,HostID,Title,ShortDescription,LongDescription,AddressID,Published,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,Suspended")] Event @event)
         {
+            DateTime current_date = DateTime.Now;
+
+            @event.HostID = User.Identity.GetUserId();
+            @event.Edited = current_date;
+
             if (ModelState.IsValid)
             {
                 db.Entry(@event).State = EntityState.Modified;

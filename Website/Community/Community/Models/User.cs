@@ -75,5 +75,6 @@ namespace Community.Models
         public virtual ICollection<Volunteer> Volunteers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
+        public static object Identity { get; internal set; }
     }
 }

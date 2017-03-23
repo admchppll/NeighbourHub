@@ -3,9 +3,34 @@
 @{
     ViewBag.Title = "Details";
 }
+<script>
+    function addRequestVerificationToken(data) {
+        data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+        return data;
+    };
 
+    function volunteer() {
+        var data1 = {EventId: @Html.Raw(Model.ID)};
+
+        $.ajax({
+            url: '/Volunteer/Volunteer',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data1),
+            dataType: "json",
+            method: "POST",
+            success: function(data){
+                if(data.success)
+                    alert("success");
+                else
+                    alert("failure");
+            },
+            error: function(data) {
+                alert("Unable to Volunteer for this event");
+            }
+        });
+    }
+</script>
 <h2>Details</h2>
-
 <div>
     <h4>Event</h4>
     <hr />
@@ -237,6 +262,11 @@
     </dl>
 </div>
 <p>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <a id="volunteer" onclick="volunteer()">Volunteer</a>
+    }
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -33,7 +33,7 @@ namespace Community.Models
         public int AddressID { get; set; }
         public System.DateTime Created { get; set; }
         public bool Published { get; set; }
-        public Nullable<System.DateTime> Edited { get; set; }
+        public DateTime? Edited { get; set; }
         public Nullable<short> Repeated { get; set; }
         public Nullable<byte> RepeatIncrement { get; set; }
         public System.DateTime Date { get; set; }

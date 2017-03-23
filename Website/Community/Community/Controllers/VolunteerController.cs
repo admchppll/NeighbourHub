@@ -21,7 +21,9 @@ namespace Community.Controllers
             try
             {
                 var userID = User.Identity.GetUserId();
-                var count = db.Profiles.Where(p => p.UserID == userID).Count();
+                var count = db.Profiles
+                    .Where(p => p.UserID == userID)
+                    .Count();
 
                 if (count == 0)
                     return false;
@@ -86,6 +88,109 @@ namespace Community.Controllers
             ViewBag.EventID = new SelectList(db.Events, "ID", "HostID", volunteer.EventID);
             ViewBag.VolunteerID = new SelectList(db.Users, "ID", "Email", volunteer.VolunteerID);
             return View(volunteer);
+        }
+
+        public class VolunteerData {
+            public int EventId { get; set; }
+        }
+
+        //POST: Volunteer/Volunteer
+        [HttpPost]
+        public JsonResult Volunteer(VolunteerData data) {
+            Volunteer volunteer = new Volunteer();
+            volunteer.VolunteerID = User.Identity.GetUserId();
+            volunteer.EventID = data.EventId;
+
+            //Check if a volunteer already exists
+
+            if (ModelState.IsValid) {
+                db.Volunteers.Add(volunteer);
+                try
+                {
+                    db.SaveChanges();
+                    return Json(new { success = true });
+                }
+                catch (Exception) { }                
+            }
+            return Json( new { success=false });
+        }
+
+        //POST: Volunteer/Confirm
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public bool Confirm(int volunteerID)
+        {
+            var query = db.Volunteers
+                    .Where(v => v.ID == volunteerID);
+
+            foreach (Volunteer vol in query) {
+                if (vol.Event.HostID == User.Identity.GetUserId())
+                {
+                    vol.Confirmed = true;
+                }
+            }
+
+            try
+            {
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception) {}
+
+            return false;
+        }
+
+        //POST: Volunteer/Reject
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public bool Reject(int volunteerID)
+        {
+            var query = db.Volunteers
+                .Include(v => v.Event)
+                .Where(v => v.ID == volunteerID);
+
+            foreach (Volunteer vol in query)
+            {
+                if (vol.Event.HostID == User.Identity.GetUserId())
+                {
+                    vol.Rejected = true;
+                }
+            }
+
+            try
+            {
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception) { }
+
+            return false;
+        }
+
+        //POST: Volunteer/Withdraw
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public bool Withdraw(int volunteerID)
+        {
+            var query = db.Volunteers
+                    .Where(v => v.ID == volunteerID);
+
+            foreach (Volunteer vol in query)
+            {
+                if (vol.VolunteerID == User.Identity.GetUserId())
+                {
+                    vol.Withdrawn = true;
+                }
+            }
+
+            try
+            {
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception) { }
+
+            return false;
         }
 
         // GET: Volunteer/Edit/5

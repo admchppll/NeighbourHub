@@ -31,7 +31,7 @@ namespace Community.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Address address = db.Addresses.Find(id);
+            Models.Address address = db.Addresses.Find(id);
             if (address == null)
             {
                 return HttpNotFound();
@@ -51,11 +51,11 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Address1,Address2,City,County,Country,Postcode,Notes,Default")] Address address)
+        public ActionResult Create([Bind(Include = "ID,Name,Address1,Address2,City,County,Country,Postcode,Notes,Default")] Models.Address address)
         {
             address.UserID = User.Identity.GetUserId();
 
-            Postcode postcode = new Postcode(address.Postcode);
+            Helpers.Postcode postcode = new Helpers.Postcode(address.Postcode);
             address.Long = postcode.longitude;
             address.Lat = postcode.latitude;
 
@@ -77,7 +77,7 @@ namespace Community.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Address address = db.Addresses.Find(id);
+            Models.Address address = db.Addresses.Find(id);
             if (address == null)
             {
                 return HttpNotFound();
@@ -91,7 +91,7 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserID,Name,Address1,Address2,City,County,Country,Postcode,Notes,Long,Lat,Default")] Address address)
+        public ActionResult Edit([Bind(Include = "ID,UserID,Name,Address1,Address2,City,County,Country,Postcode,Notes,Long,Lat,Default")] Models.Address address)
         {
             if (ModelState.IsValid)
             {
@@ -110,7 +110,7 @@ namespace Community.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Address address = db.Addresses.Find(id);
+            Models.Address address = db.Addresses.Find(id);
             if (address == null)
             {
                 return HttpNotFound();
@@ -123,7 +123,7 @@ namespace Community.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Address address = db.Addresses.Find(id);
+            Models.Address address = db.Addresses.Find(id);
             db.Addresses.Remove(address);
             db.SaveChanges();
             return RedirectToAction("Index");
