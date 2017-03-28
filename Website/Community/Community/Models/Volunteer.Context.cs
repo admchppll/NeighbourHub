@@ -27,6 +27,7 @@ namespace Community.Models
     
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Audit> Audits { get; set; }
+        public virtual DbSet<Bookmarked> Bookmarkeds { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<EventTag> EventTags { get; set; }
         public virtual DbSet<Information> Information { get; set; }
@@ -44,6 +45,7 @@ namespace Community.Models
         public virtual DbSet<UserClaim> UserClaims { get; set; }
         public virtual DbSet<UserInterest> UserInterests { get; set; }
         public virtual DbSet<UserLogin> UserLogins { get; set; }
+        public virtual DbSet<UserOrganisation> UserOrganisations { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserSkill> UserSkills { get; set; }
         public virtual DbSet<Volunteer> Volunteers { get; set; }

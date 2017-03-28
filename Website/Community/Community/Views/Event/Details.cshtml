@@ -242,6 +242,7 @@
 
     </dl>
 </div>
+@{Html.RenderAction("Display", "EventTag", new { eventId = Model.ID});}
 <p>
     @using (Html.BeginForm())
     {

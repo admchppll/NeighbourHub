@@ -20,9 +20,9 @@ namespace Community.Models
         public string Title { get; set; }
         public string Body { get; set; }
         public Nullable<System.DateTime> Sent { get; set; }
-        public Nullable<bool> Read { get; set; }
-        public Nullable<bool> Saved { get; set; }
-        public Nullable<bool> Notified { get; set; }
+        public bool Read { get; set; }
+        public bool Saved { get; set; }
+        public bool Notified { get; set; }
         public string Admin { get; set; }
     
         public virtual User User { get; set; }

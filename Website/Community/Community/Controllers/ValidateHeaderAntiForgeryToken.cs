@@ -10,7 +10,7 @@ namespace Community.Controllers
     * Date: 2014
     * Code version: 1.0
     * Availability: https://gist.github.com/nozzlegear/eb3e4560580fc21f2032
-    *
+    * Purpose: Validate tokens contained within headers of custom post requests where previous built-in functions are no longer satisfactory
     **************************************************************************************/
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public sealed class ValidateHeaderAntiForgeryTokenAttribute : FilterAttribute, IAuthorizationFilter

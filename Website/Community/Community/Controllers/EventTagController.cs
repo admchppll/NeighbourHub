@@ -21,6 +21,15 @@ namespace Community.Controllers
             return View(eventTags.ToList());
         }
 
+        public ActionResult Display(int? eventID)
+        {
+            var eventTags = db.EventTags
+                .Include(e => e.Event)
+                .Include(e => e.Tag)
+                .Where(e => e.EventID == eventID);
+            return PartialView(eventTags.ToList());
+        }
+
         // GET: EventTag/Details/5
         public ActionResult Details(int? id)
         {
@@ -49,7 +58,7 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,EventID,TagID")] EventTag eventTag)
+        public ActionResult Create([Bind(Include = "EventID,TagID")] EventTag eventTag)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +67,7 @@ namespace Community.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EventID = new SelectList(db.Events, "ID", "HostID", eventTag.EventID);
+            ViewBag.EventID = new SelectList(db.Events, "ID", "Title", eventTag.EventID);
             ViewBag.TagID = new SelectList(db.Tags, "ID", "Name", eventTag.TagID);
             return View(eventTag);
         }
@@ -101,6 +110,7 @@ namespace Community.Controllers
         // GET: EventTag/Delete/5
         public ActionResult Delete(int? id)
         {
+            ViewBag.returnUrl = HttpContext.Request.UrlReferrer.ToString();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -121,7 +131,8 @@ namespace Community.Controllers
             EventTag eventTag = db.EventTags.Find(id);
             db.EventTags.Remove(eventTag);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction(ViewBag.returnUrl);
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

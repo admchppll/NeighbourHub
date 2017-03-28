@@ -19,9 +19,9 @@ namespace Community.Models
         public string SenderID { get; set; }
         public string RecipientID { get; set; }
         public Nullable<int> EventID { get; set; }
-        public Nullable<bool> Gift { get; set; }
+        public bool Gift { get; set; }
         public short Amount { get; set; }
-        public Nullable<bool> Complete { get; set; }
+        public bool Complete { get; set; }
     
         public virtual Event Event { get; set; }
     }

@@ -107,7 +107,7 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,ShortDescription,LongDescription,AddressID,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo")] Event @event)
+        public ActionResult Create([Bind(Include = "Title,ShortDescription,LongDescription,AddressID,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo")] Event @event)
         {
             DateTime current_date = DateTime.Now;
 
@@ -124,7 +124,16 @@ namespace Community.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AddressID = new SelectList(db.Addresses, "ID", "Name", @event.AddressID);
+            var userID = User.Identity.GetUserId();
+            var addresses = db.Addresses
+                .Where(a => a.UserID == userID)
+                .Select(a => new {
+                    AddressID = a.ID,
+                    Label = a.Name + " (" + a.Address1 + ")"
+                })
+                .ToList();
+
+            ViewBag.AddressID = new SelectList(addresses, "AddressID", "Label");
             return View(@event);
         }
 

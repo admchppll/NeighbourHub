@@ -18,6 +18,8 @@ namespace Community.Models
         public User()
         {
             this.Addresses = new HashSet<Address>();
+            this.Bookmarkeds = new HashSet<Bookmarked>();
+            this.Events = new HashSet<Event>();
             this.Messages = new HashSet<Message>();
             this.Messages1 = new HashSet<Message>();
             this.Notifications = new HashSet<Notification>();
@@ -28,9 +30,9 @@ namespace Community.Models
             this.UserLogins = new HashSet<UserLogin>();
             this.UserRoles = new HashSet<UserRole>();
             this.UserInterests = new HashSet<UserInterest>();
+            this.UserOrganisations = new HashSet<UserOrganisation>();
             this.UserSkills = new HashSet<UserSkill>();
             this.Volunteers = new HashSet<Volunteer>();
-            this.Events = new HashSet<Event>();
         }
     
         public string ID { get; set; }
@@ -49,6 +51,10 @@ namespace Community.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bookmarked> Bookmarkeds { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event> Events { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Message> Messages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -70,11 +76,10 @@ namespace Community.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserInterest> UserInterests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserOrganisation> UserOrganisations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSkill> UserSkills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Volunteer> Volunteers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Event> Events { get; set; }
-        public static object Identity { get; internal set; }
     }
 }

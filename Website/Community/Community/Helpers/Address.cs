@@ -14,6 +14,10 @@ namespace Community.Helpers
 
         private const string URL = "http://api.postcodes.io/postcodes/";
 
+        /// <summary>
+        /// Constructor that will also retrieve long/lat of a given postcode
+        /// </summary>
+        /// <param name="code">Postcode</param>
         public Postcode(string code)
         {
             postcode = code;

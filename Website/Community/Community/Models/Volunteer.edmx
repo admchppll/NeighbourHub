@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VolunteerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VolunteerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="ID" />
@@ -21,7 +21,7 @@
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="Long" Type="float" />
           <Property Name="Lat" Type="float" />
-          <Property Name="Default" Type="bit" />
+          <Property Name="Default" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Audit">
           <Key>
@@ -34,15 +34,13 @@
           <Property Name="AuditMessage" Type="nvarchar(max)" Nullable="false" />
           <Property Name="AdminOnly" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Bookmark">
+        <EntityType Name="Bookmarked">
           <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="EventID" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -61,28 +59,28 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="RepeatIncrement" Type="tinyint" />
           <Property Name="Date" Type="smalldatetime" Nullable="false" />
           <Property Name="Length" Type="tinyint" Nullable="false" />
-          <Property Name="AM1" Type="bit" />
-          <Property Name="AM2" Type="bit" />
-          <Property Name="AM3" Type="bit" />
-          <Property Name="AM4" Type="bit" />
-          <Property Name="AM5" Type="bit" />
-          <Property Name="AM6" Type="bit" />
-          <Property Name="AM7" Type="bit" />
-          <Property Name="PM1" Type="bit" />
-          <Property Name="PM2" Type="bit" />
-          <Property Name="PM3" Type="bit" />
-          <Property Name="PM4" Type="bit" />
-          <Property Name="PM5" Type="bit" />
-          <Property Name="PM6" Type="bit" />
-          <Property Name="PM7" Type="bit" />
+          <Property Name="AM1" Type="bit" Nullable="false" />
+          <Property Name="AM2" Type="bit" Nullable="false" />
+          <Property Name="AM3" Type="bit" Nullable="false" />
+          <Property Name="AM4" Type="bit" Nullable="false" />
+          <Property Name="AM5" Type="bit" Nullable="false" />
+          <Property Name="AM6" Type="bit" Nullable="false" />
+          <Property Name="AM7" Type="bit" Nullable="false" />
+          <Property Name="PM1" Type="bit" Nullable="false" />
+          <Property Name="PM2" Type="bit" Nullable="false" />
+          <Property Name="PM3" Type="bit" Nullable="false" />
+          <Property Name="PM4" Type="bit" Nullable="false" />
+          <Property Name="PM5" Type="bit" Nullable="false" />
+          <Property Name="PM6" Type="bit" Nullable="false" />
+          <Property Name="PM7" Type="bit" Nullable="false" />
           <Property Name="DateInfo" Type="nvarchar" MaxLength="200" />
-          <Property Name="Suspended" Type="bit" />
+          <Property Name="Suspended" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="EventTag">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="int" Nullable="false" />
           <Property Name="TagID" Type="int" Nullable="false" />
         </EntityType>
@@ -112,9 +110,9 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="Title" Type="nvarchar" MaxLength="50" />
           <Property Name="Body" Type="nvarchar(max)" />
           <Property Name="Sent" Type="smalldatetime" />
-          <Property Name="Read" Type="bit" />
-          <Property Name="Saved" Type="bit" />
-          <Property Name="Notified" Type="bit" />
+          <Property Name="Read" Type="bit" Nullable="false" />
+          <Property Name="Saved" Type="bit" Nullable="false" />
+          <Property Name="Notified" Type="bit" Nullable="false" />
           <Property Name="Admin" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Notification">
@@ -126,6 +124,7 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="Title" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Link" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Viewed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Organisation">
           <Key>
@@ -134,8 +133,9 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Balance" Type="smallint" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Phone" Type="smallint" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Address1" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Address2" Type="nvarchar" MaxLength="50" />
           <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -147,7 +147,7 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="Google" Type="nvarchar" MaxLength="200" />
           <Property Name="Youtube" Type="nvarchar" MaxLength="200" />
           <Property Name="CharityNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Approved" Type="bit" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
@@ -155,18 +155,17 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="OrganisationID" Type="smallint" />
           <Property Name="Balance" Type="smallint" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="5" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Gender" Type="bit" />
-          <Property Name="BirthDate" Type="smalldatetime" />
+          <Property Name="Gender" Type="bit" Nullable="false" />
+          <Property Name="BirthDate" Type="smalldatetime" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="20" />
           <Property Name="Biography" Type="nvarchar(max)" />
           <Property Name="PictureURL" Type="nvarchar(max)" />
-          <Property Name="Active" Type="bit" />
-          <Property Name="Suspended" Type="bit" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Suspended" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -191,6 +190,8 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Label" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
@@ -210,9 +211,9 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="SenderID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecipientID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="EventID" Type="int" />
-          <Property Name="Gift" Type="bit" />
+          <Property Name="Gift" Type="bit" Nullable="false" />
           <Property Name="Amount" Type="smallint" Nullable="false" />
-          <Property Name="Complete" Type="bit" />
+          <Property Name="Complete" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -260,6 +261,18 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IdentityUser_Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="UserOrganisation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="OrganisationID" Type="smallint" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="Denied" Type="bit" Nullable="false" />
+          <Property Name="Admin" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -313,26 +326,26 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Bookmark_Event">
+        <Association Name="FK_Bookmarked_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
-          <End Role="Bookmark" Type="Self.Bookmark" Multiplicity="*" />
+          <End Role="Bookmarked" Type="Self.Bookmarked" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Event">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Bookmark">
+            <Dependent Role="Bookmarked">
               <PropertyRef Name="EventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Bookmark_User">
+        <Association Name="FK_Bookmarked_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Bookmark" Type="Self.Bookmark" Multiplicity="*" />
+          <End Role="Bookmarked" Type="Self.Bookmarked" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Bookmark">
+            <Dependent Role="Bookmarked">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -399,6 +412,18 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Event_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="HostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EventTag_Event1">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
           <End Role="EventTag" Type="Self.EventTag" Multiplicity="*" />
@@ -456,18 +481,6 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             </Principal>
             <Dependent Role="Notification">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Profile_Organisation">
-          <End Role="Organisation" Type="Self.Organisation" Multiplicity="0..1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organisation">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="OrganisationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -555,6 +568,30 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserOrganisation_Organisation">
+          <End Role="Organisation" Type="Self.Organisation" Multiplicity="1" />
+          <End Role="UserOrganisation" Type="Self.UserOrganisation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organisation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOrganisation">
+              <PropertyRef Name="OrganisationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserOrganisation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserOrganisation" Type="Self.UserOrganisation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOrganisation">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserSkill_Skill">
           <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
           <End Role="UserSkill" Type="Self.UserSkill" Multiplicity="*" />
@@ -606,6 +643,7 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
         <EntityContainer Name="VolunteerModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bookmarked" EntityType="Self.Bookmarked" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventTag" EntityType="Self.EventTag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Information" EntityType="Self.Information" Schema="dbo" store:Type="Tables" />
@@ -623,15 +661,10 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <EntitySet Name="UserClaim" EntityType="Self.UserClaim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInterest" EntityType="Self.UserInterest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserOrganisation" EntityType="Self.UserOrganisation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSkill" EntityType="Self.UserSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Bookmark" EntityType="Self.Bookmark" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Bookmark].[UserID] AS [UserID], 
-    [Bookmark].[EventID] AS [EventID]
-    FROM [dbo].[Bookmark] AS [Bookmark]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
             <End Role="User" EntitySet="User" />
             <End Role="Address" EntitySet="Address" />
@@ -640,13 +673,13 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             <End Role="Event" EntitySet="Event" />
             <End Role="Audit" EntitySet="Audit" />
           </AssociationSet>
-          <AssociationSet Name="FK_Bookmark_Event" Association="Self.FK_Bookmark_Event">
+          <AssociationSet Name="FK_Bookmarked_Event" Association="Self.FK_Bookmarked_Event">
             <End Role="Event" EntitySet="Event" />
-            <End Role="Bookmark" EntitySet="Bookmark" />
+            <End Role="Bookmarked" EntitySet="Bookmarked" />
           </AssociationSet>
-          <AssociationSet Name="FK_Bookmark_User" Association="Self.FK_Bookmark_User">
+          <AssociationSet Name="FK_Bookmarked_User" Association="Self.FK_Bookmarked_User">
             <End Role="User" EntitySet="User" />
-            <End Role="Bookmark" EntitySet="Bookmark" />
+            <End Role="Bookmarked" EntitySet="Bookmarked" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_UserClaim_dbo_User_IdentityUser_Id" Association="Self.FK_dbo_UserClaim_dbo_User_IdentityUser_Id">
             <End Role="User" EntitySet="User" />
@@ -668,6 +701,10 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             <End Role="Address" EntitySet="Address" />
             <End Role="Event" EntitySet="Event" />
           </AssociationSet>
+          <AssociationSet Name="FK_Event_User" Association="Self.FK_Event_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
           <AssociationSet Name="FK_EventTag_Event1" Association="Self.FK_EventTag_Event1">
             <End Role="Event" EntitySet="Event" />
             <End Role="EventTag" EntitySet="EventTag" />
@@ -687,10 +724,6 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <AssociationSet Name="FK_Notification_User" Association="Self.FK_Notification_User">
             <End Role="User" EntitySet="User" />
             <End Role="Notification" EntitySet="Notification" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Profile_Organisation" Association="Self.FK_Profile_Organisation">
-            <End Role="Organisation" EntitySet="Organisation" />
-            <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
           <AssociationSet Name="FK_Profile_User" Association="Self.FK_Profile_User">
             <End Role="User" EntitySet="User" />
@@ -720,6 +753,14 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             <End Role="User" EntitySet="User" />
             <End Role="UserInterest" EntitySet="UserInterest" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserOrganisation_Organisation" Association="Self.FK_UserOrganisation_Organisation">
+            <End Role="Organisation" EntitySet="Organisation" />
+            <End Role="UserOrganisation" EntitySet="UserOrganisation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserOrganisation_User" Association="Self.FK_UserOrganisation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserOrganisation" EntitySet="UserOrganisation" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserSkill_Skill" Association="Self.FK_UserSkill_Skill">
             <End Role="Skill" EntitySet="Skill" />
             <End Role="UserSkill" EntitySet="UserSkill" />
@@ -737,8 +778,7 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             <End Role="Volunteer" EntitySet="Volunteer" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VolunteerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -758,7 +798,7 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Long" Type="Double" />
           <Property Name="Lat" Type="Double" />
-          <Property Name="Default" Type="Boolean" />
+          <Property Name="Default" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
           <NavigationProperty Name="Events" Relationship="Self.FK_Event_Address" FromRole="Address" ToRole="Event" />
         </EntityType>
@@ -773,6 +813,16 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="AuditMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AdminOnly" Type="Boolean" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Audit_Event" FromRole="Audit" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Bookmarked">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Bookmarked_Event" FromRole="Bookmarked" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Bookmarked_User" FromRole="Bookmarked" ToRole="User" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -791,29 +841,30 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="RepeatIncrement" Type="Byte" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Length" Type="Byte" Nullable="false" />
-          <Property Name="AM1" Type="Boolean" />
-          <Property Name="AM2" Type="Boolean" />
-          <Property Name="AM3" Type="Boolean" />
-          <Property Name="AM4" Type="Boolean" />
-          <Property Name="AM5" Type="Boolean" />
-          <Property Name="AM6" Type="Boolean" />
-          <Property Name="AM7" Type="Boolean" />
-          <Property Name="PM1" Type="Boolean" />
-          <Property Name="PM2" Type="Boolean" />
-          <Property Name="PM3" Type="Boolean" />
-          <Property Name="PM4" Type="Boolean" />
-          <Property Name="PM5" Type="Boolean" />
-          <Property Name="PM6" Type="Boolean" />
-          <Property Name="PM7" Type="Boolean" />
+          <Property Name="AM1" Type="Boolean" Nullable="false" />
+          <Property Name="AM2" Type="Boolean" Nullable="false" />
+          <Property Name="AM3" Type="Boolean" Nullable="false" />
+          <Property Name="AM4" Type="Boolean" Nullable="false" />
+          <Property Name="AM5" Type="Boolean" Nullable="false" />
+          <Property Name="AM6" Type="Boolean" Nullable="false" />
+          <Property Name="AM7" Type="Boolean" Nullable="false" />
+          <Property Name="PM1" Type="Boolean" Nullable="false" />
+          <Property Name="PM2" Type="Boolean" Nullable="false" />
+          <Property Name="PM3" Type="Boolean" Nullable="false" />
+          <Property Name="PM4" Type="Boolean" Nullable="false" />
+          <Property Name="PM5" Type="Boolean" Nullable="false" />
+          <Property Name="PM6" Type="Boolean" Nullable="false" />
+          <Property Name="PM7" Type="Boolean" Nullable="false" />
           <Property Name="DateInfo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Suspended" Type="Boolean" />
+          <Property Name="Suspended" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Event_Address" FromRole="Event" ToRole="Address" />
           <NavigationProperty Name="Audits" Relationship="Self.FK_Audit_Event" FromRole="Event" ToRole="Audit" />
+          <NavigationProperty Name="Bookmarkeds" Relationship="Self.FK_Bookmarked_Event" FromRole="Event" ToRole="Bookmarked" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Event_User" FromRole="Event" ToRole="User" />
           <NavigationProperty Name="EventTags" Relationship="Self.FK_EventTag_Event1" FromRole="Event" ToRole="EventTag" />
           <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Event" FromRole="Event" ToRole="Report" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Event" FromRole="Event" ToRole="Transaction" />
           <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_Event" FromRole="Event" ToRole="Volunteer" />
-          <NavigationProperty Name="Users" Relationship="Self.Bookmark" FromRole="Event" ToRole="User" />
         </EntityType>
         <EntityType Name="EventTag">
           <Key>
@@ -852,9 +903,9 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Sent" Type="DateTime" Precision="0" />
-          <Property Name="Read" Type="Boolean" />
-          <Property Name="Saved" Type="Boolean" />
-          <Property Name="Notified" Type="Boolean" />
+          <Property Name="Read" Type="Boolean" Nullable="false" />
+          <Property Name="Saved" Type="Boolean" Nullable="false" />
+          <Property Name="Notified" Type="Boolean" Nullable="false" />
           <Property Name="Admin" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="User" Relationship="Self.FK_Message_User_Recipient" FromRole="Message" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="Self.FK_Message_User_Sender" FromRole="Message" ToRole="User" />
@@ -868,6 +919,7 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Link" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Viewed" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Notification_User" FromRole="Notification" ToRole="User" />
         </EntityType>
         <EntityType Name="Organisation">
@@ -877,8 +929,9 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Balance" Type="Int16" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Phone" Type="Int16" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -890,8 +943,8 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="Google" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Youtube" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CharityNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Approved" Type="Boolean" />
-          <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_Organisation" FromRole="Organisation" ToRole="Profile" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserOrganisations" Relationship="Self.FK_UserOrganisation_Organisation" FromRole="Organisation" ToRole="UserOrganisation" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
@@ -899,19 +952,17 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrganisationID" Type="Int16" />
           <Property Name="Balance" Type="Int16" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Gender" Type="Boolean" />
-          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="Boolean" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Biography" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PictureURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Boolean" />
-          <Property Name="Suspended" Type="Boolean" />
-          <NavigationProperty Name="Organisation" Relationship="Self.FK_Profile_Organisation" FromRole="Profile" ToRole="Organisation" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Suspended" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Profile_User" FromRole="Profile" ToRole="User" />
         </EntityType>
         <EntityType Name="Report">
@@ -941,6 +992,8 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="UserSkills" Relationship="Self.FK_UserSkill_Skill" FromRole="Skill" ToRole="UserSkill" />
         </EntityType>
         <EntityType Name="Tag">
@@ -962,9 +1015,9 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="SenderID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RecipientID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EventID" Type="Int32" />
-          <Property Name="Gift" Type="Boolean" />
+          <Property Name="Gift" Type="Boolean" Nullable="false" />
           <Property Name="Amount" Type="Int16" Nullable="false" />
-          <Property Name="Complete" Type="Boolean" />
+          <Property Name="Complete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Transaction_Event" FromRole="Transaction" ToRole="Event" />
         </EntityType>
         <EntityType Name="User">
@@ -985,6 +1038,8 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_User" FromRole="User" ToRole="Address" />
+          <NavigationProperty Name="Bookmarkeds" Relationship="Self.FK_Bookmarked_User" FromRole="User" ToRole="Bookmarked" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Event_User" FromRole="User" ToRole="Event" />
           <NavigationProperty Name="Messages" Relationship="Self.FK_Message_User_Recipient" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="Messages1" Relationship="Self.FK_Message_User_Sender" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="Notifications" Relationship="Self.FK_Notification_User" FromRole="User" ToRole="Notification" />
@@ -995,9 +1050,9 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <NavigationProperty Name="UserLogins" Relationship="Self.FK_dbo_UserLogin_dbo_User_IdentityUser_Id" FromRole="User" ToRole="UserLogin" />
           <NavigationProperty Name="UserRoles" Relationship="Self.FK_dbo_UserRole_dbo_User_IdentityUser_Id" FromRole="User" ToRole="UserRole" />
           <NavigationProperty Name="UserInterests" Relationship="Self.FK_UserInterest_User" FromRole="User" ToRole="UserInterest" />
+          <NavigationProperty Name="UserOrganisations" Relationship="Self.FK_UserOrganisation_User" FromRole="User" ToRole="UserOrganisation" />
           <NavigationProperty Name="UserSkills" Relationship="Self.FK_UserSkill_User" FromRole="User" ToRole="UserSkill" />
           <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_User" FromRole="User" ToRole="Volunteer" />
-          <NavigationProperty Name="Events" Relationship="Self.Bookmark" FromRole="User" ToRole="Event" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
@@ -1031,6 +1086,20 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdentityUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="Self.FK_dbo_UserLogin_dbo_User_IdentityUser_Id" FromRole="UserLogin" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UserOrganisation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrganisationID" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Organisation" Relationship="Self.FK_UserOrganisation_Organisation" FromRole="UserOrganisation" ToRole="Organisation" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserOrganisation_User" FromRole="UserOrganisation" ToRole="User" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="Denied" Type="Boolean" Nullable="false" />
+          <Property Name="Admin" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -1102,6 +1171,42 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Bookmarked_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="Bookmarked" Type="Self.Bookmarked" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bookmarked">
+              <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bookmarked_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Bookmarked" Type="Self.Bookmarked" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Bookmarked">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="HostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EventTag_Event1">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
           <End Role="EventTag" Type="Self.EventTag" Multiplicity="*" />
@@ -1210,14 +1315,14 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Profile_Organisation">
-          <End Role="Organisation" Type="Self.Organisation" Multiplicity="0..1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+        <Association Name="FK_UserOrganisation_Organisation">
+          <End Role="Organisation" Type="Self.Organisation" Multiplicity="1" />
+          <End Role="UserOrganisation" Type="Self.UserOrganisation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organisation">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Profile">
+            <Dependent Role="UserOrganisation">
               <PropertyRef Name="OrganisationID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1332,6 +1437,18 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserOrganisation_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserOrganisation" Type="Self.UserOrganisation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserOrganisation">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserSkill_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="UserSkill" Type="Self.UserSkill" Multiplicity="*" />
@@ -1356,13 +1473,10 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Bookmark">
-          <End Role="Event" Type="Self.Event" Multiplicity="*" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="VolunteerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="Audits" EntityType="Self.Audit" />
+          <EntitySet Name="Bookmarkeds" EntityType="Self.Bookmarked" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="EventTags" EntityType="Self.EventTag" />
           <EntitySet Name="Information" EntityType="Self.Information" />
@@ -1380,6 +1494,7 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <EntitySet Name="UserClaims" EntityType="Self.UserClaim" />
           <EntitySet Name="UserInterests" EntityType="Self.UserInterest" />
           <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
+          <EntitySet Name="UserOrganisations" EntityType="Self.UserOrganisation" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <EntitySet Name="UserSkills" EntityType="Self.UserSkill" />
           <EntitySet Name="Volunteers" EntityType="Self.Volunteer" />
@@ -1394,6 +1509,18 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <AssociationSet Name="FK_Audit_Event" Association="Self.FK_Audit_Event">
             <End Role="Event" EntitySet="Events" />
             <End Role="Audit" EntitySet="Audits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bookmarked_Event" Association="Self.FK_Bookmarked_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Bookmarked" EntitySet="Bookmarkeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bookmarked_User" Association="Self.FK_Bookmarked_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Bookmarked" EntitySet="Bookmarkeds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_User" Association="Self.FK_Event_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Event" EntitySet="Events" />
           </AssociationSet>
           <AssociationSet Name="FK_EventTag_Event1" Association="Self.FK_EventTag_Event1">
             <End Role="Event" EntitySet="Events" />
@@ -1431,9 +1558,9 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             <End Role="User" EntitySet="Users" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
-          <AssociationSet Name="FK_Profile_Organisation" Association="Self.FK_Profile_Organisation">
+          <AssociationSet Name="FK_UserOrganisation_Organisation" Association="Self.FK_UserOrganisation_Organisation">
             <End Role="Organisation" EntitySet="Organisations" />
-            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="UserOrganisation" EntitySet="UserOrganisations" />
           </AssociationSet>
           <AssociationSet Name="FK_Profile_User" Association="Self.FK_Profile_User">
             <End Role="User" EntitySet="Users" />
@@ -1471,6 +1598,10 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
             <End Role="User" EntitySet="Users" />
             <End Role="UserInterest" EntitySet="UserInterests" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserOrganisation_User" Association="Self.FK_UserOrganisation_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserOrganisation" EntitySet="UserOrganisations" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserSkill_User" Association="Self.FK_UserSkill_User">
             <End Role="User" EntitySet="Users" />
             <End Role="UserSkill" EntitySet="UserSkills" />
@@ -1478,10 +1609,6 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
           <AssociationSet Name="FK_Volunteer_User" Association="Self.FK_Volunteer_User">
             <End Role="User" EntitySet="Users" />
             <End Role="Volunteer" EntitySet="Volunteers" />
-          </AssociationSet>
-          <AssociationSet Name="Bookmark" Association="Self.Bookmark">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="User" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1518,6 +1645,15 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="AuditMessage" ColumnName="AuditMessage" />
                 <ScalarProperty Name="AdminOnly" ColumnName="AdminOnly" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookmarkeds">
+            <EntityTypeMapping TypeName="VolunteerModel.Bookmarked">
+              <MappingFragment StoreEntitySet="Bookmarked">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1607,6 +1743,7 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Viewed" ColumnName="Viewed" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1616,6 +1753,7 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Address1" ColumnName="Address1" />
@@ -1638,7 +1776,6 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
               <MappingFragment StoreEntitySet="Profile">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="OrganisationID" ColumnName="OrganisationID" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -1677,6 +1814,8 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
               <MappingFragment StoreEntitySet="Skill">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1753,6 +1892,19 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserOrganisations">
+            <EntityTypeMapping TypeName="VolunteerModel.UserOrganisation">
+              <MappingFragment StoreEntitySet="UserOrganisation">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+                <ScalarProperty Name="Denied" ColumnName="Denied" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="OrganisationID" ColumnName="OrganisationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserRoles">
             <EntityTypeMapping TypeName="VolunteerModel.UserRole">
               <MappingFragment StoreEntitySet="UserRole">
@@ -1783,14 +1935,6 @@ warning 6002: The table/view 'Volunteer.dbo.Bookmark' does not have a primary ke
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Bookmark" TypeName="VolunteerModel.Bookmark" StoreEntitySet="Bookmark">
-            <EndProperty Name="Event">
-              <ScalarProperty Name="ID" ColumnName="EventID" />
-            </EndProperty>
-            <EndProperty Name="User">
-              <ScalarProperty Name="ID" ColumnName="UserID" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

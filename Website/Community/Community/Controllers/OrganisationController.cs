@@ -10,7 +10,6 @@ using Community.Models;
 
 namespace Community.Controllers
 {
-    [Authorize]
     public class OrganisationController : Controller
     {
         private VolunteerEntities db = new VolunteerEntities();
@@ -47,7 +46,7 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Description,Email,Phone,Address1,Address2,City,County,Country,Postcode,Facebook,Twitter,Google,Youtube,CharityNumber,Approved")] Organisation organisation)
+        public ActionResult Create([Bind(Include = "ID,Name,Description,Balance,Email,Phone,Address1,Address2,City,County,Country,Postcode,Facebook,Twitter,Google,Youtube,CharityNumber,Approved")] Organisation organisation)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +78,7 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Description,Email,Phone,Address1,Address2,City,County,Country,Postcode,Facebook,Twitter,Google,Youtube,CharityNumber,Approved")] Organisation organisation)
+        public ActionResult Edit([Bind(Include = "ID,Name,Description,Balance,Email,Phone,Address1,Address2,City,County,Country,Postcode,Facebook,Twitter,Google,Youtube,CharityNumber,Approved")] Organisation organisation)
         {
             if (ModelState.IsValid)
             {

@@ -22,6 +22,8 @@ namespace Community.Models
     
         public int ID { get; set; }
         public string Label { get; set; }
+        public bool Active { get; set; }
+        public System.DateTime Created { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserSkill> UserSkills { get; set; }

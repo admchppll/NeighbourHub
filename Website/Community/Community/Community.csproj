@@ -214,6 +214,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\BookmarkController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventTagController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -229,10 +230,13 @@
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UserInterestController.cs" />
+    <Compile Include="Controllers\UserOrganisationController.cs" />
     <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Controllers\UserSkillController.cs" />
     <Compile Include="Controllers\ValidateHeaderAntiForgeryToken.cs" />
     <Compile Include="Controllers\VolunteerController.cs" />
+    <Compile Include="Filters\CookieFilter.cs" />
+    <Compile Include="Filters\UrlFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,87 +244,93 @@
     <Compile Include="Helpers\Profile.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Audit.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bookmarked.cs">
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Event.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventTag.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Interest.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Notification.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Organisation.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profile.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Report.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Skill.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tag.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Transaction.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserClaim.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserInterest.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserLogin.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserOrganisation.cs">
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRole.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserSkill.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Volunteer.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Volunteer.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Volunteer.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Volunteer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Volunteer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Volunteer.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Volunteer1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Volunteer.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -334,15 +344,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Model1.Context.tt">
+    <Content Include="Models\Volunteer.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>Volunteer.edmx</DependentUpon>
+      <LastGenOutput>Volunteer.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Model1.tt">
+    <Content Include="Models\Volunteer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>Volunteer.edmx</DependentUpon>
+      <LastGenOutput>Volunteer1.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
@@ -357,12 +367,12 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <EntityDeploy Include="Models\Model1.edmx">
+    <EntityDeploy Include="Models\Volunteer.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>Volunteer.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <Content Include="Models\Volunteer.edmx.diagram">
+      <DependentUpon>Volunteer.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -442,11 +452,6 @@
     <Content Include="Views\Tag\Details.cshtml" />
     <Content Include="Views\Tag\Edit.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
-    <Content Include="Views\EventTag\Create.cshtml" />
-    <Content Include="Views\EventTag\Delete.cshtml" />
-    <Content Include="Views\EventTag\Details.cshtml" />
-    <Content Include="Views\EventTag\Edit.cshtml" />
-    <Content Include="Views\EventTag\Index.cshtml" />
     <Content Include="Views\Information\Create.cshtml" />
     <Content Include="Views\Information\Delete.cshtml" />
     <Content Include="Views\Information\Details.cshtml" />
@@ -467,11 +472,6 @@
     <Content Include="Views\Message\Details.cshtml" />
     <Content Include="Views\Message\Edit.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
-    <Content Include="Views\Organisation\Create.cshtml" />
-    <Content Include="Views\Organisation\Delete.cshtml" />
-    <Content Include="Views\Organisation\Details.cshtml" />
-    <Content Include="Views\Organisation\Edit.cshtml" />
-    <Content Include="Views\Organisation\Index.cshtml" />
     <Content Include="Views\Report\Create.cshtml" />
     <Content Include="Views\Report\Delete.cshtml" />
     <Content Include="Views\Report\Details.cshtml" />
@@ -501,6 +501,27 @@
     <Content Include="Views\Role\Create.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Gender.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\YesNo.cshtml" />
+    <Content Include="Views\Bookmark\Create.cshtml" />
+    <Content Include="Views\Bookmark\Delete.cshtml" />
+    <Content Include="Views\Bookmark\Details.cshtml" />
+    <Content Include="Views\Bookmark\Edit.cshtml" />
+    <Content Include="Views\Bookmark\Index.cshtml" />
+    <Content Include="Views\Organisation\Create.cshtml" />
+    <Content Include="Views\Organisation\Delete.cshtml" />
+    <Content Include="Views\Organisation\Details.cshtml" />
+    <Content Include="Views\Organisation\Edit.cshtml" />
+    <Content Include="Views\Organisation\Index.cshtml" />
+    <Content Include="Views\UserOrganisation\Create.cshtml" />
+    <Content Include="Views\UserOrganisation\Delete.cshtml" />
+    <Content Include="Views\UserOrganisation\Details.cshtml" />
+    <Content Include="Views\UserOrganisation\Edit.cshtml" />
+    <Content Include="Views\UserOrganisation\Index.cshtml" />
+    <Content Include="Views\EventTag\Create.cshtml" />
+    <Content Include="Views\EventTag\Delete.cshtml" />
+    <Content Include="Views\EventTag\Details.cshtml" />
+    <Content Include="Views\EventTag\Edit.cshtml" />
+    <Content Include="Views\EventTag\Index.cshtml" />
+    <Content Include="Views\EventTag\Display.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

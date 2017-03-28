@@ -17,14 +17,15 @@ namespace Community.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Organisation()
         {
-            this.Profiles = new HashSet<Profile>();
+            this.UserOrganisations = new HashSet<UserOrganisation>();
         }
     
         public short ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public short Balance { get; set; }
         public string Email { get; set; }
-        public short Phone { get; set; }
+        public string Phone { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
@@ -36,9 +37,9 @@ namespace Community.Models
         public string Google { get; set; }
         public string Youtube { get; set; }
         public string CharityNumber { get; set; }
-        public Nullable<bool> Approved { get; set; }
+        public bool Approved { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public virtual ICollection<UserOrganisation> UserOrganisations { get; set; }
     }
 }

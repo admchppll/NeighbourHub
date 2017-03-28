@@ -1,0 +1,832 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VolunteerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="County" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Postcode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Long" Type="Double" />
+    <Property Name="Lat" Type="Double" />
+    <Property Name="Default" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
+    <NavigationProperty Name="Events" Relationship="Self.FK_Event_Address" FromRole="Address" ToRole="Event" />
+  </EntityType>
+  <EntityType Name="Audit">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EventID" Type="Int32" />
+    <Property Name="AuditMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AdminOnly" Type="Boolean" />
+    <NavigationProperty Name="Event" Relationship="Self.FK_Audit_Event" FromRole="Audit" ToRole="Event" />
+  </EntityType>
+  <EntityType Name="Bookmarked">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EventID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="Self.FK_Bookmarked_Event" FromRole="Bookmarked" ToRole="Event" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Bookmarked_User" FromRole="Bookmarked" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HostID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ShortDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="LongDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AddressID" Type="Int32" Nullable="false" />
+    <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Published" Type="Boolean" Nullable="false" />
+    <Property Name="Edited" Type="DateTime" Precision="0" />
+    <Property Name="Repeated" Type="Int16" />
+    <Property Name="RepeatIncrement" Type="Byte" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Length" Type="Byte" Nullable="false" />
+    <Property Name="AM1" Type="Boolean" Nullable="false" />
+    <Property Name="AM2" Type="Boolean" Nullable="false" />
+    <Property Name="AM3" Type="Boolean" Nullable="false" />
+    <Property Name="AM4" Type="Boolean" Nullable="false" />
+    <Property Name="AM5" Type="Boolean" Nullable="false" />
+    <Property Name="AM6" Type="Boolean" Nullable="false" />
+    <Property Name="AM7" Type="Boolean" Nullable="false" />
+    <Property Name="PM1" Type="Boolean" Nullable="false" />
+    <Property Name="PM2" Type="Boolean" Nullable="false" />
+    <Property Name="PM3" Type="Boolean" Nullable="false" />
+    <Property Name="PM4" Type="Boolean" Nullable="false" />
+    <Property Name="PM5" Type="Boolean" Nullable="false" />
+    <Property Name="PM6" Type="Boolean" Nullable="false" />
+    <Property Name="PM7" Type="Boolean" Nullable="false" />
+    <Property Name="DateInfo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Suspended" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Address" Relationship="Self.FK_Event_Address" FromRole="Event" ToRole="Address" />
+    <NavigationProperty Name="Audits" Relationship="Self.FK_Audit_Event" FromRole="Event" ToRole="Audit" />
+    <NavigationProperty Name="Bookmarkeds" Relationship="Self.FK_Bookmarked_Event" FromRole="Event" ToRole="Bookmarked" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Event_User" FromRole="Event" ToRole="User" />
+    <NavigationProperty Name="EventTags" Relationship="Self.FK_EventTag_Event1" FromRole="Event" ToRole="EventTag" />
+    <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Event" FromRole="Event" ToRole="Report" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Event" FromRole="Event" ToRole="Transaction" />
+    <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_Event" FromRole="Event" ToRole="Volunteer" />
+  </EntityType>
+  <EntityType Name="EventTag">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="EventID" Type="Int32" Nullable="false" />
+    <Property Name="TagID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="Self.FK_EventTag_Event1" FromRole="EventTag" ToRole="Event" />
+    <NavigationProperty Name="Tag" Relationship="Self.FK_EventTag_Tag" FromRole="EventTag" ToRole="Tag" />
+  </EntityType>
+  <EntityType Name="Information">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Edited" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="Interest">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Label" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="UserInterests" Relationship="Self.FK_UserInterest_Interest" FromRole="Interest" ToRole="UserInterest" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SenderID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RecipientID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Sent" Type="DateTime" Precision="0" />
+    <Property Name="Read" Type="Boolean" Nullable="false" />
+    <Property Name="Saved" Type="Boolean" Nullable="false" />
+    <Property Name="Notified" Type="Boolean" Nullable="false" />
+    <Property Name="Admin" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Message_User_Recipient" FromRole="Message" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_Message_User_Sender" FromRole="Message" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Notification">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Link" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Viewed" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Notification_User" FromRole="Notification" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Organisation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Balance" Type="Int16" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="County" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Postcode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Facebook" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Twitter" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Google" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Youtube" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CharityNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Approved" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="UserOrganisations" Relationship="Self.FK_UserOrganisation_Organisation" FromRole="Organisation" ToRole="UserOrganisation" />
+  </EntityType>
+  <EntityType Name="Profile">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Balance" Type="Int16" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="Boolean" Nullable="false" />
+    <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Biography" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PictureURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Suspended" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Profile_User" FromRole="Profile" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Report">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ReportedEvent" Type="Int32" />
+    <Property Name="ReportedID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Event" Relationship="Self.FK_Report_Event" FromRole="Report" ToRole="Event" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Report_User_Reported" FromRole="Report" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_Report_User_Reporter" FromRole="Report" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_dbo_UserRole_dbo_Role_RoleId" FromRole="Role" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="Skill">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="UserSkills" Relationship="Self.FK_UserSkill_Skill" FromRole="Skill" ToRole="UserSkill" />
+  </EntityType>
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Created" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="EventTags" Relationship="Self.FK_EventTag_Tag" FromRole="Tag" ToRole="EventTag" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SenderID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RecipientID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EventID" Type="Int32" />
+    <Property Name="Gift" Type="Boolean" Nullable="false" />
+    <Property Name="Amount" Type="Int16" Nullable="false" />
+    <Property Name="Complete" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="Self.FK_Transaction_Event" FromRole="Transaction" ToRole="Event" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_User" FromRole="User" ToRole="Address" />
+    <NavigationProperty Name="Bookmarkeds" Relationship="Self.FK_Bookmarked_User" FromRole="User" ToRole="Bookmarked" />
+    <NavigationProperty Name="Events" Relationship="Self.FK_Event_User" FromRole="User" ToRole="Event" />
+    <NavigationProperty Name="Messages" Relationship="Self.FK_Message_User_Recipient" FromRole="User" ToRole="Message" />
+    <NavigationProperty Name="Messages1" Relationship="Self.FK_Message_User_Sender" FromRole="User" ToRole="Message" />
+    <NavigationProperty Name="Notifications" Relationship="Self.FK_Notification_User" FromRole="User" ToRole="Notification" />
+    <NavigationProperty Name="Profiles" Relationship="Self.FK_Profile_User" FromRole="User" ToRole="Profile" />
+    <NavigationProperty Name="Reports" Relationship="Self.FK_Report_User_Reported" FromRole="User" ToRole="Report" />
+    <NavigationProperty Name="Reports1" Relationship="Self.FK_Report_User_Reporter" FromRole="User" ToRole="Report" />
+    <NavigationProperty Name="UserClaims" Relationship="Self.FK_dbo_UserClaim_dbo_User_IdentityUser_Id" FromRole="User" ToRole="UserClaim" />
+    <NavigationProperty Name="UserLogins" Relationship="Self.FK_dbo_UserLogin_dbo_User_IdentityUser_Id" FromRole="User" ToRole="UserLogin" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK_dbo_UserRole_dbo_User_IdentityUser_Id" FromRole="User" ToRole="UserRole" />
+    <NavigationProperty Name="UserInterests" Relationship="Self.FK_UserInterest_User" FromRole="User" ToRole="UserInterest" />
+    <NavigationProperty Name="UserOrganisations" Relationship="Self.FK_UserOrganisation_User" FromRole="User" ToRole="UserOrganisation" />
+    <NavigationProperty Name="UserSkills" Relationship="Self.FK_UserSkill_User" FromRole="User" ToRole="UserSkill" />
+    <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_User" FromRole="User" ToRole="Volunteer" />
+  </EntityType>
+  <EntityType Name="UserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IdentityUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="Self.FK_dbo_UserClaim_dbo_User_IdentityUser_Id" FromRole="UserClaim" ToRole="User" />
+  </EntityType>
+  <EntityType Name="UserInterest">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="InterestID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Interest" Relationship="Self.FK_UserInterest_Interest" FromRole="UserInterest" ToRole="Interest" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserInterest_User" FromRole="UserInterest" ToRole="User" />
+  </EntityType>
+  <EntityType Name="UserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IdentityUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="Self.FK_dbo_UserLogin_dbo_User_IdentityUser_Id" FromRole="UserLogin" ToRole="User" />
+  </EntityType>
+  <EntityType Name="UserOrganisation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OrganisationID" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="Organisation" Relationship="Self.FK_UserOrganisation_Organisation" FromRole="UserOrganisation" ToRole="Organisation" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserOrganisation_User" FromRole="UserOrganisation" ToRole="User" />
+    <Property Name="Approved" Type="Boolean" Nullable="false" />
+    <Property Name="Denied" Type="Boolean" Nullable="false" />
+    <Property Name="Admin" Type="Boolean" Nullable="false" />
+    <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IdentityUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_dbo_UserRole_dbo_Role_RoleId" FromRole="UserRole" ToRole="Role" />
+    <NavigationProperty Name="User" Relationship="Self.FK_dbo_UserRole_dbo_User_IdentityUser_Id" FromRole="UserRole" ToRole="User" />
+  </EntityType>
+  <EntityType Name="UserSkill">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Skill" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Skill1" Relationship="Self.FK_UserSkill_Skill" FromRole="UserSkill" ToRole="Skill" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserSkill_User" FromRole="UserSkill" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Volunteer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EventID" Type="Int32" Nullable="false" />
+    <Property Name="VolunteerID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Confirmed" Type="Boolean" Nullable="false" />
+    <Property Name="Rejected" Type="Boolean" Nullable="false" />
+    <Property Name="Withdrawn" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="Self.FK_Volunteer_Event" FromRole="Volunteer" ToRole="Event" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Volunteer_User" FromRole="Volunteer" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Address_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Address" Type="Self.Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Address">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Event_Address">
+    <End Role="Address" Type="Self.Address" Multiplicity="1" />
+    <End Role="Event" Type="Self.Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="AddressID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Audit_Event">
+    <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+    <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Audit">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bookmarked_Event">
+    <End Role="Event" Type="Self.Event" Multiplicity="1" />
+    <End Role="Bookmarked" Type="Self.Bookmarked" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookmarked">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bookmarked_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Bookmarked" Type="Self.Bookmarked" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookmarked">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Event_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Event" Type="Self.Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="HostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventTag_Event1">
+    <End Role="Event" Type="Self.Event" Multiplicity="1" />
+    <End Role="EventTag" Type="Self.EventTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EventTag">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Report_Event">
+    <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="ReportedEvent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaction_Event">
+    <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Volunteer_Event">
+    <End Role="Event" Type="Self.Event" Multiplicity="1" />
+    <End Role="Volunteer" Type="Self.Volunteer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Volunteer">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EventTag_Tag">
+    <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+    <End Role="EventTag" Type="Self.EventTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EventTag">
+        <PropertyRef Name="TagID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInterest_Interest">
+    <End Role="Interest" Type="Self.Interest" Multiplicity="1" />
+    <End Role="UserInterest" Type="Self.UserInterest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Interest">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInterest">
+        <PropertyRef Name="InterestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_User_Recipient">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="RecipientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_User_Sender">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="SenderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Notification_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Notification">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserOrganisation_Organisation">
+    <End Role="Organisation" Type="Self.Organisation" Multiplicity="1" />
+    <End Role="UserOrganisation" Type="Self.UserOrganisation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisation">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserOrganisation">
+        <PropertyRef Name="OrganisationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Profile_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Profile">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Report_User_Reported">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="ReportedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Report_User_Reporter">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_UserRole_dbo_Role_RoleId">
+    <End Role="Role" Type="Self.Role" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSkill_Skill">
+    <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+    <End Role="UserSkill" Type="Self.UserSkill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Skill">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserSkill">
+        <PropertyRef Name="Skill" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_UserClaim_dbo_User_IdentityUser_Id">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UserClaim" Type="Self.UserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserClaim">
+        <PropertyRef Name="IdentityUser_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_UserLogin_dbo_User_IdentityUser_Id">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserLogin">
+        <PropertyRef Name="IdentityUser_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_UserRole_dbo_User_IdentityUser_Id">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserRole">
+        <PropertyRef Name="IdentityUser_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInterest_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserInterest" Type="Self.UserInterest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInterest">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserOrganisation_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserOrganisation" Type="Self.UserOrganisation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserOrganisation">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSkill_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserSkill" Type="Self.UserSkill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserSkill">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Volunteer_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Volunteer" Type="Self.Volunteer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Volunteer">
+        <PropertyRef Name="VolunteerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VolunteerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Addresses" EntityType="Self.Address" />
+    <EntitySet Name="Audits" EntityType="Self.Audit" />
+    <EntitySet Name="Bookmarkeds" EntityType="Self.Bookmarked" />
+    <EntitySet Name="Events" EntityType="Self.Event" />
+    <EntitySet Name="EventTags" EntityType="Self.EventTag" />
+    <EntitySet Name="Information" EntityType="Self.Information" />
+    <EntitySet Name="Interests" EntityType="Self.Interest" />
+    <EntitySet Name="Messages" EntityType="Self.Message" />
+    <EntitySet Name="Notifications" EntityType="Self.Notification" />
+    <EntitySet Name="Organisations" EntityType="Self.Organisation" />
+    <EntitySet Name="Profiles" EntityType="Self.Profile" />
+    <EntitySet Name="Reports" EntityType="Self.Report" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Skills" EntityType="Self.Skill" />
+    <EntitySet Name="Tags" EntityType="Self.Tag" />
+    <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserClaims" EntityType="Self.UserClaim" />
+    <EntitySet Name="UserInterests" EntityType="Self.UserInterest" />
+    <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
+    <EntitySet Name="UserOrganisations" EntityType="Self.UserOrganisation" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <EntitySet Name="UserSkills" EntityType="Self.UserSkill" />
+    <EntitySet Name="Volunteers" EntityType="Self.Volunteer" />
+    <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Address" EntitySet="Addresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Event_Address" Association="Self.FK_Event_Address">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Audit_Event" Association="Self.FK_Audit_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Audit" EntitySet="Audits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bookmarked_Event" Association="Self.FK_Bookmarked_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Bookmarked" EntitySet="Bookmarkeds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bookmarked_User" Association="Self.FK_Bookmarked_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Bookmarked" EntitySet="Bookmarkeds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Event_User" Association="Self.FK_Event_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventTag_Event1" Association="Self.FK_EventTag_Event1">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="EventTag" EntitySet="EventTags" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Report_Event" Association="Self.FK_Report_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Report" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaction_Event" Association="Self.FK_Transaction_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Transaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Volunteer_Event" Association="Self.FK_Volunteer_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Volunteer" EntitySet="Volunteers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EventTag_Tag" Association="Self.FK_EventTag_Tag">
+      <End Role="Tag" EntitySet="Tags" />
+      <End Role="EventTag" EntitySet="EventTags" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInterest_Interest" Association="Self.FK_UserInterest_Interest">
+      <End Role="Interest" EntitySet="Interests" />
+      <End Role="UserInterest" EntitySet="UserInterests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_User_Recipient" Association="Self.FK_Message_User_Recipient">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_User_Sender" Association="Self.FK_Message_User_Sender">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Notification_User" Association="Self.FK_Notification_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Notification" EntitySet="Notifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserOrganisation_Organisation" Association="Self.FK_UserOrganisation_Organisation">
+      <End Role="Organisation" EntitySet="Organisations" />
+      <End Role="UserOrganisation" EntitySet="UserOrganisations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Profile_User" Association="Self.FK_Profile_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Profile" EntitySet="Profiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Report_User_Reported" Association="Self.FK_Report_User_Reported">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Report" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Report_User_Reporter" Association="Self.FK_Report_User_Reporter">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Report" EntitySet="Reports" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_UserRole_dbo_Role_RoleId" Association="Self.FK_dbo_UserRole_dbo_Role_RoleId">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSkill_Skill" Association="Self.FK_UserSkill_Skill">
+      <End Role="Skill" EntitySet="Skills" />
+      <End Role="UserSkill" EntitySet="UserSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_UserClaim_dbo_User_IdentityUser_Id" Association="Self.FK_dbo_UserClaim_dbo_User_IdentityUser_Id">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserClaim" EntitySet="UserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_UserLogin_dbo_User_IdentityUser_Id" Association="Self.FK_dbo_UserLogin_dbo_User_IdentityUser_Id">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserLogin" EntitySet="UserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_UserRole_dbo_User_IdentityUser_Id" Association="Self.FK_dbo_UserRole_dbo_User_IdentityUser_Id">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserRole" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInterest_User" Association="Self.FK_UserInterest_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserInterest" EntitySet="UserInterests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserOrganisation_User" Association="Self.FK_UserOrganisation_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserOrganisation" EntitySet="UserOrganisations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSkill_User" Association="Self.FK_UserSkill_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserSkill" EntitySet="UserSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Volunteer_User" Association="Self.FK_Volunteer_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Volunteer" EntitySet="Volunteers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

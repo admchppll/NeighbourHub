@@ -17,7 +17,7 @@ namespace Community.Controllers
         // GET: Profile
         public ActionResult Index()
         {
-            var profiles = db.Profiles.Include(p => p.Organisation).Include(p => p.User);
+            var profiles = db.Profiles.Include(p => p.User);
             return View(profiles.ToList());
         }
 
@@ -42,7 +42,6 @@ namespace Community.Controllers
         {
             if (ProfileExists() == false)
             {
-                ViewBag.OrganisationID = new SelectList(db.Organisations, "ID", "Name");
                 ViewBag.UserID = new SelectList(db.Users, "ID", "Email");
                 return View();
             }
@@ -56,7 +55,7 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,OrganisationID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography,PictureURL,Active,Suspended")] Profile profile)
+        public ActionResult Create([Bind(Include = "ID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography,PictureURL,Active,Suspended")] Profile profile)
         {
             profile.UserID = User.Identity.GetUserId();
             if (ModelState.IsValid)
@@ -65,8 +64,6 @@ namespace Community.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.OrganisationID = new SelectList(db.Organisations, "ID", "Name", profile.OrganisationID);
             return View(profile);
         }
 
@@ -82,7 +79,6 @@ namespace Community.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.OrganisationID = new SelectList(db.Organisations, "ID", "Name", profile.OrganisationID);
             return View(profile);
         }
 
@@ -91,7 +87,7 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserID,OrganisationID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography,PictureURL,Active,Suspended")] Profile profile)
+        public ActionResult Edit([Bind(Include = "ID,UserID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography,PictureURL,Active,Suspended")] Profile profile)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +95,6 @@ namespace Community.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.OrganisationID = new SelectList(db.Organisations, "ID", "Name", profile.OrganisationID);
             return View(profile);
         }
 
