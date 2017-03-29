@@ -26,3 +26,27 @@ textarea {
 .btn-primary:hover {
     color: #fff500;
 }
+
+#cookieFooter {
+    background-color: #47146a;
+    color: #fff;
+    position:absolute;
+    bottom:0;
+    width:100%
+}
+
+#cookieFooter .container {
+    padding: 10px 0;    
+}
+
+#cookieFooter button {
+    color: #47146a;
+}
+
+#cookieFooter a {
+    color: #fff500;
+}
+
+.navbar-brand {
+    font-family: 'Arial Rounded MT', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

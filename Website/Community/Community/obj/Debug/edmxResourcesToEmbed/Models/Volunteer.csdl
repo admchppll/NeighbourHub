@@ -19,6 +19,7 @@
     <Property Name="Default" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
     <NavigationProperty Name="Events" Relationship="Self.FK_Event_Address" FromRole="Address" ToRole="Event" />
+    <Property Name="GeoLocation" Type="Geography" />
   </EntityType>
   <EntityType Name="Audit">
     <Key>
@@ -828,5 +829,8 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Volunteer" EntitySet="Volunteers" />
     </AssociationSet>
+    <FunctionImport Name="createGeoLocationAddress">
+      <Parameter Name="AddressID" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
 </Schema>

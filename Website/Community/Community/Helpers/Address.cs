@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System.Data;
+using System.Data.Entity.Spatial;
+using System.Globalization;
 using System.IO;
 using System.Net;
 
@@ -10,7 +11,6 @@ namespace Community.Helpers
         public string postcode;
         public double longitude;
         public double latitude;
-        public static DataSet dataSet;
 
         private const string URL = "http://api.postcodes.io/postcodes/";
 
@@ -43,6 +43,12 @@ namespace Community.Helpers
             }
         }
 
+        public static DbGeography CreateGeographyPoint(double latitude, double longitude)
+        {
+            var text = string.Format(CultureInfo.InvariantCulture.NumberFormat, "POINT({0} {1})", longitude, latitude);
+            // 4326 is the coordinate system
+            return DbGeography.PointFromText(text, 4326);
+        }
     }
 
     public class PostcodeRoot {

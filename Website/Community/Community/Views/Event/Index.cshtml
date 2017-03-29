@@ -48,7 +48,7 @@
             @Html.DisplayNameFor(model => model.Suspended)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Address.UserID)
+            @Html.DisplayNameFor(model => model.Address.Name)
         </th>
         <th></th>
     </tr>
@@ -92,7 +92,7 @@
             @Html.DisplayFor(modelItem => item.Suspended)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Address.UserID)
+            @Html.DisplayFor(modelItem => item.Address.Name)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

@@ -11,28 +11,21 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class Profile
     {
         public int ID { get; set; }
         public string UserID { get; set; }
         public short Balance { get; set; }
         public string Title { get; set; }
-        [DisplayName("First Name")]
         public string FirstName { get; set; }
         public string Surname { get; set; }
-        [UIHint("Gender")]
         public bool Gender { get; set; }
-        [DisplayName("Date of Birth")]
-        [DisplayFormat(DataFormatString = "{0:dd MMMM yyyy}")]
         public System.DateTime BirthDate { get; set; }
         public string Phone { get; set; }
         public string Biography { get; set; }
         public string PictureURL { get; set; }
-        [UIHint("YesNo")]
         public bool Active { get; set; }
-        [UIHint("YesNo")]
         public bool Suspended { get; set; }
     
         public virtual User User { get; set; }

@@ -33,6 +33,7 @@ namespace Community.Models
         public Nullable<double> Long { get; set; }
         public Nullable<double> Lat { get; set; }
         public bool Default { get; set; }
+        public System.Data.Entity.Spatial.DbGeography GeoLocation { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

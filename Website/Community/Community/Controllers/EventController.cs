@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using Community.Models;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity.Spatial;
+using System.Globalization;
+using Community.Helpers;
 
 namespace Community.Controllers
 {
@@ -58,7 +61,27 @@ namespace Community.Controllers
         // GET: Event
         public ActionResult Index()
         {
-            var events = db.Events.Include(y => y.Address);
+            var events = db.Events.Include(y => y.Address).Include(z => z.User);
+            return View(events.ToList());
+        }
+
+        [AllowAnonymous]
+        // GET: Event
+        public ActionResult Search(string postcode)
+        {
+            if (postcode == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Postcode code = new Postcode(postcode);
+            DbGeography geog = Postcode.CreateGeographyPoint(code.latitude, code.longitude);
+
+            var events = db.Events
+                .Include(y => y.Address)
+                .Include(z => z.User)
+                .Where(y => y.Address.GeoLocation.Distance(geog) < 1000)
+                .Where(y => y.Suspended != true && y.Published == true);
             return View(events.ToList());
         }
 

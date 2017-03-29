@@ -12,6 +12,8 @@ namespace Community.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class VolunteerEntities : DbContext
     {
@@ -49,5 +51,14 @@ namespace Community.Models
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserSkill> UserSkills { get; set; }
         public virtual DbSet<Volunteer> Volunteers { get; set; }
+    
+        public virtual int createGeoLocationAddress(Nullable<int> addressID)
+        {
+            var addressIDParameter = addressID.HasValue ?
+                new ObjectParameter("AddressID", addressID) :
+                new ObjectParameter("AddressID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("createGeoLocationAddress", addressIDParameter);
+        }
     }
 }

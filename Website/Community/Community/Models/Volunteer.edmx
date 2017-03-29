@@ -22,6 +22,7 @@
           <Property Name="Long" Type="float" />
           <Property Name="Lat" Type="float" />
           <Property Name="Default" Type="bit" Nullable="false" />
+          <Property Name="GeoLocation" Type="geography" />
         </EntityType>
         <EntityType Name="Audit">
           <Key>
@@ -640,6 +641,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="createGeoLocationAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AddressID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="VolunteerModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
@@ -801,6 +805,7 @@
           <Property Name="Default" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
           <NavigationProperty Name="Events" Relationship="Self.FK_Event_Address" FromRole="Address" ToRole="Event" />
+          <Property Name="GeoLocation" Type="Geography" />
         </EntityType>
         <EntityType Name="Audit">
           <Key>
@@ -1610,6 +1615,9 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Volunteer" EntitySet="Volunteers" />
           </AssociationSet>
+          <FunctionImport Name="createGeoLocationAddress">
+            <Parameter Name="AddressID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -1620,6 +1628,7 @@
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="VolunteerModel.Address">
               <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="GeoLocation" ColumnName="GeoLocation" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1935,6 +1944,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="createGeoLocationAddress" FunctionName="VolunteerModel.Store.createGeoLocationAddress" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Addresses">
       <EntityTypeMapping TypeName="VolunteerModel.Address">
         <MappingFragment StoreEntitySet="Address">
+          <ScalarProperty Name="GeoLocation" ColumnName="GeoLocation" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -319,5 +320,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="createGeoLocationAddress" FunctionName="VolunteerModel.Store.createGeoLocationAddress" />
   </EntityContainerMapping>
 </Mapping>

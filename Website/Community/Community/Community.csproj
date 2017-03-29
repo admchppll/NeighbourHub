@@ -522,6 +522,7 @@
     <Content Include="Views\EventTag\Edit.cshtml" />
     <Content Include="Views\EventTag\Index.cshtml" />
     <Content Include="Views\EventTag\Display.cshtml" />
+    <Content Include="Views\Event\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

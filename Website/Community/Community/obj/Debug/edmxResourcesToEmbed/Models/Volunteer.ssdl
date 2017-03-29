@@ -17,6 +17,7 @@
     <Property Name="Long" Type="float" />
     <Property Name="Lat" Type="float" />
     <Property Name="Default" Type="bit" Nullable="false" />
+    <Property Name="GeoLocation" Type="geography" />
   </EntityType>
   <EntityType Name="Audit">
     <Key>
@@ -635,6 +636,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="createGeoLocationAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AddressID" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="VolunteerModelStoreContainer">
     <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
