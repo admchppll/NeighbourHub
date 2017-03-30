@@ -43,6 +43,42 @@ namespace Community.Controllers
             return View(volunteers.ToList());
         }
 
+        public ActionResult Volunteers(int eventId)
+        {
+            ViewBag.EventID = eventId;
+            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User)
+                .Where(v => v.EventID == eventId
+                && v.Confirmed == false
+                && v.Rejected == false
+                && v.Withdrawn == false
+                && v.Accepted == false);
+            return PartialView(volunteers.ToList());
+        }
+
+        public ActionResult Confirmed(int eventId)
+        {
+            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User).Where(v => v.EventID == eventId && v.Confirmed == true);
+            return PartialView("_Confirmed",volunteers.ToList());
+        }
+
+        public ActionResult Rejected(int eventId)
+        {
+            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User).Where(v => v.EventID == eventId && v.Rejected == true);
+            return PartialView("_Rejected", volunteers.ToList());
+        }
+
+        public ActionResult Withdrawn(int eventId)
+        {
+            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User).Where(v => v.EventID == eventId && v.Withdrawn == true);
+            return PartialView("_Withdrawn", volunteers.ToList());
+        }
+
+        public ActionResult Accepted(int eventId)
+        {
+            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User).Where(v => v.EventID == eventId && v.Accepted == true);
+            return PartialView("_Accepted", volunteers.ToList());
+        }
+
         // GET: Volunteer/Details/5
         public ActionResult Details(int? id)
         {

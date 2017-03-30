@@ -51,9 +51,10 @@
     <Property Name="Created" Type="smalldatetime" Nullable="false" />
     <Property Name="Published" Type="bit" Nullable="false" />
     <Property Name="Edited" Type="smalldatetime" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Time" Type="time" Precision="7" Nullable="false" />
     <Property Name="Repeated" Type="smallint" />
     <Property Name="RepeatIncrement" Type="tinyint" />
-    <Property Name="Date" Type="smalldatetime" Nullable="false" />
     <Property Name="Length" Type="tinyint" Nullable="false" />
     <Property Name="AM1" Type="bit" Nullable="false" />
     <Property Name="AM2" Type="bit" Nullable="false" />
@@ -71,6 +72,9 @@
     <Property Name="PM7" Type="bit" Nullable="false" />
     <Property Name="DateInfo" Type="nvarchar" MaxLength="200" />
     <Property Name="Suspended" Type="bit" Nullable="false" />
+    <Property Name="VolunteerQuantity" Type="tinyint" Nullable="false" />
+    <Property Name="Points" Type="tinyint" Nullable="false" />
+    <Property Name="PictureURL" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="EventTag">
     <Key>
@@ -294,6 +298,7 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EventID" Type="int" Nullable="false" />
     <Property Name="VolunteerID" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Accepted" Type="bit" Nullable="false" />
     <Property Name="Confirmed" Type="bit" Nullable="false" />
     <Property Name="Rejected" Type="bit" Nullable="false" />
     <Property Name="Withdrawn" Type="bit" Nullable="false" />

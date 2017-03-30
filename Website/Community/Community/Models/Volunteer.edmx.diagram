@@ -9,26 +9,26 @@
         <EntityTypeShape EntityType="VolunteerModel.Audit" Width="1.5" PointX="7.5" PointY="18.625" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Bookmarked" Width="1.5" PointX="10.5" PointY="23" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Event" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="VolunteerModel.EventTag" Width="1.5" PointX="10.5" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerModel.EventTag" Width="1.5" PointX="10.5" PointY="20.625" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Information" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="VolunteerModel.Interest" Width="1.5" PointX="3.75" PointY="40.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerModel.Interest" Width="1.5" PointX="4.75" PointY="36.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Message" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Notification" Width="1.5" PointX="3" PointY="24.375" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Organisation" Width="1.5" PointX="5.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Profile" Width="1.5" PointX="3" PointY="27.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Report" Width="1.5" PointX="10.5" PointY="25.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Role" Width="1.5" PointX="5.75" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="VolunteerModel.Skill" Width="1.5" PointX="3.75" PointY="43.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerModel.Skill" Width="1.5" PointX="6.875" PointY="36.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Tag" Width="1.5" PointX="8.25" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="VolunteerModel.Transaction" Width="1.5" PointX="7.5" PointY="34.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerModel.Transaction" Width="1.5" PointX="8.625" PointY="33.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.User" Width="1.5" PointX="0.75" PointY="22.875" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.UserClaim" Width="1.5" PointX="3" PointY="31.875" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.UserInterest" Width="1.5" PointX="6" PointY="28.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="VolunteerModel.UserLogin" Width="1.5" PointX="3" PointY="37.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerModel.UserLogin" Width="1.5" PointX="3" PointY="34.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.UserOrganisation" Width="1.5" PointX="8" PointY="25.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.UserRole" Width="1.5" PointX="8" PointY="22.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.UserSkill" Width="1.5" PointX="6" PointY="31.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="VolunteerModel.Volunteer" Width="1.5" PointX="13.5" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerModel.Volunteer" Width="1.5" PointX="12.75" PointY="22.75" IsExpanded="true" />
         <AssociationConnector Association="VolunteerModel.FK_Address_User" ManuallyRouted="false" />
         <AssociationConnector Association="VolunteerModel.FK_Event_Address" ManuallyRouted="false" />
         <AssociationConnector Association="VolunteerModel.FK_Audit_Event" ManuallyRouted="false" />

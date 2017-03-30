@@ -66,9 +66,22 @@ namespace Community.Controllers
         }
 
         [AllowAnonymous]
-        // GET: Event
-        public ActionResult Search(string postcode)
+        public ActionResult Search() {
+            ViewBag.Search = false;
+            return View();
+        }
+
+        [AllowAnonymous, HttpPost]
+        // POST: Event
+        public ActionResult Search(string postcode, double distance)
         {
+            const double mile = 1609.34;
+            var resultRadius = distance * mile;
+
+            ViewBag.Postcode = postcode;
+            ViewBag.Distance = distance;
+            ViewBag.Search = true;
+
             if (postcode == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,7 +93,7 @@ namespace Community.Controllers
             var events = db.Events
                 .Include(y => y.Address)
                 .Include(z => z.User)
-                .Where(y => y.Address.GeoLocation.Distance(geog) < 1000)
+                .Where(y => y.Address.GeoLocation.Distance(geog) < resultRadius)
                 .Where(y => y.Suspended != true && y.Published == true);
             return View(events.ToList());
         }
@@ -93,7 +106,9 @@ namespace Community.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
+            int eventID = (int)id;
+
+            Event @event = db.Events.Where(e => e.ID == eventID).SingleOrDefault();
             if (@event == null)
             {
                 return HttpNotFound();
@@ -130,7 +145,7 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,ShortDescription,LongDescription,AddressID,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo")] Event @event)
+        public ActionResult Create([Bind(Include = "Title,ShortDescription,LongDescription,AddressID,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,VolunteerQuantity,Points")] Event @event)
         {
             DateTime current_date = DateTime.Now;
 
@@ -185,7 +200,6 @@ namespace Community.Controllers
         {
             DateTime current_date = DateTime.Now;
 
-            @event.HostID = User.Identity.GetUserId();
             @event.Edited = current_date;
 
             if (ModelState.IsValid)

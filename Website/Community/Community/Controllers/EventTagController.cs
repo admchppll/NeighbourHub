@@ -24,7 +24,14 @@ namespace Community.Controllers
         public ActionResult Display(int? eventID)
         {
             var eventTags = db.EventTags
-                .Include(e => e.Event)
+                .Include(e => e.Tag)
+                .Where(e => e.EventID == eventID);
+            return PartialView(eventTags.ToList());
+        }
+
+        public ActionResult Utility(int? eventID)
+        {
+            var eventTags = db.EventTags
                 .Include(e => e.Tag)
                 .Where(e => e.EventID == eventID);
             return PartialView(eventTags.ToList());

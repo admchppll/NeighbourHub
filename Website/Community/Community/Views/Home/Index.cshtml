@@ -7,9 +7,8 @@
     <p class="lead"></p>
     <p></p>
 </div>
-
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-xs-12 col-sm-6 col-md-8">
         <ul>
             <li>@Html.ActionLink("Event", "Index", "Event")</li>
             <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
@@ -30,10 +29,7 @@
             <li>@Html.ActionLink("Message", "Index", "Message")</li>
         </ul>
     </div>
-    <div class="col-md-4">
-
-    </div>
-    <div class="col-md-4">
-        
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        @Html.Partial("_Search", "Index")
     </div>
 </div>

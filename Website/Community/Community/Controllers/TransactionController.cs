@@ -45,7 +45,7 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Date,SenderID,RecipientID,EventID,Gift,Amount,Complete")] Transaction transaction)
+        public ActionResult Create([Bind(Include = "ID,Date,SenderID,RecipientID,EventID,Gift,Amount")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {

@@ -56,9 +56,10 @@
           <Property Name="Created" Type="smalldatetime" Nullable="false" />
           <Property Name="Published" Type="bit" Nullable="false" />
           <Property Name="Edited" Type="smalldatetime" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Time" Type="time" Precision="7" Nullable="false" />
           <Property Name="Repeated" Type="smallint" />
           <Property Name="RepeatIncrement" Type="tinyint" />
-          <Property Name="Date" Type="smalldatetime" Nullable="false" />
           <Property Name="Length" Type="tinyint" Nullable="false" />
           <Property Name="AM1" Type="bit" Nullable="false" />
           <Property Name="AM2" Type="bit" Nullable="false" />
@@ -76,6 +77,9 @@
           <Property Name="PM7" Type="bit" Nullable="false" />
           <Property Name="DateInfo" Type="nvarchar" MaxLength="200" />
           <Property Name="Suspended" Type="bit" Nullable="false" />
+          <Property Name="VolunteerQuantity" Type="tinyint" Nullable="false" />
+          <Property Name="Points" Type="tinyint" Nullable="false" />
+          <Property Name="PictureURL" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="EventTag">
           <Key>
@@ -299,6 +303,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EventID" Type="int" Nullable="false" />
           <Property Name="VolunteerID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Accepted" Type="bit" Nullable="false" />
           <Property Name="Confirmed" Type="bit" Nullable="false" />
           <Property Name="Rejected" Type="bit" Nullable="false" />
           <Property Name="Withdrawn" Type="bit" Nullable="false" />
@@ -870,6 +875,10 @@
           <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Event" FromRole="Event" ToRole="Report" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Event" FromRole="Event" ToRole="Transaction" />
           <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_Event" FromRole="Event" ToRole="Volunteer" />
+          <Property Name="VolunteerQuantity" Type="Byte" Nullable="false" />
+          <Property Name="Points" Type="Byte" Nullable="false" />
+          <Property Name="PictureURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="EventTag">
           <Key>
@@ -1139,6 +1148,7 @@
           <Property Name="Withdrawn" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Volunteer_Event" FromRole="Volunteer" ToRole="Event" />
           <NavigationProperty Name="User" Relationship="Self.FK_Volunteer_User" FromRole="Volunteer" ToRole="User" />
+          <Property Name="Accepted" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Address_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -1616,7 +1626,7 @@
             <End Role="Volunteer" EntitySet="Volunteers" />
           </AssociationSet>
           <FunctionImport Name="createGeoLocationAddress">
-            <Parameter Name="AddressID" Mode="In" Type="Int32" />
+          <Parameter Name="AddressID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
       </Schema>
@@ -1669,6 +1679,10 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="VolunteerModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="PictureURL" ColumnName="PictureURL" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+                <ScalarProperty Name="VolunteerQuantity" ColumnName="VolunteerQuantity" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="HostID" ColumnName="HostID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -1935,6 +1949,7 @@
           <EntitySetMapping Name="Volunteers">
             <EntityTypeMapping TypeName="VolunteerModel.Volunteer">
               <MappingFragment StoreEntitySet="Volunteer">
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="VolunteerID" ColumnName="VolunteerID" />

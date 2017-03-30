@@ -45,6 +45,10 @@
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="VolunteerModel.Event">
         <MappingFragment StoreEntitySet="Event">
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="PictureURL" ColumnName="PictureURL" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+          <ScalarProperty Name="VolunteerQuantity" ColumnName="VolunteerQuantity" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="HostID" ColumnName="HostID" />
           <ScalarProperty Name="Title" ColumnName="Title" />
@@ -311,6 +315,7 @@
     <EntitySetMapping Name="Volunteers">
       <EntityTypeMapping TypeName="VolunteerModel.Volunteer">
         <MappingFragment StoreEntitySet="Volunteer">
+          <ScalarProperty Name="Accepted" ColumnName="Accepted" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="EventID" ColumnName="EventID" />
           <ScalarProperty Name="VolunteerID" ColumnName="VolunteerID" />

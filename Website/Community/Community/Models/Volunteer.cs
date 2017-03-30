@@ -20,6 +20,7 @@ namespace Community.Models
         public bool Confirmed { get; set; }
         public bool Rejected { get; set; }
         public bool Withdrawn { get; set; }
+        public bool Accepted { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual User User { get; set; }

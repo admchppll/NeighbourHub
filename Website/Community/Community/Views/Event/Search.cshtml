@@ -9,53 +9,44 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Repeated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RepeatIncrement)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Length)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.UserName)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShortDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Length)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID })
-        </td>
-    </tr>
+@if (ViewBag.Search == true)
+{
+    <div class="col-xs-12 col-md-3">
+        @Html.Partial("_Sidebar")
+    </div>
+}
+else {
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+        @Html.Partial("_Sidebar")
+    </div>
 }
 
-</table>
+
+<div class="col-md-9">
+@if (ViewBag.Search == true)
+{
+    foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+                <p>@Html.DisplayFor(modelItem => item.ShortDescription)</p>
+                <h4>@Html.DisplayFor(modelItem => item.Date)</h4>
+                @Html.ActionLink("Details", "Details", new { id = item.ID })
+            </div>
+        </div>
+    }
+    if (Model.Count() == 0)
+    {
+        <h3>Sorry, we couldn't find any events near you!</h3>
+        <p>Please try either:
+        <ul>
+            <li>Expanding your search radius</li>
+            <li>Reduce the number of filters in your search</li>
+            <li>Try searching in another location</li>
+        </ul>
+        </p>
+    }
+}
+</div>

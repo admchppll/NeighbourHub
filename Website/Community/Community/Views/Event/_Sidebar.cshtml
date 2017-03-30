@@ -1,0 +1,27 @@
+﻿@using (Html.BeginForm("Search", "Event"))
+{
+    <div class="col-xs-12">
+        <h4>Postcode</h4>
+        <input class="form-control" aria-label="" name="postcode" placeholder="Postcode" type="text" value="@ViewBag.Postcode">
+    </div>
+    <div class="col-xs-12">
+        <h4>Search Radius</h4>
+        <select id="distanceSelect" name="distance" class="form-control">
+            <option value="0.5">0.5 Miles</option>
+            <option value="1">1 Mile</option>
+            <option value="2">2 Miles</option>
+            <option value="3">3 Miles</option>
+            <option value="4">4 Miles</option>
+            <option value="5">5 Miles</option>
+            <option value="10">10 Miles</option>
+        </select>
+    </div>
+    <div class="col-xs-12">
+        <button type="submit" class="btn btn-primary col-xs-12">Search</button>
+    </div>
+    <script type="text/javascript">
+        //choose previously searched value
+        var distanceSelect = document.getElementById("distanceSelect");
+        distanceSelect.value = @ViewBag.Distance;
+    </script>
+}

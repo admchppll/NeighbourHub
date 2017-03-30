@@ -84,6 +84,10 @@
     <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Event" FromRole="Event" ToRole="Report" />
     <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Event" FromRole="Event" ToRole="Transaction" />
     <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_Event" FromRole="Event" ToRole="Volunteer" />
+    <Property Name="VolunteerQuantity" Type="Byte" Nullable="false" />
+    <Property Name="Points" Type="Byte" Nullable="false" />
+    <Property Name="PictureURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
   </EntityType>
   <EntityType Name="EventTag">
     <Key>
@@ -353,6 +357,7 @@
     <Property Name="Withdrawn" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Event" Relationship="Self.FK_Volunteer_Event" FromRole="Volunteer" ToRole="Event" />
     <NavigationProperty Name="User" Relationship="Self.FK_Volunteer_User" FromRole="Volunteer" ToRole="User" />
+    <Property Name="Accepted" Type="Boolean" Nullable="false" />
   </EntityType>
   <Association Name="FK_Address_User">
     <End Role="User" Type="Self.User" Multiplicity="1" />

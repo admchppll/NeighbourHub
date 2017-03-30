@@ -25,7 +25,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.HostID)
+            @Html.DisplayNameFor(model => model.User.UserName)
         </dt>
 
         <dd>
@@ -54,38 +54,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.LongDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Edited)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Edited)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Repeated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Repeated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RepeatIncrement)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RepeatIncrement)
         </dd>
 
         <dt>
@@ -223,26 +191,10 @@
         <dd>
             @Html.DisplayFor(model => model.DateInfo)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Suspended)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Suspended)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address.UserID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address.UserID)
-        </dd>
-
     </dl>
 </div>
 @{Html.RenderAction("Display", "EventTag", new { eventId = Model.ID});}
+@{Html.RenderAction("Volunteers", "Volunteer", new { eventId = Model.ID });}
 <p>
     @using (Html.BeginForm())
     {

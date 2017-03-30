@@ -6,7 +6,6 @@
 
 <h2>Edit</h2>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -256,6 +255,8 @@
                 </div>
             </div>
         </div>
+
+        @{Html.RenderAction("Utility", "EventTag", new { eventId = Model.ID });}
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -1,13 +1,6 @@
 ﻿@model IEnumerable<Community.Models.EventTag>
-<h1>Event Tags</h1>
-<p>
-    @Html.ActionLink("Add New", "Create")
-</p>
-
+<h3>Tags</h3>
 
 @foreach (var item in Model) {
-        <h4>
-            <span class="label label-primary">@Html.DisplayFor(modelItem => item.Tag.Name) <span class="badge"><a href="@Url.Action("Delete", new { id=item.ID })"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></span></span> 
-        </h4>
+        <h4><span class="label label-primary">@Html.DisplayFor(modelItem => item.Tag.Name)</span></h4>
 }
-
