@@ -1,30 +1,16 @@
 ﻿@model Community.Models.Event
-
+@using Community.Helpers
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Details";
 }
-<script>
-    function volunteer() {
-        var data = {EventId: @Html.Raw(Model.ID)};
-        var success = function(data){
-            if(data.success)
-                alert("success");
-            else
-                alert("failure");
-        };
-        var failure = function(data) {
-            alert("Unable to Volunteer for this event");
-        };
-
-        ajax('/Volunteer/Volunteer', data, success, failure);
-    }
-</script>
+@Html.AntiForgeryToken()
 <h2>Details</h2>
-<div>
+<div class="col-md-8">
     <h4>Event</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <dt> 
             @Html.DisplayNameFor(model => model.User.UserName)
         </dt>
 
@@ -193,14 +179,76 @@
         </dd>
     </dl>
 </div>
-@{Html.RenderAction("Display", "EventTag", new { eventId = Model.ID});}
-@{Html.RenderAction("Volunteers", "Volunteer", new { eventId = Model.ID });}
-<p>
-    @using (Html.BeginForm())
+<div class="col-md-4">
+    <div class="row">
+    @if (VolunteerHelper.isVolunteer(User.Identity.GetUserId(), Model.ID) == false)
     {
-        @Html.AntiForgeryToken()
-        <a id="volunteer" href="javascript:void();" onclick="volunteer()">Volunteer</a>
+        <button id="volunteerBtn" href="javascript:void();" onclick="volunteer(@Html.Raw(Model.ID))" class="btn btn-primary">Volunteer</button>
     }
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    else if (VolunteerHelper.isWithdrawn(User.Identity.GetUserId(), Model.ID) == false) {
+        <button id="withdrawBtn" href="javascript:void();" onclick="withdraw(@Html.Raw(Model.ID))" class="btn btn-warning">Withdraw</button>
+    }
+    </div>
+    <div class="row">
+        <div class="col-xs-12 alert hidden" id="volunteerMessage"><strong id="volunteerMsgTitle"></strong><span id="volunteerMsgContent"></span></div>
+    </div>
+    </div>
+<div class="col-md-4">
+   @if (VolunteerHelper.isHost(User.Identity.GetUserId(), Model.ID))
+   {
+       Html.RenderAction("Display", "EventTag", new { eventId = Model.ID });
+   }
+   else {
+       Html.RenderAction("Utility", "EventTag", new { eventId = Model.ID });
+   }
+</div>
+@if (VolunteerHelper.isHost(User.Identity.GetUserId(), Model.ID))
+{
+    Html.RenderAction("Volunteers", "Volunteer", new { eventId = Model.ID });
+}
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
     @Html.ActionLink("Back to List", "Index")
-</p>
+</div>
+
+<script>
+
+
+    function volunteer(eventID) {
+        var data = {
+            EventId: eventID
+        };
+        ajaxVolunteer('/Volunteer/Volunteer', data);
+    }
+
+    function withdraw(eventID) {
+        var data = {
+            EventId: eventID
+        };
+        ajaxVolunteer('/Volunteer/Withdraw', data);
+    }
+
+    function volunteerAdminOperation(volunteerID, eventID, operation) {
+        var url = "/Volunteer/";
+        var data = {
+            ID: volunteerID,
+            EventId: eventID
+        };
+
+        switch (operation) {
+            case "accept":
+                url += "Accept";
+                break;
+            case "confirm":
+                url += "Confirm";
+                break;
+            case "reject":
+                url += "Reject";
+                break;
+            default: break;
+        }
+
+        ajaxVolunteer(url, data);
+    }
+</script>

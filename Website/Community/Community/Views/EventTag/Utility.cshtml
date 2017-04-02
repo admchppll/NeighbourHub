@@ -1,13 +1,17 @@
 ﻿@model IEnumerable<Community.Models.EventTag>
 <h3>Tags</h3>
-<p>
-    @Html.ActionLink("Add New", "Create")
-</p>
 
 @foreach (var item in Model)
 {
     <h4>
-        <span class="label label-primary">@Html.DisplayFor(modelItem => item.Tag.Name) <span class="badge"><a href="@Url.Action("Delete", new { id=item.ID })"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></span></span>
+        <span class="">@Html.DisplayFor(modelItem => item.Tag.Name) <a href="@Url.Action("Delete", new { id=item.ID })"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></span>
     </h4>
 }
-
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-12 input-group">
+        @Html.DropDownList("Name", new SelectList(ViewBag.Tags, "ID", "Name"), htmlAttributes: new { id = "tag", @class = "form-control" })
+        <div class="input-group-btn">
+            <button class="btn btn-primary">Add</button>
+        </div>
+    </div>
+</div>

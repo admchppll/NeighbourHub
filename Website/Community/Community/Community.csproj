@@ -242,6 +242,7 @@
     </Compile>
     <Compile Include="Helpers\Address.cs" />
     <Compile Include="Helpers\Profile.cs" />
+    <Compile Include="Helpers\Volunteer.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs">
       <DependentUpon>Volunteer.tt</DependentUpon>
@@ -516,13 +517,12 @@
     <Content Include="Views\UserOrganisation\Details.cshtml" />
     <Content Include="Views\UserOrganisation\Edit.cshtml" />
     <Content Include="Views\UserOrganisation\Index.cshtml" />
-    <Content Include="Views\EventTag\Create.cshtml" />
-    <Content Include="Views\EventTag\Delete.cshtml" />
-    <Content Include="Views\EventTag\Details.cshtml" />
-    <Content Include="Views\EventTag\Edit.cshtml" />
-    <Content Include="Views\EventTag\Index.cshtml" />
     <Content Include="Views\EventTag\Display.cshtml" />
     <Content Include="Views\Event\Search.cshtml" />
+    <Content Include="Views\Home\_Search.cshtml" />
+    <Content Include="Views\Event\_Sidebar.cshtml" />
+    <Content Include="Views\EventTag\Utility.cshtml" />
+    <Content Include="Views\Volunteer\Volunteers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

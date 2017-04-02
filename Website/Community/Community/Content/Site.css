@@ -50,3 +50,7 @@ textarea {
 .navbar-brand {
     font-family: 'Arial Rounded MT', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+.alert {
+    margin: 5px 0;
+}

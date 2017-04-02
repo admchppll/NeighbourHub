@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Community.Models;
 using Microsoft.AspNet.Identity;
+using Community.Helpers;
 
 namespace Community.Controllers
 {
@@ -46,37 +47,15 @@ namespace Community.Controllers
         public ActionResult Volunteers(int eventId)
         {
             ViewBag.EventID = eventId;
-            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User)
-                .Where(v => v.EventID == eventId
-                && v.Confirmed == false
-                && v.Rejected == false
-                && v.Withdrawn == false
-                && v.Accepted == false);
+            var volunteers = db.Volunteers
+                .Include(v => v.Event)
+                .Include(v => v.User)
+                .Where(v => v.EventID == eventId)
+                .OrderBy(v => v.Accepted)
+                .OrderBy(v => v.Confirmed)
+                .OrderBy(v => v.Rejected)
+                .OrderBy(v => v.Withdrawn);
             return PartialView(volunteers.ToList());
-        }
-
-        public ActionResult Confirmed(int eventId)
-        {
-            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User).Where(v => v.EventID == eventId && v.Confirmed == true);
-            return PartialView("_Confirmed",volunteers.ToList());
-        }
-
-        public ActionResult Rejected(int eventId)
-        {
-            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User).Where(v => v.EventID == eventId && v.Rejected == true);
-            return PartialView("_Rejected", volunteers.ToList());
-        }
-
-        public ActionResult Withdrawn(int eventId)
-        {
-            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User).Where(v => v.EventID == eventId && v.Withdrawn == true);
-            return PartialView("_Withdrawn", volunteers.ToList());
-        }
-
-        public ActionResult Accepted(int eventId)
-        {
-            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User).Where(v => v.EventID == eventId && v.Accepted == true);
-            return PartialView("_Accepted", volunteers.ToList());
         }
 
         // GET: Volunteer/Details/5
@@ -139,92 +118,240 @@ namespace Community.Controllers
             volunteer.EventID = data.EventId;
 
             //Check if a volunteer already exists
+            bool volunteerExists = VolunteerHelper.isVolunteer(volunteer.VolunteerID, volunteer.EventID);
 
-            if (ModelState.IsValid) {
+            if (volunteerExists) {
+                return Json(new
+                {
+                    success = false,
+                    title = "",
+                    message = "It appears you have already volunteered on this event."
+                });
+            }
+            else if (ModelState.IsValid) {
                 db.Volunteers.Add(volunteer);
                 try
                 {
                     db.SaveChanges();
-                    return Json(new { success = true });
+                    return Json(new {
+                        success = true,
+                        title = "Thank You! ",
+                        message = "You have been added as a volunteer. You will be notified when the host accepts you on the event!"
+                    });
                 }
                 catch (Exception) { }                
             }
-            return Json( new { success=false });
+            return Json( new {
+                success = false,
+                title = "",
+                message = "We were unable to add you as a volunteer! Please refresh the page and try again! If the problem continues, please contact us."
+            });
         }
 
         //POST: Volunteer/Confirm
         [HttpPost, ValidateHeaderAntiForgeryToken]
-        public bool Confirm(VolunteerPostData data)
+        public JsonResult Confirm(VolunteerPostData data)
         {
-            var query = db.Volunteers
-                    .Where(v => v.ID == data.Id);
+            string userID = User.Identity.GetUserId();
+            bool volunteerExists = VolunteerHelper.existsVolunteer(data.Id);
 
-            foreach (Volunteer vol in query) {
-                if (vol.Event.HostID == User.Identity.GetUserId())
+            if (volunteerExists == false)
+            {
+                return Json(new
                 {
-                    vol.Confirmed = true;
+                    success = false,
+                    title = "",
+                    message = "We couldn't find the volunteer to confirm, please refresh the page and try again! If the problem continues, please contact us."
+                });
+            }
+            else {
+                Volunteer volunteer = db.Volunteers.Find(data.Id);
+
+                if (VolunteerHelper.isHost(userID, data.EventId))
+                {
+                    try
+                    {
+                        volunteer.Confirmed = true;
+                        db.Entry(volunteer).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        return Json(new
+                        {
+                            success = true,
+                            title = "",
+                            message = "This volunteer's attendance has been confirmed."
+                        });
+                    }
+                    catch (Exception) { }
+                }
+                else {
+                    return Json(new
+                    {
+                        success = false,
+                        title = "",
+                        message = "It looks like this isn't your event. You cannot confirm a volunteer for an event you are not the host of."
+                    });
                 }
             }
 
-            try
-            {
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception) {}
+            return Json(new
+                {
+                    success = false,
+                    title = "",
+                    message = "We were unable to confirm this volunteer! Please refresh the page and try again! If the problem continues, please contact us."
+                });
+        }
 
-            return false;
+        //POST: Volunteer/Accept
+        [HttpPost, ValidateHeaderAntiForgeryToken]
+        public JsonResult Accept(VolunteerPostData data)
+        {
+            string userID = User.Identity.GetUserId();
+            bool volunteerExists = VolunteerHelper.existsVolunteer(data.Id);
+
+            if (volunteerExists == false)
+            {
+                return Json(new
+                {
+                    success = false,
+                    title = "",
+                    message = "We couldn't find the volunteer to accept, please refresh the page and try again! If the problem continues, please contact us."
+                });
+            }
+            else {
+                Volunteer volunteer = db.Volunteers.Find(data.Id);
+
+                if (VolunteerHelper.isHost(userID, data.EventId))
+                {
+                    try
+                    {
+                        volunteer.Accepted = true;
+                        db.Entry(volunteer).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        return Json(new
+                        {
+                            success = true,
+                            title = "",
+                            message = "This volunteer has been accepted."
+                        });
+                    }
+                    catch (Exception) { }
+                }
+                else {
+                    return Json(new
+                    {
+                        success = false,
+                        title = "",
+                        message = "It looks like this isn't your event. You cannot accept a volunteer for an event you are not the host of."
+                    });
+                }
+            }
+
+            return Json(new
+            {
+                success = false,
+                title = "",
+                message = "We were unable to accept this volunteer! Please refresh the page and try again! If the problem continues, please contact us."
+            });
         }
 
         //POST: Volunteer/Reject
         [HttpPost, ValidateHeaderAntiForgeryToken]
-        public bool Reject(VolunteerPostData data)
+        public JsonResult Reject(VolunteerPostData data)
         {
-            var query = db.Volunteers
-                .Include(v => v.Event)
-                .Where(v => v.ID == data.Id);
+            string userID = User.Identity.GetUserId();
+            bool volunteerExists = VolunteerHelper.existsVolunteer(data.Id);
 
-            foreach (Volunteer vol in query)
+            if (volunteerExists == false)
             {
-                if (vol.Event.HostID == User.Identity.GetUserId())
+                return Json(new
                 {
-                    vol.Rejected = true;
+                    success = false,
+                    title = "",
+                    message = "We couldn't find the volunteer to reject, please refresh the page and try again! If the problem continues, please contact us."
+                });
+            }
+            else {
+                Volunteer volunteer = db.Volunteers.Find(data.Id);
+
+                if (VolunteerHelper.isHost(userID, data.EventId))
+                {
+                    try
+                    {
+                        volunteer.Rejected = true;
+                        db.Entry(volunteer).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        return Json(new
+                        {
+                            success = true,
+                            title = "",
+                            message = "This volunteer has been rejected."
+                        });
+                    }
+                    catch (Exception) { }
+                }
+                else {
+                    return Json(new
+                    {
+                        success = false,
+                        title = "",
+                        message = "It looks like this isn't your event. You cannot reject a volunteer for an event you are not the host of."
+                    });
                 }
             }
 
-            try
+            return Json(new
             {
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception) { }
-
-            return false;
+                success = false,
+                title = "",
+                message = "We were unable to reject this volunteer! Please refresh the page and try again! If the problem continues, please contact us."
+            });
         }
 
         //POST: Volunteer/Withdraw
         [HttpPost, ValidateHeaderAntiForgeryToken]
-        public bool Withdraw(VolunteerPostData data)
+        public JsonResult Withdraw(VolunteerPostData data)
         {
-            var query = db.Volunteers
-                    .Where(v => v.ID == data.Id);
+            string userID = User.Identity.GetUserId();
+            bool isVolunteer = VolunteerHelper.isVolunteer(userID, data.EventId);
 
-            foreach (Volunteer vol in query)
+            if (isVolunteer == false)
             {
-                if (vol.VolunteerID == User.Identity.GetUserId())
+                return Json(new
                 {
-                    vol.Withdrawn = true;
+                    success = false,
+                    title = "",
+                    message = "It appears you haven't volunteered yet!"
+                });
+            }
+            else {
+                int volunteerID = VolunteerHelper.getVolunteer(userID, data.EventId);
+                Volunteer volunteer = db.Volunteers.Find(volunteerID);
+
+                try
+                {
+                    volunteer.Withdrawn = true;
+                    db.Entry(volunteer).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return Json(new
+                    {
+                        success = true,
+                        title = "Sorry you don't want to volunteer anymore. ",
+                        message = "You have been successfully withdrawn from this event."
+                    });
                 }
+                catch (Exception) { }
             }
 
-            try
+            return Json(new
             {
-                db.SaveChanges();
-                return true;
-            }
-            catch (Exception) { }
-
-            return false;
+                success = false,
+                title = "",
+                message = "We were unable to withdraw you from this event! Please refresh the page and try again! If the problem continues, please contact us."
+            });
         }
 
         protected override void Dispose(bool disposing)

@@ -1,55 +1,66 @@
 ﻿@model IEnumerable<Community.Models.Volunteer>
 
 <h3>Volunteers</h3>
-<h4>Unhandled</h4>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Confirmed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rejected)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Withdrawn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Accepted)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.User.UserName)
         </th>
-        <th></th>
+        <th>Status</th>
+        <th>Actions</th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Confirmed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rejected)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Withdrawn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Accepted)
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.User.UserName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @if (item.Withdrawn)
+            {
+                <span>Withdrawn</span>
+            }
+            else if (item.Rejected)
+            {
+                if (item.Accepted)
+                {
+                    <span>Did not attend</span>
+                }
+                else {
+                    <span>Rejected</span>
+                }
+            }
+            else if (item.Confirmed)
+            {
+                <span>Attended</span>
+            }
+            else if (item.Accepted)
+            {
+                <span>Accepted</span>
+            }
+            else {
+                <span>Awaiting Action</span>
+            }
+        </td>
+        <td>
+        @if (item.Accepted == false 
+            && item.Rejected == false 
+            && item.Withdrawn == false)
+        {
+            <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'accept')" class="btn btn-primary">Accept</button>
+            <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'reject')" class="btn btn-primary">Reject</button>
+        }
+        else if (item.Accepted
+            && item.Withdrawn == false
+            && item.Rejected == false
+            && item.Confirmed == false)
+        {
+            <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'confirm')" class="btn btn-primary">Attended</button>
+            <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'reject')" class="btn btn-primary">Didn't Attend</button>
+        }
         </td>
     </tr>
 }
 </table>
-
-@{Html.RenderAction("Confirmed", "Volunteer", new { eventId = ViewBag.EventID });}
-@{Html.RenderAction("Accepted", "Volunteer", new { eventId = ViewBag.EventID });}
-@{Html.RenderAction("Rejected", "Volunteer", new { eventId = ViewBag.EventID });}
-@{Html.RenderAction("Withdrawn", "Volunteer", new { eventId = ViewBag.EventID });}

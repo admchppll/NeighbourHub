@@ -2,5 +2,5 @@
 <h3>Tags</h3>
 
 @foreach (var item in Model) {
-        <h4><span class="label label-primary">@Html.DisplayFor(modelItem => item.Tag.Name)</span></h4>
+        <h4>@Html.DisplayFor(modelItem => item.Tag.Name)</h4>
 }

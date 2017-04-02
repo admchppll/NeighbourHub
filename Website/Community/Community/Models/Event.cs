@@ -36,7 +36,7 @@ namespace Community.Models
         public Nullable<System.DateTime> Edited { get; set; }
         public Nullable<short> Repeated { get; set; }
         public Nullable<byte> RepeatIncrement { get; set; }
-        public DateTime Date { get; set; }
+        public System.DateTime Date { get; set; }
         public byte Length { get; set; }
         public bool AM1 { get; set; }
         public bool AM2 { get; set; }
