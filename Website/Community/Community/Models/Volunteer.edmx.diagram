@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="VolunteerModel.Bookmarked" Width="1.5" PointX="10.5" PointY="23" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Event" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.EventTag" Width="1.5" PointX="10.5" PointY="20.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="VolunteerModel.Information" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerModel.Information" Width="1.5" PointX="3.375" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Interest" Width="1.5" PointX="4.75" PointY="36.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Message" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Notification" Width="1.5" PointX="3" PointY="24.375" IsExpanded="true" />

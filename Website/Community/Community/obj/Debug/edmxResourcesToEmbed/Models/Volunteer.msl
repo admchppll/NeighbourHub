@@ -328,5 +328,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="createGeoLocationAddress" FunctionName="VolunteerModel.Store.createGeoLocationAddress" />
+    <FunctionImportMapping FunctionImportName="confirmVolunteer" FunctionName="VolunteerModel.Store.confirmVolunteer" />
+    <FunctionImportMapping FunctionImportName="withdrawVolunteer" FunctionName="VolunteerModel.Store.withdrawVolunteer" />
   </EntityContainerMapping>
 </Mapping>

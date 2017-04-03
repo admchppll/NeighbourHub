@@ -643,8 +643,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="confirmVolunteer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="VolunteerID" Type="int" Mode="In" />
+  </Function>
   <Function Name="createGeoLocationAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="AddressID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="withdrawVolunteer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="VolunteerID" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="VolunteerModelStoreContainer">
     <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />

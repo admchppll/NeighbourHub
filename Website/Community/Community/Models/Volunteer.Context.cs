@@ -69,5 +69,14 @@ namespace Community.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("confirmVolunteer", volunteerIDParameter);
         }
+    
+        public virtual int withdrawVolunteer(Nullable<int> volunteerID)
+        {
+            var volunteerIDParameter = volunteerID.HasValue ?
+                new ObjectParameter("VolunteerID", volunteerID) :
+                new ObjectParameter("VolunteerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("withdrawVolunteer", volunteerIDParameter);
+        }
     }
 }

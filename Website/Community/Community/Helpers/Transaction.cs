@@ -4,15 +4,18 @@ namespace Community.Helpers
 {
     class TransactionHelper
     {
-        public static Transaction CreateEventTrans(string senderID, string recipientID, int eventID, short amount)
+        public static void CreateEventTrans(string senderID, string recipientID, int eventID, short amount)
         {
+            VolunteerEntities db = new VolunteerEntities();
+
             Transaction transaction = new Transaction();
             transaction.Amount = amount;
             transaction.EventID = eventID;
             transaction.SenderID = senderID;
             transaction.RecipientID = recipientID;
 
-            return transaction;
+            db.Transactions.Add(transaction);
+            db.SaveChanges();
         }
     }
 }

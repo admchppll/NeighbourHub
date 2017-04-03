@@ -654,6 +654,9 @@
         <Function Name="createGeoLocationAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AddressID" Type="int" Mode="In" />
         </Function>
+        <Function Name="withdrawVolunteer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VolunteerID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="VolunteerModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
@@ -1638,6 +1641,9 @@
           <FunctionImport Name="confirmVolunteer">
           <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="withdrawVolunteer">
+            <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -1973,6 +1979,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="createGeoLocationAddress" FunctionName="VolunteerModel.Store.createGeoLocationAddress" />
           <FunctionImportMapping FunctionImportName="confirmVolunteer" FunctionName="VolunteerModel.Store.confirmVolunteer" />
+          <FunctionImportMapping FunctionImportName="withdrawVolunteer" FunctionName="VolunteerModel.Store.withdrawVolunteer" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

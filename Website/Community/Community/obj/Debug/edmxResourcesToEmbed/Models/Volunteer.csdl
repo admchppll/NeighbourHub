@@ -839,5 +839,11 @@
     <FunctionImport Name="createGeoLocationAddress">
       <Parameter Name="AddressID" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="confirmVolunteer">
+      <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="withdrawVolunteer">
+      <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
 </Schema>

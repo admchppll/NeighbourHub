@@ -241,7 +241,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Address.cs" />
+    <Compile Include="Helpers\Notification.cs" />
     <Compile Include="Helpers\Profile.cs" />
+    <Compile Include="Helpers\Transaction.cs" />
     <Compile Include="Helpers\Volunteer.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs">

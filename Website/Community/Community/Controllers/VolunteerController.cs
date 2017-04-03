@@ -217,14 +217,13 @@ namespace Community.Controllers
                         volunteer.Accepted = true;
 
                         //Create transaction to put tokens on hold for volunteer
-                        Transaction transaction = TransactionHelper.CreateEventTrans(
+                        TransactionHelper.CreateEventTrans(
                             userID, 
                             volunteer.VolunteerID,
                             volunteer.EventID, 
                             VolunteerHelper.getVolunteerPointValue(volunteer.EventID));
                         
                         db.Entry(volunteer).State = EntityState.Modified;
-                        db.Transactions.Add(transaction);
                         db.SaveChanges();
 
                         NotificationHelper.Create(
@@ -286,20 +285,42 @@ namespace Community.Controllers
 
                         db.Entry(volunteer).State = EntityState.Modified;
                         db.SaveChanges();
+                        string title;
+                        string message;
 
+                        if (volunteer.Accepted == true)
+                        {
+                            title = "Did not attend!";
+                            message = "You have been marked as not attending an event";
+                        }
+                        else {
+                            title = "Rejected";
+                            message = "You have been rejected as a volunteer";
+                        }
                         //Notify volunteer of rejection
                         NotificationHelper.Create(
                             volunteer.VolunteerID,
-                            "Rejected",
-                            "You have been rejected as a volunteer",
+                            title,
+                            message,
                             "~/Event/Details/" + volunteer.EventID);
 
-                        return Json(new
+                        if (volunteer.Accepted == false)
                         {
-                            success = true,
-                            title = "",
-                            message = "This volunteer has been rejected."
-                        });
+                            return Json(new
+                            {
+                                success = true,
+                                title = "",
+                                message = "This volunteer has been rejected."
+                            });
+                        }
+                        else {
+                            return Json(new
+                            {
+                                success = true,
+                                title = "",
+                                message = "This volunteer has been successfully marked as not attending."
+                            });
+                        }
                     }
                     catch (Exception) { }
                 }
