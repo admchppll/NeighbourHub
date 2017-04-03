@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Community.Models;
 using Microsoft.AspNet.Identity;
+using System.IO;
+using System.Web;
+using Community.Helpers;
 
 namespace Community.Controllers
 {
@@ -40,24 +42,37 @@ namespace Community.Controllers
         // GET: Profile/Create
         public ActionResult Create()
         {
-            if (ProfileExists() == false)
+            string userID = User.Identity.GetUserId();
+            if (ProfileHelper.ProfileExists(userID) == false)
             {
                 ViewBag.UserID = new SelectList(db.Users, "ID", "Email");
                 return View();
             }
             else {
-                return RedirectToAction("Edit", new { id = CurrentProfileID() });
+                return RedirectToAction("Edit", new { id = ProfileHelper.CurrentProfileID(userID) });
             }
         }
 
         // POST: Profile/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography,PictureURL,Active,Suspended")] Profile profile)
+        [HttpPost,ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography")] Profile profile, [Bind(Include = "PictureURL")]HttpPostedFileBase PictureURL)
         {
+            DateTime current_date = DateTime.Now;
+            if (PictureURL != null && PictureURL.ContentLength > 0)
+            {
+                string currentDateString = current_date.ToString("ddMMyy");
+                Directory.CreateDirectory(Server.MapPath("~/Uploads/Profile/") + currentDateString);
+
+                string fileExtension = Path.GetExtension(PictureURL.FileName);
+                string fileName = Guid.NewGuid().ToString() + fileExtension;
+                string filePath = Path.Combine(Server.MapPath("~/Uploads/Profile/" + currentDateString), fileName);
+                PictureURL.SaveAs(filePath);
+
+                profile.PictureURL = "~/Uploads/Profile/" + currentDateString + "/" + fileName;
+            }
             profile.UserID = User.Identity.GetUserId();
+            profile.Active = true;
+
             if (ModelState.IsValid)
             {
                 db.Profiles.Add(profile);
@@ -83,11 +98,8 @@ namespace Community.Controllers
         }
 
         // POST: Profile/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography,PictureURL,Active,Suspended")] Profile profile)
+        [HttpPost,ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ID,UserID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography,PictureURL")] Profile profile)
         {
             if (ModelState.IsValid)
             {
@@ -122,41 +134,6 @@ namespace Community.Controllers
             db.Profiles.Remove(profile);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        /// <summary>
-        /// Checks if current user has created a profile yet
-        /// </summary>
-        /// <returns>True if a profile exists, otherwise False</returns>
-        public bool ProfileExists() {
-            try
-            {
-                var userID = User.Identity.GetUserId();
-                var count = db.Profiles.Where(p => p.UserID == userID).Count();
-
-                if (count == 0)
-                    return false;
-                else
-                    return true;
-            }
-            catch (NullReferenceException) {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Finds the profile id of current users
-        /// </summary>
-        /// <returns></returns>
-        public int CurrentProfileID() {
-            var userID = User.Identity.GetUserId();
-
-            var profileID = db.Profiles
-                .Where(p => p.UserID == userID)
-                .Select(p => p.ID)
-                .FirstOrDefault();
-
-            return profileID;
         }
 
         protected override void Dispose(bool disposing)

@@ -8,51 +8,15 @@ using Community.Models;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity.Spatial;
 using Community.Helpers;
+using System.Web;
+using System.IO;
 
 namespace Community.Controllers
 {
     [Authorize]
     public class EventController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
-
-        public bool ProfileExists()
-        {
-            try
-            {
-                var userID = User.Identity.GetUserId();
-                var count = db.Profiles
-                    .Where(p => p.UserID == userID)
-                    .Count();
-
-                if (count == 0)
-                    return false;
-                else
-                    return true;
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
-        }
-
-        public bool AddressExists()
-        {
-            try
-            {
-                var userID = User.Identity.GetUserId();
-                var count = db.Addresses.Where(p => p.UserID == userID).Count();
-
-                if (count == 0)
-                    return false;
-                else
-                    return true;
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
-        }
+        private VolunteerEntities db = new VolunteerEntities();  
 
         [AllowAnonymous]
         // GET: Event
@@ -117,6 +81,11 @@ namespace Community.Controllers
         public ActionResult Create()
         {
             var userID = User.Identity.GetUserId();
+
+            if (Helpers.ProfileHelper.isActive(userID)) {
+                return HttpNotFound();
+            }
+
             var addresses = db.Addresses
                 .Where(a => a.UserID == userID)
                 .Select(a => new {
@@ -125,11 +94,11 @@ namespace Community.Controllers
                 })
                 .ToList();
 
-            if (ProfileExists() == false)
+            if (ProfileHelper.ProfileExists(userID) == false)
             {
                 return RedirectToAction("Create", "Profile");
             }
-            else if (AddressExists() == false){
+            else if (AddressHelper.AddressExists(userID) == false){
                 return RedirectToAction("Create", "Address");
             }
 
@@ -138,13 +107,24 @@ namespace Community.Controllers
         }
 
         // POST: Event/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,ShortDescription,LongDescription,AddressID,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,VolunteerQuantity,Points")] Event @event)
+        public ActionResult Create([Bind(Include = "Title,ShortDescription,LongDescription,AddressID,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,VolunteerQuantity,Points")] Event @event, [Bind(Include="PictureURL")]HttpPostedFileBase PictureURL)
         {
             DateTime current_date = DateTime.Now;
+
+            if (PictureURL != null && PictureURL.ContentLength > 0)
+            {
+                string currentDateString = current_date.ToString("ddMMyy");
+                Directory.CreateDirectory(Server.MapPath("~/Uploads/Event/") + currentDateString);
+
+                string fileExtension = Path.GetExtension(PictureURL.FileName);
+                string fileName = Guid.NewGuid().ToString() + fileExtension;
+                string filePath = Path.Combine(Server.MapPath("~/Uploads/Event/" + currentDateString), fileName);
+                PictureURL.SaveAs(filePath);
+
+                @event.PictureURL = "~/Uploads/Event/" + currentDateString + "/" + fileName;
+            }
 
             @event.HostID = User.Identity.GetUserId();
             @event.Suspended = false;

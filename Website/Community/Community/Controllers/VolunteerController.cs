@@ -17,26 +17,6 @@ namespace Community.Controllers
     {
         private VolunteerEntities db = new VolunteerEntities();
 
-        public bool ProfileExists()
-        {
-            try
-            {
-                var userID = User.Identity.GetUserId();
-                var count = db.Profiles
-                    .Where(p => p.UserID == userID)
-                    .Count();
-
-                if (count == 0)
-                    return false;
-                else
-                    return true;
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
-        }
-
         // GET: Volunteer
         public ActionResult Index()
         {
@@ -76,11 +56,6 @@ namespace Community.Controllers
         // GET: Volunteer/Create
         public ActionResult Create()
         {
-            if (ProfileExists() == false)
-            {
-                return RedirectToAction("Create", "Profile");
-            }
-
             ViewBag.EventID = new SelectList(db.Events, "ID", "HostID");
             ViewBag.VolunteerID = new SelectList(db.Users, "ID", "Email");
             return View();
@@ -174,6 +149,13 @@ namespace Community.Controllers
                         volunteer.Confirmed = true;
                         db.Entry(volunteer).State = EntityState.Modified;
                         db.SaveChanges();
+                        db.confirmVolunteer(data.Id);
+
+                        NotificationHelper.Create(
+                            volunteer.VolunteerID,
+                            "Confirmed",
+                            "You have been confirmed as attending an event",
+                            "~/Event/Details/" + volunteer.EventID);
 
                         return Json(new
                         {
@@ -219,15 +201,37 @@ namespace Community.Controllers
                 });
             }
             else {
-                Volunteer volunteer = db.Volunteers.Find(data.Id);
-
-                if (VolunteerHelper.isHost(userID, data.EventId))
+                if (ProfileHelper.canAffordVolunteer(userID, data.EventId) == false) {
+                    return Json(new
+                    {
+                        success = false,
+                        title = "",
+                        message = "We couldn't accept the volunteer, unfortunately you don't have enough tokens to host this volunteer! Try volunteering for more events to get more tokens!"
+                    });
+                }
+                else if (VolunteerHelper.isHost(userID, data.EventId))
                 {
                     try
                     {
+                        Volunteer volunteer = db.Volunteers.Find(data.Id);
                         volunteer.Accepted = true;
+
+                        //Create transaction to put tokens on hold for volunteer
+                        Transaction transaction = TransactionHelper.CreateEventTrans(
+                            userID, 
+                            volunteer.VolunteerID,
+                            volunteer.EventID, 
+                            VolunteerHelper.getVolunteerPointValue(volunteer.EventID));
+                        
                         db.Entry(volunteer).State = EntityState.Modified;
+                        db.Transactions.Add(transaction);
                         db.SaveChanges();
+
+                        NotificationHelper.Create(
+                            volunteer.VolunteerID,
+                            "Accepted",
+                            "You have been accepted as a volunteer",
+                            "~/Event/Details/" + volunteer.EventID);
 
                         return Json(new
                         {
@@ -236,7 +240,14 @@ namespace Community.Controllers
                             message = "This volunteer has been accepted."
                         });
                     }
-                    catch (Exception) { }
+                    catch (Exception) {
+                        return Json(new
+                        {
+                            success = false,
+                            title = "",
+                            message = "We were unable to accept this volunteer! Please refresh the page and try again! If the problem continues, please contact us."
+                        });
+                    }
                 }
                 else {
                     return Json(new
@@ -247,13 +258,6 @@ namespace Community.Controllers
                     });
                 }
             }
-
-            return Json(new
-            {
-                success = false,
-                title = "",
-                message = "We were unable to accept this volunteer! Please refresh the page and try again! If the problem continues, please contact us."
-            });
         }
 
         //POST: Volunteer/Reject
@@ -273,15 +277,22 @@ namespace Community.Controllers
                 });
             }
             else {
-                Volunteer volunteer = db.Volunteers.Find(data.Id);
-
                 if (VolunteerHelper.isHost(userID, data.EventId))
                 {
                     try
                     {
+                        Volunteer volunteer = db.Volunteers.Find(data.Id);
                         volunteer.Rejected = true;
+
                         db.Entry(volunteer).State = EntityState.Modified;
                         db.SaveChanges();
+
+                        //Notify volunteer of rejection
+                        NotificationHelper.Create(
+                            volunteer.VolunteerID,
+                            "Rejected",
+                            "You have been rejected as a volunteer",
+                            "~/Event/Details/" + volunteer.EventID);
 
                         return Json(new
                         {
@@ -335,6 +346,12 @@ namespace Community.Controllers
                     volunteer.Withdrawn = true;
                     db.Entry(volunteer).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    NotificationHelper.Create(
+                            VolunteerHelper.getHost(data.EventId),
+                            "Withdrawn",
+                            "A volunteer has withdrawn from your event!",
+                            "~/Event/Details/" + data.EventId);
 
                     return Json(new
                     {

@@ -3,6 +3,8 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Community.Models;
+using Microsoft.AspNet.Identity;
+using System;
 
 namespace Community.Controllers
 {
@@ -15,6 +17,17 @@ namespace Community.Controllers
         public ActionResult Index()
         {
             var transactions = db.Transactions.Include(t => t.Event);
+            return View(transactions.ToList());
+        }
+
+        // GET: Transaction/UserTransaction/5
+        public ActionResult UserTransactions()
+        {
+            var userID = User.Identity.GetUserId();
+            var transactions = db.Transactions
+                .Include(t => t.Event)
+                .Where(t => t.RecipientID == userID 
+                    || t.SenderID == userID);
             return View(transactions.ToList());
         }
 
@@ -41,12 +54,11 @@ namespace Community.Controllers
         }
 
         // POST: Transaction/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Date,SenderID,RecipientID,EventID,Gift,Amount")] Transaction transaction)
+        [HttpPost,ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,SenderID,RecipientID,EventID,Gift,Amount,Complete,Cancelled")] Transaction transaction)
         {
+            transaction.Date = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 db.Transactions.Add(transaction);

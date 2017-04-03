@@ -221,6 +221,8 @@
     <EntitySetMapping Name="Transactions">
       <EntityTypeMapping TypeName="VolunteerModel.Transaction">
         <MappingFragment StoreEntitySet="Transaction">
+          <ScalarProperty Name="ParentTransaction" ColumnName="ParentTransaction" />
+          <ScalarProperty Name="Cancelled" ColumnName="Cancelled" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="SenderID" ColumnName="SenderID" />

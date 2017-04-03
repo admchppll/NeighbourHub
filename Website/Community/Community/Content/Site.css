@@ -54,3 +54,41 @@ textarea {
 .alert {
     margin: 5px 0;
 }
+
+.tag {
+    margin: 5px;
+    font-size: 1.1em;
+    float: left;
+}
+
+.tag a {
+    color: #fff;
+}
+
+.tag a:hover {
+    color: #47146a;
+}
+
+.tagList {
+    display:inline;
+}
+
+#alternateDateTable, #alternateDateTable td, #alternateDateTable th {
+    border: none;
+}
+
+#alternateDateTable th {
+    text-align: center;
+}
+
+#volunteerInfo {
+    padding-top: 10px;
+}
+
+#longDescription {
+    padding-top: 10px;
+}
+
+.event-links {
+    padding-top: 15px;
+}

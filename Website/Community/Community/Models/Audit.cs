@@ -19,7 +19,7 @@ namespace Community.Models
         public string UserID { get; set; }
         public Nullable<int> EventID { get; set; }
         public string AuditMessage { get; set; }
-        public Nullable<bool> AdminOnly { get; set; }
+        public bool AdminOnly { get; set; }
     
         public virtual Event Event { get; set; }
     }

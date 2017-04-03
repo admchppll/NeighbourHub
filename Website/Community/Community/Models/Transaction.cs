@@ -22,6 +22,8 @@ namespace Community.Models
         public bool Gift { get; set; }
         public short Amount { get; set; }
         public bool Complete { get; set; }
+        public bool Cancelled { get; set; }
+        public Nullable<int> ParentTransaction { get; set; }
     
         public virtual Event Event { get; set; }
     }

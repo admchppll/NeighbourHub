@@ -1,4 +1,5 @@
 ﻿using Community.Models;
+using System;
 using System.Linq;
 
 namespace Community.Helpers
@@ -68,6 +69,21 @@ namespace Community.Helpers
                 .Any();
 
             return exists;
+        }
+
+        public static short getVolunteerPointValue(int eventID)
+        {
+            VolunteerEntities db = new VolunteerEntities();
+            var @event = db.Events
+                .Where(e => e.ID == eventID)
+                .Select(e => new {
+                    Value = e.Points,
+                    Quantity = e.VolunteerQuantity
+                })
+                .Single();
+
+            short result = Convert.ToInt16(@event.Value / @event.Quantity);
+            return result;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Community.Models.EventTag>
 <h3>Tags</h3>
-
+<div class="col-xs-12 tagList">
 @foreach (var item in Model) {
-        <h4>@Html.DisplayFor(modelItem => item.Tag.Name)</h4>
+    <span class="label label-info tag">@Html.DisplayFor(modelItem => item.Tag.Name)</span>
 }
+</div>

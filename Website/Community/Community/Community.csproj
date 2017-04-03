@@ -393,6 +393,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Volunteer.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -523,6 +524,7 @@
     <Content Include="Views\Event\_Sidebar.cshtml" />
     <Content Include="Views\EventTag\Utility.cshtml" />
     <Content Include="Views\Volunteer\Volunteers.cshtml" />
+    <Content Include="Views\Transaction\UserTransactions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

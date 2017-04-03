@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Community.Models.Transaction>
+@using Microsoft.AspNet.Identity;
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Event.Title)
+        </th>
+        <th>
+            Transaction Type
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gift)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Complete)
+        </th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @if (item.Gift == false)
+            {
+                Html.DisplayFor(modelItem => item.Event.Title);
+            }
+            else {
+                Html.Raw("Gift");
+            }
+        </td>
+        <td>
+            @{
+                string userID = User.Identity.GetUserId();
+                if (item.RecipientID == userID)
+                {
+                    Html.Raw("Recieved");
+                }
+                else if (item.SenderID == userID){
+                    Html.Raw("Sent");
+                }
+            }
+        </td>
+        <td>
+            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Complete, "YesNo")
+        </td>  
+    </tr>
+}
+
+</table>

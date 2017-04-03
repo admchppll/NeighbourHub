@@ -1,66 +1,70 @@
 ﻿@model IEnumerable<Community.Models.Volunteer>
 
 <h3>Volunteers</h3>
-
+<div class="row">
+    <div class="col-xs-12 alert hidden" id="volunteerAdminMessage">
+        <strong id="volunteerAdminMsgTitle"></strong>
+        <span id="volunteerAdminMsgContent"></span>
+    </div>
+</div>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.User.UserName)
-        </th>
+        <th>Username</th>
         <th>Status</th>
         <th>Actions</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
+    @foreach (var item in Model)
+    {
+        <tr>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.User.UserName)
-        </td>
-        <td>
-            @if (item.Withdrawn)
-            {
-                <span>Withdrawn</span>
-            }
-            else if (item.Rejected)
-            {
-                if (item.Accepted)
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @if (item.Withdrawn)
                 {
-                    <span>Did not attend</span>
+                    <span>Withdrawn</span>
+                }
+                else if (item.Rejected)
+                {
+                    if (item.Accepted)
+                    {
+                        <span>Did not attend</span>
+                    }
+                    else {
+                        <span>Rejected</span>
+                    }
+                }
+                else if (item.Confirmed)
+                {
+                    <span>Attended</span>
+                }
+                else if (item.Accepted)
+                {
+                    <span>Accepted</span>
                 }
                 else {
-                    <span>Rejected</span>
+                    <span>Awaiting Action</span>
                 }
-            }
-            else if (item.Confirmed)
-            {
-                <span>Attended</span>
-            }
-            else if (item.Accepted)
-            {
-                <span>Accepted</span>
-            }
-            else {
-                <span>Awaiting Action</span>
-            }
-        </td>
-        <td>
-        @if (item.Accepted == false 
-            && item.Rejected == false 
-            && item.Withdrawn == false)
-        {
-            <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'accept')" class="btn btn-primary">Accept</button>
-            <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'reject')" class="btn btn-primary">Reject</button>
-        }
-        else if (item.Accepted
-            && item.Withdrawn == false
+            </td>
+            <td>
+                @if (item.Accepted == false
             && item.Rejected == false
-            && item.Confirmed == false)
-        {
-            <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'confirm')" class="btn btn-primary">Attended</button>
-            <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'reject')" class="btn btn-primary">Didn't Attend</button>
-        }
-        </td>
-    </tr>
-}
+            && item.Withdrawn == false)
+                {
+                    <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'accept')" class="btn btn-success">Accept</button>
+                    <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'reject')" class="btn btn-danger">Reject</button>
+                }
+                else if (item.Accepted
+                    && item.Withdrawn == false
+                    && item.Rejected == false
+                    && item.Confirmed == false)
+                {
+                    <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'confirm')" class="btn btn-success">Attended</button>
+                    <button href="javascript:void();" onclick="volunteerAdminOperation(@item.ID, @item.EventID, 'reject')" class="btn btn-danger">Didn't Attend</button>
+                }
+            </td>
+        </tr>
+    }
 </table>

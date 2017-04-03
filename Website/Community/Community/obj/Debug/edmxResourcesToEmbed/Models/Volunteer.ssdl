@@ -28,7 +28,7 @@
     <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="EventID" Type="int" />
     <Property Name="AuditMessage" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="AdminOnly" Type="bit" />
+    <Property Name="AdminOnly" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Bookmarked">
     <Key>
@@ -72,8 +72,8 @@
     <Property Name="PM7" Type="bit" Nullable="false" />
     <Property Name="DateInfo" Type="nvarchar" MaxLength="200" />
     <Property Name="Suspended" Type="bit" Nullable="false" />
-    <Property Name="VolunteerQuantity" Type="tinyint" Nullable="false" />
-    <Property Name="Points" Type="tinyint" Nullable="false" />
+    <Property Name="VolunteerQuantity" Type="smallint" Nullable="false" />
+    <Property Name="Points" Type="smallint" Nullable="false" />
     <Property Name="PictureURL" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="EventTag">
@@ -213,7 +213,9 @@
     <Property Name="EventID" Type="int" />
     <Property Name="Gift" Type="bit" Nullable="false" />
     <Property Name="Amount" Type="smallint" Nullable="false" />
+    <Property Name="Cancelled" Type="bit" Nullable="false" />
     <Property Name="Complete" Type="bit" Nullable="false" />
+    <Property Name="ParentTransaction" Type="int" />
   </EntityType>
   <EntityType Name="User">
     <Key>

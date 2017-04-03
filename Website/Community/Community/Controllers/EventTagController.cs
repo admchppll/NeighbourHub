@@ -29,6 +29,7 @@ namespace Community.Controllers
                 .Where(e => e.EventID == eventID);
 
             ViewBag.Tags = db.Tags.Where(v => v.Active == true);
+            ViewBag.EventID = eventID;
 
             return PartialView(eventTags.ToList());
         }
@@ -67,7 +68,11 @@ namespace Community.Controllers
                 db.EventTags.Add(eventTag);
                 db.SaveChanges();
                 //return RedirectToAction("Index");
-                return Json(new{success = true});
+                return Json(new
+                {
+                    success = true,
+                    id = eventTag.ID
+                });
             }
 
             return Json(new { success = false });

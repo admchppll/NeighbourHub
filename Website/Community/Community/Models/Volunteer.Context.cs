@@ -60,5 +60,14 @@ namespace Community.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("createGeoLocationAddress", addressIDParameter);
         }
+    
+        public virtual int confirmVolunteer(Nullable<int> volunteerID)
+        {
+            var volunteerIDParameter = volunteerID.HasValue ?
+                new ObjectParameter("VolunteerID", volunteerID) :
+                new ObjectParameter("VolunteerID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("confirmVolunteer", volunteerIDParameter);
+        }
     }
 }

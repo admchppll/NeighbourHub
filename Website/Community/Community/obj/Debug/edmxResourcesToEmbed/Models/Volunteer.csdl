@@ -30,7 +30,7 @@
     <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="EventID" Type="Int32" />
     <Property Name="AuditMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="AdminOnly" Type="Boolean" />
+    <Property Name="AdminOnly" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Event" Relationship="Self.FK_Audit_Event" FromRole="Audit" ToRole="Event" />
   </EntityType>
   <EntityType Name="Bookmarked">
@@ -242,6 +242,8 @@
     <Property Name="Amount" Type="Int16" Nullable="false" />
     <Property Name="Complete" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Event" Relationship="Self.FK_Transaction_Event" FromRole="Transaction" ToRole="Event" />
+    <Property Name="Cancelled" Type="Boolean" Nullable="false" />
+    <Property Name="ParentTransaction" Type="Int32" />
   </EntityType>
   <EntityType Name="User">
     <Key>

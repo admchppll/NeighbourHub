@@ -5,250 +5,127 @@
     ViewBag.Title = "Details";
 }
 @Html.AntiForgeryToken()
-<h2>Details</h2>
-<div class="col-md-8">
-    <h4>Event</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt> 
-            @Html.DisplayNameFor(model => model.User.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HostID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ShortDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LongDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LongDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Length)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Length)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AM1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AM1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AM2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AM2)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AM3)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AM3)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AM4)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AM4)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AM5)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AM5)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AM6)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AM6)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AM7)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AM7)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PM1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PM1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PM2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PM2)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PM3)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PM3)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PM4)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PM4)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PM5)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PM5)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PM6)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PM6)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PM7)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PM7)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateInfo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateInfo)
-        </dd>
-    </dl>
-</div>
-<div class="col-md-4">
-    <div class="row">
-    @if (VolunteerHelper.isVolunteer(User.Identity.GetUserId(), Model.ID) == false)
+<div class="col-xs-12 event-links">
+    @if (VolunteerHelper.isHost(User.Identity.GetUserId(), Model.ID))
     {
-        <button id="volunteerBtn" href="javascript:void();" onclick="volunteer(@Html.Raw(Model.ID))" class="btn btn-primary">Volunteer</button>
+        Html.ActionLink("Edit", "Edit", new { id = Model.ID });
     }
-    else if (VolunteerHelper.isWithdrawn(User.Identity.GetUserId(), Model.ID) == false) {
-        <button id="withdrawBtn" href="javascript:void();" onclick="withdraw(@Html.Raw(Model.ID))" class="btn btn-warning">Withdraw</button>
-    }
-    </div>
-    <div class="row">
-        <div class="col-xs-12 alert hidden" id="volunteerMessage"><strong id="volunteerMsgTitle"></strong><span id="volunteerMsgContent"></span></div>
-    </div>
-    </div>
-<div class="col-md-4">
-   @if (VolunteerHelper.isHost(User.Identity.GetUserId(), Model.ID))
-   {
-       Html.RenderAction("Display", "EventTag", new { eventId = Model.ID });
-   }
-   else {
-       Html.RenderAction("Utility", "EventTag", new { eventId = Model.ID });
-   }
-</div>
-@if (VolunteerHelper.isHost(User.Identity.GetUserId(), Model.ID))
-{
-    Html.RenderAction("Volunteers", "Volunteer", new { eventId = Model.ID });
-}
-
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+    <!-- Need to find better way to do this due to search functionality-->
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-<script>
-
-
-    function volunteer(eventID) {
-        var data = {
-            EventId: eventID
-        };
-        ajaxVolunteer('/Volunteer/Volunteer', data);
-    }
-
-    function withdraw(eventID) {
-        var data = {
-            EventId: eventID
-        };
-        ajaxVolunteer('/Volunteer/Withdraw', data);
-    }
-
-    function volunteerAdminOperation(volunteerID, eventID, operation) {
-        var url = "/Volunteer/";
-        var data = {
-            ID: volunteerID,
-            EventId: eventID
-        };
-
-        switch (operation) {
-            case "accept":
-                url += "Accept";
-                break;
-            case "confirm":
-                url += "Confirm";
-                break;
-            case "reject":
-                url += "Reject";
-                break;
-            default: break;
+<div class="col-xs-12 col-md-7">
+    <div class="col-xs-12">
+        <h2>@Html.DisplayFor(model => model.Title)</h2>
+    </div>
+    <div class="col-xs-12">
+        <div id="volunteerInfo" class="row">
+            <div class="col-xs-12 col-sm-6">
+                <b>Volunteers Needed:</b> @Html.DisplayFor(model => model.VolunteerQuantity)
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <b>Points Per Volunteer:</b> @VolunteerHelper.getVolunteerPointValue(Model.ID).ToString()
+            </div>
+        </div>
+        <p id="longDescription">
+            @Html.Raw(Model.LongDescription)
+        </p>
+        @if (Model.PictureURL != null && Model.PictureURL != "")
+        {
+        <div class="col-xs-12">
+            <img src="@Url.Content(Model.PictureURL)" class="img-responsive" />
+        </div>
         }
-
-        ajaxVolunteer(url, data);
+    </div>
+    <div class="col-xs-12">
+        @if (VolunteerHelper.isHost(User.Identity.GetUserId(), Model.ID))
+        {
+            Html.RenderAction("Volunteers", "Volunteer", new { eventId = Model.ID });
+        }
+    </div>
+</div>
+<div id="eventSidebar" class="col-xs-12 col-md-5">
+    @if (VolunteerHelper.isHost(User.Identity.GetUserId(), Model.ID) == false
+        && VolunteerHelper.isVolunteer(User.Identity.GetUserId(), Model.ID) == false
+        && VolunteerHelper.isWithdrawn(User.Identity.GetUserId(), Model.ID) == false)
+    {
+        <div class="col-xs-12">
+            <div class="row">
+                @if (VolunteerHelper.isVolunteer(User.Identity.GetUserId(), Model.ID) == false)
+                {
+                    <button id="volunteerBtn" href="javascript:void();" onclick="volunteer(@Html.Raw(Model.ID))" class="btn btn-primary">Volunteer</button>
+                }
+                else if (VolunteerHelper.isWithdrawn(User.Identity.GetUserId(), Model.ID) == false)
+                {
+                    <button id="withdrawBtn" href="javascript:void();" onclick="withdraw(@Html.Raw(Model.ID))" class="btn btn-warning">Withdraw</button>
+                }
+            </div>
+            <div class="row">
+                <div class="col-xs-12 alert hidden" id="volunteerMessage">
+                    <strong id="volunteerMsgTitle"></strong>
+                    <span id="volunteerMsgContent"></span>
+                </div>
+            </div>
+        </div>
     }
-</script>
+    <div class="col-xs-12">
+        <h3>Date Information</h3>
+        <div class="col-xs-12">
+            <p>
+                @Model.Date.ToString("dddd d MMMM yyyy")
+                <br/>
+                @{DateTime time = DateTime.Parse(Model.Time.ToString());}
+                @time.ToString("h:mm tt")
+                <br/>
+                @Html.DisplayFor(model => model.Length) Hours
+            </p>
+        </div>
+        <!--<div class="col-xs-12">
+            <h4>Day Preference</h4>
+            <table id="alternateDateTable" class="table">
+                <tr>
+                    <th></th>
+                    <th>Day 1</th>
+                    <th>Day 2</th>
+                    <th>Day 3</th>
+                    <th>Day 4</th>
+                    <th>Day 5</th>
+                    <th>Day 6</th>
+                    <th>Day 7</th>
+                </tr>
+                <tr>
+                    <th>AM</th>
+                    <td class="@(Model.AM1 ? "bg-success": "")"></td>
+                    <td class="@(Model.AM2 ? "bg-success": "")"></td>
+                    <td class="@(Model.AM3 ? "bg-success": "")"></td>
+                    <td class="@(Model.AM4 ? "bg-success": "")"></td>
+                    <td class="@(Model.AM5 ? "bg-success": "")"></td>
+                    <td class="@(Model.AM6 ? "bg-success": "")"></td>
+                    <td class="@(Model.AM7 ? "bg-success": "")"></td>
+                </tr>
+                <tr>
+                    <th>PM</th>
+                    <td class="@(Model.PM1 ? "bg-success": "")"></td>
+                    <td class="@(Model.PM2 ? "bg-success": "")"></td>
+                    <td class="@(Model.PM3 ? "bg-success": "")"></td>
+                    <td class="@(Model.PM4 ? "bg-success": "")"></td>
+                    <td class="@(Model.PM5 ? "bg-success": "")"></td>
+                    <td class="@(Model.PM6 ? "bg-success": "")"></td>
+                    <td class="@(Model.PM7 ? "bg-success": "")"></td>
+                </tr>
+            </table>
+        </div>
+        @if (Model.DateInfo != "")
+        {
+        <div class="col-xs-12">
+            <h4>Extra Information</h4>
+            <p>@Html.DisplayFor(model => model.DateInfo)</p>
+        </div>
+        }-->
+    </div>
+    <div class="col-xs-12">
+    @{
+        Html.RenderAction("Display", "EventTag", new { eventId = Model.ID });
+    }
+    </div>
+</div>
+@Scripts.Render("~/Scripts/Volunteer.js")

@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Community.Models;
+using Newtonsoft.Json;
 using System.Data.Entity.Spatial;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 
 namespace Community.Helpers
@@ -63,5 +65,16 @@ namespace Community.Helpers
 
         [JsonProperty("latitude")]
         public double Latitude { get; set; }
+    }
+
+    public class AddressHelper {
+        public static bool AddressExists(string userID)
+        {
+            VolunteerEntities db = new VolunteerEntities();
+            var exists = db.Addresses
+                    .Where(p => p.UserID == userID)
+                    .Any();
+            return exists;   
+        }
     }
 }
