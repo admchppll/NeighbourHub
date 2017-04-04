@@ -82,9 +82,10 @@ namespace Community.Controllers
         {
             var userID = User.Identity.GetUserId();
 
-            if (Helpers.ProfileHelper.isActive(userID)) {
-                return HttpNotFound();
-            }
+            //Need to redirect to custom error page 
+            //if (!ProfileHelper.isActive(userID)) {
+            //    return HttpNotFound();
+            //}
 
             var addresses = db.Addresses
                 .Where(a => a.UserID == userID)
@@ -103,6 +104,7 @@ namespace Community.Controllers
             }
 
             ViewBag.AddressID = new SelectList(addresses, "AddressID", "Label");
+            ViewBag.Tags = new SelectList(db.Tags.Where(v => v.Active == true),"ID", "Name");
             return View();
         }
 
@@ -169,8 +171,6 @@ namespace Community.Controllers
         }
 
         // POST: Event/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,HostID,Title,ShortDescription,LongDescription,AddressID,Published,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,Suspended")] Event @event)

@@ -285,11 +285,14 @@ namespace Community.Controllers
 
                         db.Entry(volunteer).State = EntityState.Modified;
                         db.SaveChanges();
+
                         string title;
                         string message;
 
                         if (volunteer.Accepted == true)
                         {
+                            db.reverseTransaction(TransactionHelper.GetVolunteerTransactionID(data.EventId, volunteer.VolunteerID, userID));
+
                             title = "Did not attend!";
                             message = "You have been marked as not attending an event";
                         }
@@ -374,6 +377,10 @@ namespace Community.Controllers
                             "A volunteer has withdrawn from your event!",
                             "~/Event/Details/" + data.EventId);
 
+                    if (volunteer.Accepted) {
+                        db.reverseTransaction(TransactionHelper.GetVolunteerTransactionID(data.EventId, volunteer.VolunteerID, userID));
+                    }
+                      
                     return Json(new
                     {
                         success = true,

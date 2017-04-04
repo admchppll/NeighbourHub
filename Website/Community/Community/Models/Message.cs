@@ -22,8 +22,8 @@ namespace Community.Models
         public Nullable<System.DateTime> Sent { get; set; }
         public bool Read { get; set; }
         public bool Saved { get; set; }
-        public bool Notified { get; set; }
-        public string Admin { get; set; }
+        public Nullable<bool> Admin { get; set; }
+        public Nullable<int> ParentMessage { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }

@@ -112,8 +112,8 @@
     <Property Name="Sent" Type="smalldatetime" />
     <Property Name="Read" Type="bit" Nullable="false" />
     <Property Name="Saved" Type="bit" Nullable="false" />
-    <Property Name="Notified" Type="bit" Nullable="false" />
-    <Property Name="Admin" Type="nchar" MaxLength="10" />
+    <Property Name="Deleted" Type="bit" />
+    <Property Name="Admin" Type="bit" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -648,6 +648,12 @@
   </Function>
   <Function Name="createGeoLocationAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="AddressID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="reduceSenderBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TransactionID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="reverseTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TransactionID" Type="int" Mode="In" />
   </Function>
   <Function Name="withdrawVolunteer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="VolunteerID" Type="int" Mode="In" />

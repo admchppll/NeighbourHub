@@ -128,10 +128,10 @@
     <Property Name="Sent" Type="DateTime" Precision="0" />
     <Property Name="Read" Type="Boolean" Nullable="false" />
     <Property Name="Saved" Type="Boolean" Nullable="false" />
-    <Property Name="Notified" Type="Boolean" Nullable="false" />
-    <Property Name="Admin" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Admin" Type="Boolean" Nullable="true" />
     <NavigationProperty Name="User" Relationship="Self.FK_Message_User_Recipient" FromRole="Message" ToRole="User" />
     <NavigationProperty Name="User1" Relationship="Self.FK_Message_User_Sender" FromRole="Message" ToRole="User" />
+    <Property Name="Deleted" Type="Boolean" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>
@@ -844,6 +844,12 @@
     </FunctionImport>
     <FunctionImport Name="withdrawVolunteer">
       <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="reverseTransaction">
+      <Parameter Name="TransactionID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="reduceSenderBalance">
+      <Parameter Name="TransactionID" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
 </Schema>

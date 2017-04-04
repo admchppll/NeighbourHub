@@ -1,21 +1,18 @@
 ﻿@model IEnumerable<Community.Models.Message>
-
+@using Microsoft.AspNet.Identity
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Messages";
+    string userID = User.Identity.GetUserId();
 }
-
-<h2>Index</h2>
-
+<h2>Messages</h2>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
+        <th>User</th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Body)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Sent)
@@ -26,28 +23,27 @@
         <th>
             @Html.DisplayNameFor(model => model.Saved)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Notified)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Admin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User1.Email)
-        </th>
+        <th>Status</th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+        @if (item.User1.ID == userID)
+        {
+            @Html.DisplayFor(modelItem => item.User1.UserName)
+        }
+        else if (item.User.ID == userID)
+        {
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        }
+        else if (item.Admin == true) {
+            "Administrator".ToString();
+        }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Body)
+            @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Sent)
@@ -59,21 +55,29 @@
             @Html.DisplayFor(modelItem => item.Saved)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Notified)
+            @if (item.User1.ID == userID)
+            {
+                <span>Sent</span>
+            }
+            else if (item.User.ID == userID)
+            {
+                <span>Recieved</span>
+            }
+            else if (item.Saved == true
+                && item.Sent == null)
+            {
+                <span>Not Sent</span>
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Admin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User1.Email)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("View", "Read", new { id = item.ID })
+            @if (item.Saved == true
+                                && item.Sent == null)
+            { 
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            }
+            
         </td>
     </tr>
 }

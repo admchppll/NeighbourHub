@@ -111,6 +111,7 @@
     <EntitySetMapping Name="Messages">
       <EntityTypeMapping TypeName="VolunteerModel.Message">
         <MappingFragment StoreEntitySet="Message">
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="SenderID" ColumnName="SenderID" />
           <ScalarProperty Name="RecipientID" ColumnName="RecipientID" />
@@ -119,7 +120,6 @@
           <ScalarProperty Name="Sent" ColumnName="Sent" />
           <ScalarProperty Name="Read" ColumnName="Read" />
           <ScalarProperty Name="Saved" ColumnName="Saved" />
-          <ScalarProperty Name="Notified" ColumnName="Notified" />
           <ScalarProperty Name="Admin" ColumnName="Admin" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -330,5 +330,7 @@
     <FunctionImportMapping FunctionImportName="createGeoLocationAddress" FunctionName="VolunteerModel.Store.createGeoLocationAddress" />
     <FunctionImportMapping FunctionImportName="confirmVolunteer" FunctionName="VolunteerModel.Store.confirmVolunteer" />
     <FunctionImportMapping FunctionImportName="withdrawVolunteer" FunctionName="VolunteerModel.Store.withdrawVolunteer" />
+    <FunctionImportMapping FunctionImportName="reverseTransaction" FunctionName="VolunteerModel.Store.reverseTransaction" />
+    <FunctionImportMapping FunctionImportName="reduceSenderBalance" FunctionName="VolunteerModel.Store.reduceSenderBalance" />
   </EntityContainerMapping>
 </Mapping>

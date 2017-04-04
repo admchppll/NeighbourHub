@@ -78,5 +78,23 @@ namespace Community.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("withdrawVolunteer", volunteerIDParameter);
         }
+    
+        public virtual int reverseTransaction(Nullable<int> transactionID)
+        {
+            var transactionIDParameter = transactionID.HasValue ?
+                new ObjectParameter("TransactionID", transactionID) :
+                new ObjectParameter("TransactionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("reverseTransaction", transactionIDParameter);
+        }
+    
+        public virtual int reduceSenderBalance(Nullable<int> transactionID)
+        {
+            var transactionIDParameter = transactionID.HasValue ?
+                new ObjectParameter("TransactionID", transactionID) :
+                new ObjectParameter("TransactionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("reduceSenderBalance", transactionIDParameter);
+        }
     }
 }

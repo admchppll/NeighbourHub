@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="VolunteerModel.Interest" Width="1.5" PointX="4.75" PointY="36.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Message" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Notification" Width="1.5" PointX="3" PointY="24.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="VolunteerModel.Organisation" Width="1.5" PointX="5.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerModel.Organisation" Width="1.5" PointX="12.25" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Profile" Width="1.5" PointX="3" PointY="27.5" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Report" Width="1.5" PointX="10.5" PointY="25.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VolunteerModel.Role" Width="1.5" PointX="5.75" PointY="15.375" IsExpanded="true" />

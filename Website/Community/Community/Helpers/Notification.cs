@@ -20,7 +20,7 @@ namespace Community.Helpers
 
         }
 
-        //returns the number of notifications a user has
+        //returns the number of unread notifications a user has
         public static int Unread(string userId) {
             VolunteerEntities db = new VolunteerEntities();
             var query = db.Notifications.Where(n => n.UserID == userId).Count();

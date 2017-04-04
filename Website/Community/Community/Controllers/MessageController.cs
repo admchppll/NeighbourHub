@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Community.Models;
+using Microsoft.AspNet.Identity;
+using Community.Helpers;
 
 namespace Community.Controllers
 {
@@ -18,12 +20,17 @@ namespace Community.Controllers
         // GET: Message
         public ActionResult Index()
         {
-            var messages = db.Messages.Include(m => m.User).Include(m => m.User1);
+            string userID = User.Identity.GetUserId();
+            var messages = db.Messages
+                .Include(m => m.User)
+                .Include(m => m.User1)
+                .Where(m => m.RecipientID == userID || m.SenderID == userID)
+                .OrderByDescending(m => m.Sent);
             return View(messages.ToList());
         }
 
-        // GET: Message/Details/5
-        public ActionResult Details(int? id)
+        // GET: Message/Read/5
+        public ActionResult Read(int? id)
         {
             if (id == null)
             {
@@ -41,26 +48,41 @@ namespace Community.Controllers
         public ActionResult Create()
         {
             ViewBag.RecipientID = new SelectList(db.Users, "ID", "Email");
-            ViewBag.SenderID = new SelectList(db.Users, "ID", "Email");
             return View();
         }
 
         // POST: Message/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,SenderID,RecipientID,Title,Body,Sent,Read,Saved,Notified,Admin")] Message message)
+        public ActionResult Create([Bind(Include = "ID,RecipientID,Title,Body,Saved,Admin")] Message message)
         {
+            message.SenderID = User.Identity.GetUserId();
+            message.Read = false;
+
+            if (message.Saved == false)
+            {
+                message.Sent = DateTime.Now;
+            }
+
             if (ModelState.IsValid)
             {
                 db.Messages.Add(message);
                 db.SaveChanges();
+
+                if (message.Saved == false)
+                {
+                    message.Sent = DateTime.Now;
+                    NotificationHelper.Create(
+                        message.RecipientID, 
+                        "New Message", 
+                        "You have received a new message!", 
+                        "~/Message/Read/" + message.ID);
+                }
+
                 return RedirectToAction("Index");
             }
 
             ViewBag.RecipientID = new SelectList(db.Users, "ID", "Email", message.RecipientID);
-            ViewBag.SenderID = new SelectList(db.Users, "ID", "Email", message.SenderID);
             return View(message);
         }
 
@@ -76,17 +98,17 @@ namespace Community.Controllers
             {
                 return HttpNotFound();
             }
+            else if (message.Sent != null) {
+                return View("Read", message);
+            }
             ViewBag.RecipientID = new SelectList(db.Users, "ID", "Email", message.RecipientID);
-            ViewBag.SenderID = new SelectList(db.Users, "ID", "Email", message.SenderID);
             return View(message);
         }
 
         // POST: Message/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,SenderID,RecipientID,Title,Body,Sent,Read,Saved,Notified,Admin")] Message message)
+        public ActionResult Edit([Bind(Include = "ID,SenderID,RecipientID,Title,Body,Saved,Admin")] Message message)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +117,6 @@ namespace Community.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.RecipientID = new SelectList(db.Users, "ID", "Email", message.RecipientID);
-            ViewBag.SenderID = new SelectList(db.Users, "ID", "Email", message.SenderID);
             return View(message);
         }
 

@@ -1,10 +1,13 @@
 ﻿using Community.Models;
+using System;
+using System.Linq;
+using System.Web.Http.ModelBinding;
 
 namespace Community.Helpers
 {
-    class TransactionHelper
+    public class TransactionHelper
     {
-        public static void CreateEventTrans(string senderID, string recipientID, int eventID, short amount)
+        public static bool CreateEventTrans(string senderID, string recipientID, int eventID, short amount)
         {
             VolunteerEntities db = new VolunteerEntities();
 
@@ -13,9 +16,27 @@ namespace Community.Helpers
             transaction.EventID = eventID;
             transaction.SenderID = senderID;
             transaction.RecipientID = recipientID;
+            transaction.Gift = false;
+            transaction.Complete = false;
+            transaction.Cancelled = false;
+            transaction.Date = DateTime.Now;
 
             db.Transactions.Add(transaction);
             db.SaveChanges();
+            db.reduceSenderBalance(transaction.ID);
+            return true;
+        }
+
+        public static int GetVolunteerTransactionID(int eventID, string recipient, string sender) {
+            VolunteerEntities db = new VolunteerEntities();
+
+            var result = db.Transactions
+                .Where(t => t.EventID == eventID 
+                    && t.RecipientID == recipient
+                    && t.SenderID == sender
+                    && t.Gift == false)
+                .Single();
+            return result.ID;
         }
     }
 }
