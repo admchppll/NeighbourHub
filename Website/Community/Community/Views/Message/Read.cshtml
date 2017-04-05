@@ -2,6 +2,7 @@
 @using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Details";
+    string userID = User.Identity.GetUserId();
 }
 
 <div>
@@ -24,4 +25,8 @@
     </div>
     <div class="col-xs-12  text-right">@Html.ActionLink("Back to Messages", "Index")</div>
 </div>
-@{Html.RenderAction("Reply", "Message", new { messageID = Model.ID });}
+@if (Model.SenderID != userID)
+{
+    Html.RenderAction("Reply", "Message", new { messageID = Model.ID });
+}
+<script>CKEDITOR.replaceAll();</script>

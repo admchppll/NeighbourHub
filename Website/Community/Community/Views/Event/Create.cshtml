@@ -31,8 +31,8 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.LongDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.LongDescription, new { @class = "form-control no-resize", rows = "15" })
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.LongDescription, new { @class = "form-control no-resize editor", rows = "15" })
                     @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -257,6 +257,7 @@
     $('#EventSave').on("click", function () {
         $('Saved').val(1);
     });
+    CKEDITOR.replaceAll();
     </script>
 }
 
