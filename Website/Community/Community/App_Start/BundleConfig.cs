@@ -18,7 +18,6 @@ namespace Community
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*",
-                        "~/ckeditor/ckeditor.js",
                         "~/Scripts/global.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
