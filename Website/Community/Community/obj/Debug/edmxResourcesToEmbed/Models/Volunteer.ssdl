@@ -112,8 +112,8 @@
     <Property Name="Sent" Type="smalldatetime" />
     <Property Name="Read" Type="bit" Nullable="false" />
     <Property Name="Saved" Type="bit" Nullable="false" />
-    <Property Name="Deleted" Type="bit" />
     <Property Name="Admin" Type="bit" />
+    <Property Name="ParentMessage" Type="int" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>

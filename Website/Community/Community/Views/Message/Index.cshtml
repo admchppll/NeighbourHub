@@ -1,5 +1,7 @@
-﻿@model IEnumerable<Community.Models.Message>
-@using Microsoft.AspNet.Identity
+﻿@model PagedList.IPagedList<Community.Models.Message>
+@using Microsoft.AspNet.Identity;
+@using PagedList.Mvc;
+@using Community.Helpers;
 @{
     ViewBag.Title = "Messages";
     string userID = User.Identity.GetUserId();
@@ -8,38 +10,50 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<ul class="nav nav-pills nav-justified">
+    <li class= "@(ViewBag.Section == "index"?"active":"")"><a href="@Url.Action("Index")">All <span class="badge">@MessageHelper.getAllMessages(userID)</span></a></li>
+    <li class= "@(ViewBag.Section == "sent"?"active":"")"><a href="@Url.Action("Index", new { section = "sent"})">Sent <span class="badge">@MessageHelper.getAllSentMessages(userID)</span></a></li>
+    <li class= "@(ViewBag.Section == "received"?"active":"")"><a href="@Url.Action("Index", new { section = "received"})">Received <span class="badge">@MessageHelper.getAllReceivedMessages(userID)</span></a></li>
+    <li class= "@(ViewBag.Section == "saved"?"active":"")"><a href="@Url.Action("Index", new { section = "saved"})">Saved <span class="badge">@MessageHelper.getAllSavedMessages(userID)</span></a></li>
+</ul>
+<table class="table message-table">
     <tr>
+        <th></th>
         <th>User</th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Read)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Saved)
-        </th>
+        <th>@Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSortParm })</th>
+        <th>@Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.SentSortParm })</th>
         <th>Status</th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr class="@(item.Read == false && item.RecipientID == userID ? "unread":"")">
         <td>
-        @if (item.User1.ID == userID)
+            @if (item.Saved == true && item.Sent == null)
+            {
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+            }
+            else if (item.User1.ID == userID)
+            {
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            }
+            else if (item.User.ID == userID)
+            {
+                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+            }
+        </td>
+        <td>
+        @if (item.Admin == true && (item.RecipientID == null || item.SenderID == null))
         {
-            @Html.DisplayFor(modelItem => item.User1.UserName)
-        }
-        else if (item.User.ID == userID)
+            "Administrator".ToString();
+        } 
+        else if (item.User1.ID == userID)
         {
             @Html.DisplayFor(modelItem => item.User.UserName)
         }
-        else if (item.Admin == true) {
-            "Administrator".ToString();
+        else if (item.User.ID == userID)
+        {
+            @Html.DisplayFor(modelItem => item.User1.UserName)
         }
         </td>
         <td>
@@ -49,37 +63,43 @@
             @Html.DisplayFor(modelItem => item.Sent)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Read)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Saved)
-        </td>
-        <td>
-            @if (item.User1.ID == userID)
+            @if (item.User.ID == userID && item.Sent != null)
+            {
+                if (item.Read == true)
+                {
+                    <span>Read</span>
+                }
+                else {
+                    <span>Recieved</span>
+                }
+            }
+            else if (item.User1.ID == userID && item.Sent != null)
             {
                 <span>Sent</span>
-            }
-            else if (item.User.ID == userID)
-            {
-                <span>Recieved</span>
             }
             else if (item.Saved == true
                 && item.Sent == null)
             {
-                <span>Not Sent</span>
+                <span>Saved</span>
             }
         </td>
         <td>
-            @Html.ActionLink("View", "Read", new { id = item.ID })
             @if (item.Saved == true
-                                && item.Sent == null)
-            { 
+                && item.Sent == null)
+            {
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                @Html.Raw(" | ");
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID })
             }
-            
+            else {
+                @Html.ActionLink("View", "Read", new { id = item.ID })
+            }
+
         </td>
     </tr>
 }
-
 </table>
+<div class="pagerSection">
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort }))
+</div>

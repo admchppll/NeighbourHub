@@ -100,3 +100,7 @@ F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\System.Net.
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\System.Web.Http.xml
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\System.Web.Http.WebHost.xml
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\obj\Debug\Community.csprojResolveAssemblyReference.cache
+F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\PagedList.dll
+F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\PagedList.Mvc.dll
+F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\PagedList.xml
+F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\PagedList.Mvc.xml

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Community.Models;
 using Microsoft.AspNet.Identity;
 using Community.Helpers;
+using PagedList;
 
 namespace Community.Controllers
 {
@@ -16,15 +17,70 @@ namespace Community.Controllers
     public class MessageController : Controller
     {
         private VolunteerEntities db = new VolunteerEntities();
+        private const int pageSize = 15;
+        // GET: Message
+        public ActionResult Index(string section, string sortOrder, int? page)
+        {
+            int pageNumber = (page ?? 1);
+            string userID = User.Identity.GetUserId();
+
+            ViewBag.Section = String.IsNullOrEmpty(section) ? "index" : section;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.SentSortParm = String.IsNullOrEmpty(sortOrder) ? "sent_asc" : "";
+            ViewBag.TitleSortParm = sortOrder == "Title" ? "title_desc" : "Title";
+
+            var messages = db.Messages
+                .Include(m => m.User)
+                .Include(m => m.User1);
+
+            switch (section) {
+                case "sent":
+                    messages = messages.Where(m => m.Sent != null && m.SenderID == userID);
+                    break;
+                case "received":
+                    messages = messages.Where(m => m.Sent != null && m.RecipientID == userID);
+                    break;
+                case "saved":
+                    messages = messages.Where(m => m.Sent == null && m.SenderID == userID);
+                    break;
+                default:
+                    messages = messages.Where(m => (m.RecipientID == userID && m.Sent != null) || m.SenderID == userID);
+                    break;
+            }
+
+            switch (sortOrder)
+            {
+                case "Read":
+                    messages = messages.OrderBy(m => m.Read);
+                    break;
+                case "read_desc":
+                    messages = messages.OrderByDescending(m => m.Read);
+                    break;
+                case "Title":
+                    messages = messages.OrderBy(m => m.Title);
+                    break;
+                case "title_desc":
+                    messages = messages.OrderByDescending(m => m.Title);
+                    break;
+                case "sent_asc":
+                    messages = messages.OrderBy(m => m.Sent);
+                    break;
+                default:  
+                    messages = messages.OrderByDescending(m => m.Sent);
+                    break;
+            }
+
+            return View(messages.ToPagedList(pageNumber, pageSize));
+        }
 
         // GET: Message
-        public ActionResult Index()
+        public ActionResult Admin()
         {
             string userID = User.Identity.GetUserId();
             var messages = db.Messages
                 .Include(m => m.User)
                 .Include(m => m.User1)
-                .Where(m => m.RecipientID == userID || m.SenderID == userID)
+                .Where(m => m.Admin == true)
                 .OrderByDescending(m => m.Sent);
             return View(messages.ToList());
         }
@@ -36,10 +92,17 @@ namespace Community.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            string userId = User.Identity.GetUserId();
             Message message = db.Messages.Find(id);
-            if (message == null)
+
+            //if not the user who sent/received or message doesn't exist redirect
+            if (message == null
+                || (message.SenderID != userId && message.RecipientID != userId))
             {
                 return HttpNotFound();
+            } else if (message.RecipientID == userId 
+                && message.Read == false) {
+                MessageHelper.setRead(userId, message.ID);
             }
             return View(message);
         }
@@ -54,7 +117,7 @@ namespace Community.Controllers
         // POST: Message/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,RecipientID,Title,Body,Saved,Admin")] Message message)
+        public ActionResult Create([Bind(Include = "ID,RecipientID,Title,Body,Saved,Admin,ParentMessage")] Message message)
         {
             message.SenderID = User.Identity.GetUserId();
             message.Read = false;
@@ -84,6 +147,16 @@ namespace Community.Controllers
 
             ViewBag.RecipientID = new SelectList(db.Users, "ID", "Email", message.RecipientID);
             return View(message);
+        }
+
+        // GET: Message/Reply
+        public ActionResult Reply(int? messageID)
+        {
+            Message message = db.Messages.Find(messageID);
+            ViewBag.RecipientID = message.SenderID;
+            ViewBag.Title = "RE: " + message.Title;
+            ViewBag.ParentID = message.ID;
+            return PartialView("Reply");
         }
 
         // GET: Message/Edit/5
@@ -141,8 +214,10 @@ namespace Community.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Message message = db.Messages.Find(id);
-            db.Messages.Remove(message);
-            db.SaveChanges();
+            if (message.Sent == null) {
+                db.Messages.Remove(message);
+                db.SaveChanges();
+            }  
             return RedirectToAction("Index");
         }
 

@@ -36,9 +36,9 @@
     @if (Request.Cookies["CookiePermission"].Value.ToString() == "false" || Request.Cookies["CookiePermission"].Value == null) {
         <footer id="cookieFooter" class="container-fluid">
             <div class="container">
-                <p class="col-xs-12 col-md-10 col-lg-9">This website uses cookies to ensure you get the best experience on our website. <a href="http://www.bbc.co.uk/webwise/guides/about-cookies">Click here</a> to learn more about cookies.</p>
+                <p class="col-xs-12 col-md-10 col-lg-9">This website uses cookies to ensure you get the best experience on our website. By continuing to use this site you accept the use of cookies. <a href="http://www.bbc.co.uk/webwise/guides/about-cookies">Click here</a> to learn more about cookies.</p>
                 <div class="col-xs-12 col-md-2 col-lg-3">
-                    <button type="button" class="btn btn-default center-block" href="javascript:void()" onclick="cookieAccept();">Accept Cookies</button>
+                    <button type="button" class="btn btn-default center-block" href="javascript:void()" onclick="cookieAccept();">Continue</button>
                 </div>
             </div>            
         </footer>

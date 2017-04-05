@@ -24,15 +24,17 @@ textarea {
 }*/
 
 .btn-primary:hover {
-    color: #fff500;
+    color: #6f0;
+    border-color: #6f0;
 }
 
 #cookieFooter {
     background-color: #47146a;
     color: #fff;
-    position:absolute;
+    position:fixed;
     bottom:0;
-    width:100%
+    width:100%;
+    z-index: 1000;
 }
 
 #cookieFooter .container {
@@ -44,7 +46,7 @@ textarea {
 }
 
 #cookieFooter a {
-    color: #fff500;
+    color: #6f0;
 }
 
 .navbar-brand {
@@ -89,6 +91,36 @@ textarea {
     padding-top: 10px;
 }
 
-.event-links {
+.event-links, .top-pad {
     padding-top: 15px;
+}
+
+.sortFilter>span {
+    display: block;
+}
+
+.no-resize {
+    resize: none;
+}
+
+.unread {
+    background-color:#D5C9DD;
+}
+
+.max-width {
+    width:100%;
+}
+
+.pagerSection {
+    text-align:center;
+    margin: 0 auto;
+}
+
+.message-table, .message-table th {
+    text-align:center;
+}
+
+.vertical-padding {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

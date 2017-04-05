@@ -79,5 +79,15 @@ namespace Community.Helpers
                 .Single();
             return profile.Balance;
         }
+
+        public static string getProfileImage(string userID)
+        {
+            VolunteerEntities db = new VolunteerEntities();
+            var profile = db.Profiles
+                .Where(p => p.UserID == userID)
+                .Select(p => new { Picture = p.PictureURL })
+                .Single();
+            return profile.Picture;
+        }
     }
 }

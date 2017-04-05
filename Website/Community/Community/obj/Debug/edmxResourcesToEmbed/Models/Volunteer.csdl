@@ -131,7 +131,7 @@
     <Property Name="Admin" Type="Boolean" Nullable="true" />
     <NavigationProperty Name="User" Relationship="Self.FK_Message_User_Recipient" FromRole="Message" ToRole="User" />
     <NavigationProperty Name="User1" Relationship="Self.FK_Message_User_Sender" FromRole="Message" ToRole="User" />
-    <Property Name="Deleted" Type="Boolean" />
+    <Property Name="ParentMessage" Type="Int32" />
   </EntityType>
   <EntityType Name="Notification">
     <Key>

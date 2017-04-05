@@ -10,20 +10,28 @@ using System.Data.Entity.Spatial;
 using Community.Helpers;
 using System.Web;
 using System.IO;
+using PagedList;
 
 namespace Community.Controllers
 {
     [Authorize]
     public class EventController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();  
+        private VolunteerEntities db = new VolunteerEntities();
+        private const int pageSize = 5;
+        private const double mile = 1609.34;
 
         [AllowAnonymous]
         // GET: Event
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var events = db.Events.Include(y => y.Address).Include(z => z.User);
-            return View(events.ToList());
+            int pageNumber = (page ?? 1);
+
+            var events = db.Events
+                .Include(y => y.Address)
+                .Include(z => z.User)
+                .OrderBy(e => e.ID);
+            return View(events.ToPagedList(pageNumber, pageSize));
         }
 
         [AllowAnonymous]
@@ -34,9 +42,9 @@ namespace Community.Controllers
 
         [AllowAnonymous, HttpPost]
         // POST: Event
-        public ActionResult Search(string postcode, double distance)
+        public ActionResult Search(string postcode, double distance, int? page)
         {
-            const double mile = 1609.34;
+            int pageNumber = (page ?? 1);
             var resultRadius = distance * mile;
 
             ViewBag.Postcode = postcode;
@@ -55,8 +63,9 @@ namespace Community.Controllers
                 .Include(y => y.Address)
                 .Include(z => z.User)
                 .Where(y => y.Address.GeoLocation.Distance(geog) < resultRadius)
-                .Where(y => y.Suspended != true && y.Published == true);
-            return View(events.ToList());
+                .Where(y => y.Suspended != true && y.Published == true)
+                .OrderBy(e => e.ID);
+            return View(events.ToPagedList(pageNumber, pageSize));
         }
 
         [AllowAnonymous]

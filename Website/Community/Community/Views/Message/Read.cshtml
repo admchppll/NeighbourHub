@@ -1,48 +1,27 @@
 ﻿@model Community.Models.Message
-
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Message</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            To
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User1.Email)
-        </dd>
-
-        <dt>
-            From
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
+    <div class="row">
+        <h4 class="col-xs-12 top-pad">
             @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Body)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Body)
-        </dd>
-    </dl>
+            <hr />
+        </h4>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <b>From:</b> @Html.DisplayFor(model => model.User1.UserName)
+        </div>
+        <div class="col-sm-6">
+            <b>To:</b> @Html.DisplayFor(model => model.User.UserName)
+        </div>
+        <div class="col-xs-12 vertical-padding">
+            @Html.Raw(Model.Body)
+        </div>
+    </div>
+    <div class="col-xs-12  text-right">@Html.ActionLink("Back to Messages", "Index")</div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@{Html.RenderAction("Reply", "Message", new { messageID = Model.ID });}

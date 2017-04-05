@@ -111,7 +111,7 @@
     <EntitySetMapping Name="Messages">
       <EntityTypeMapping TypeName="VolunteerModel.Message">
         <MappingFragment StoreEntitySet="Message">
-          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="ParentMessage" ColumnName="ParentMessage" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="SenderID" ColumnName="SenderID" />
           <ScalarProperty Name="RecipientID" ColumnName="RecipientID" />
