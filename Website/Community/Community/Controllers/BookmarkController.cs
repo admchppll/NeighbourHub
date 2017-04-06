@@ -12,7 +12,7 @@ namespace Community.Controllers
 {
     public class BookmarkController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         // GET: Bookmark
         public ActionResult Index()

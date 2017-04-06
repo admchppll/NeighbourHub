@@ -14,7 +14,7 @@ namespace Community.Controllers
     [Authorize]
     public class ProfileController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         // GET: Profile
         public ActionResult Index()

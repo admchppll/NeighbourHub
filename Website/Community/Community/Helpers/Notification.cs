@@ -12,7 +12,7 @@ namespace Community.Helpers
             notification.Description = description;
             notification.Link = link;
 
-            using (VolunteerEntities db = new VolunteerEntities()) {
+            using (CommunityEntities db = new CommunityEntities()) {
                 db.Notifications.Add(notification);
                 db.SaveChanges();
             } 
@@ -22,7 +22,7 @@ namespace Community.Helpers
 
         //returns the number of unread notifications a user has
         public static int Unread(string userId) {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             var query = db.Notifications.Where(n => n.UserID == userId).Count();
             return query;
         }

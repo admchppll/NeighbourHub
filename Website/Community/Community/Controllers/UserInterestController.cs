@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Community.Models;
 
@@ -13,7 +9,7 @@ namespace Community.Controllers
     [Authorize]
     public class UserInterestController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         // GET: UserInterest
         public ActionResult Index()

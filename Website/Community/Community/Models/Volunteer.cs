@@ -17,10 +17,10 @@ namespace Community.Models
         public int ID { get; set; }
         public int EventID { get; set; }
         public string VolunteerID { get; set; }
+        public bool Accepted { get; set; }
         public bool Confirmed { get; set; }
         public bool Rejected { get; set; }
         public bool Withdrawn { get; set; }
-        public bool Accepted { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual User User { get; set; }

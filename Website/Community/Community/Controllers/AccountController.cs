@@ -17,7 +17,7 @@ namespace Community.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         public AccountController()
         {

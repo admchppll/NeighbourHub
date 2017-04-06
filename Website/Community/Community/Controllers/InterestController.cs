@@ -13,7 +13,7 @@ namespace Community.Controllers
     [Authorize]
     public class InterestController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         // GET: Interest
         public ActionResult Index()

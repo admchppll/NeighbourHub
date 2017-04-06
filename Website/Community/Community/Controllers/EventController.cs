@@ -17,7 +17,7 @@ namespace Community.Controllers
     [Authorize]
     public class EventController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
         private const int pageSize = 5;
         private const double mile = 1609.34;
 

@@ -7,7 +7,7 @@ namespace Community.Helpers
     public class VolunteerHelper
     {
         public static bool existsVolunteer(int id) {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             bool exists = db.Volunteers
                 .Where(v => v.ID == id)
@@ -17,7 +17,7 @@ namespace Community.Helpers
         }
 
         public static bool isVolunteer(string userId, int eventID) {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             bool exists = db.Volunteers
                 .Where(v => v.EventID == eventID
@@ -29,7 +29,7 @@ namespace Community.Helpers
 
         public static bool isWithdrawn(string userID, int eventID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             bool exists = db.Volunteers
                 .Where(v => v.EventID == eventID
@@ -42,7 +42,7 @@ namespace Community.Helpers
 
         public static int getVolunteer(string userID, int eventID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             var volunteer = db.Volunteers
                 .Where(v => v.EventID == eventID
@@ -52,7 +52,7 @@ namespace Community.Helpers
         }
 
         public static string getHost(int eventID) {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             var @event = db.Events.Find(eventID);
 
@@ -61,7 +61,7 @@ namespace Community.Helpers
 
         public static bool isHost(string hostID, int eventID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             bool exists = db.Events
                 .Where(v => v.ID == eventID
@@ -73,7 +73,7 @@ namespace Community.Helpers
 
         public static short getVolunteerPointValue(int eventID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             var @event = db.Events
                 .Where(e => e.ID == eventID)
                 .Select(e => new {

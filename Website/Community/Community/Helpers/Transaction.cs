@@ -9,7 +9,7 @@ namespace Community.Helpers
     {
         public static bool CreateEventTrans(string senderID, string recipientID, int eventID, short amount)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             Transaction transaction = new Transaction();
             transaction.Amount = amount;
@@ -28,7 +28,7 @@ namespace Community.Helpers
         }
 
         public static int GetVolunteerTransactionID(int eventID, string recipient, string sender) {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             var result = db.Transactions
                 .Where(t => t.EventID == eventID 

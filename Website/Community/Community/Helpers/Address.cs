@@ -70,7 +70,7 @@ namespace Community.Helpers
     public class AddressHelper {
         public static bool AddressExists(string userID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             var exists = db.Addresses
                     .Where(p => p.UserID == userID)
                     .Any();

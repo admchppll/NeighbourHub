@@ -13,7 +13,7 @@ namespace Community.Controllers
     [Authorize]
     public class TagController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         // GET: Tag
         public ActionResult Index()

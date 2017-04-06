@@ -16,7 +16,7 @@ namespace Community.Controllers
     [Authorize]
     public class MessageController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
         private const int pageSize = 15;
         // GET: Message
         public ActionResult Index(string section, string sortOrder, int? page)

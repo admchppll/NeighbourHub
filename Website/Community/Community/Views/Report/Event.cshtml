@@ -1,34 +1,26 @@
 ﻿@model Community.Models.Report
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Report Event";
 }
 
-<h2>Create</h2>
-
-
+<h2>Report</h2>
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Report</h4>
+        <h4>Event</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ReportedEvent, "ReportedEvent", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ReportedEvent", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ReportedEvent, "", new { @class = "text-danger" })
+            <div class="col-md-2">
+                Event
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReportedID, "ReportedID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ReportedID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ReportedID, "", new { @class = "text-danger" })
+                <input type="hidden" id="ReportedEvent" name="ReportedEvent" value="@ViewBag.ReportedEvent"/><a href="@Url.Action("Details", "Event", new { eventId = ViewBag.ReportedEvent })">@ViewBag.EventTitle</a>
+
             </div>
         </div>
 

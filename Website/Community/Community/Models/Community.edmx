@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="VolunteerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CommunityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="ID" />
@@ -110,8 +110,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SenderID" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="RecipientID" Type="nvarchar" MaxLength="128" />
+          <Property Name="SenderID" Type="nvarchar" MaxLength="128" />
+          <Property Name="RecipientID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" />
           <Property Name="Body" Type="nvarchar(max)" />
           <Property Name="Sent" Type="smalldatetime" />
@@ -181,6 +181,8 @@
           <Property Name="ReportedEvent" Type="int" />
           <Property Name="ReportedID" Type="nvarchar" MaxLength="128" />
           <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Sent" Type="datetime" Nullable="false" />
+          <Property Name="Resolved" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -457,7 +459,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Message_User_Recipient">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Message" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -469,7 +471,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Message_User_Sender">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Message" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -663,7 +665,7 @@
         <Function Name="withdrawVolunteer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VolunteerID" Type="int" Mode="In" />
         </Function>
-        <EntityContainer Name="VolunteerModelStoreContainer">
+        <EntityContainer Name="CommunityModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bookmarked" EntityType="Self.Bookmarked" Schema="dbo" store:Type="Tables" />
@@ -804,7 +806,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="VolunteerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="CommunityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="ID" />
@@ -822,9 +824,9 @@
           <Property Name="Long" Type="Double" />
           <Property Name="Lat" Type="Double" />
           <Property Name="Default" Type="Boolean" Nullable="false" />
+          <Property Name="GeoLocation" Type="Geography" />
           <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
           <NavigationProperty Name="Events" Relationship="Self.FK_Event_Address" FromRole="Address" ToRole="Event" />
-          <Property Name="GeoLocation" Type="Geography" />
         </EntityType>
         <EntityType Name="Audit">
           <Key>
@@ -861,9 +863,10 @@
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Published" Type="Boolean" Nullable="false" />
           <Property Name="Edited" Type="DateTime" Precision="0" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
           <Property Name="Repeated" Type="Int16" />
           <Property Name="RepeatIncrement" Type="Byte" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Length" Type="Byte" Nullable="false" />
           <Property Name="AM1" Type="Boolean" Nullable="false" />
           <Property Name="AM2" Type="Boolean" Nullable="false" />
@@ -881,6 +884,9 @@
           <Property Name="PM7" Type="Boolean" Nullable="false" />
           <Property Name="DateInfo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Suspended" Type="Boolean" Nullable="false" />
+          <Property Name="VolunteerQuantity" Type="Int16" Nullable="false" />
+          <Property Name="Points" Type="Int16" Nullable="false" />
+          <Property Name="PictureURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Event_Address" FromRole="Event" ToRole="Address" />
           <NavigationProperty Name="Audits" Relationship="Self.FK_Audit_Event" FromRole="Event" ToRole="Audit" />
           <NavigationProperty Name="Bookmarkeds" Relationship="Self.FK_Bookmarked_Event" FromRole="Event" ToRole="Bookmarked" />
@@ -889,16 +895,12 @@
           <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Event" FromRole="Event" ToRole="Report" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Event" FromRole="Event" ToRole="Transaction" />
           <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_Event" FromRole="Event" ToRole="Volunteer" />
-          <Property Name="VolunteerQuantity" Type="Byte" Nullable="false" />
-          <Property Name="Points" Type="Byte" Nullable="false" />
-          <Property Name="PictureURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="EventTag">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventID" Type="Int32" Nullable="false" />
           <Property Name="TagID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_EventTag_Event1" FromRole="EventTag" ToRole="Event" />
@@ -926,17 +928,17 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SenderID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecipientID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SenderID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecipientID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Sent" Type="DateTime" Precision="0" />
           <Property Name="Read" Type="Boolean" Nullable="false" />
           <Property Name="Saved" Type="Boolean" Nullable="false" />
-          <Property Name="Admin" Type="Boolean" Nullable="true" />
+          <Property Name="Admin" Type="Boolean" />
+          <Property Name="ParentMessage" Type="Int32" />
           <NavigationProperty Name="User" Relationship="Self.FK_Message_User_Recipient" FromRole="Message" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="Self.FK_Message_User_Sender" FromRole="Message" ToRole="User" />
-          <Property Name="ParentMessage" Type="Int32" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -1005,6 +1007,8 @@
           <NavigationProperty Name="Event" Relationship="Self.FK_Report_Event" FromRole="Report" ToRole="Event" />
           <NavigationProperty Name="User" Relationship="Self.FK_Report_User_Reported" FromRole="Report" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="Self.FK_Report_User_Reporter" FromRole="Report" ToRole="User" />
+          <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Resolved" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1045,10 +1049,10 @@
           <Property Name="EventID" Type="Int32" />
           <Property Name="Gift" Type="Boolean" Nullable="false" />
           <Property Name="Amount" Type="Int16" Nullable="false" />
-          <Property Name="Complete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Event" Relationship="Self.FK_Transaction_Event" FromRole="Transaction" ToRole="Event" />
           <Property Name="Cancelled" Type="Boolean" Nullable="false" />
+          <Property Name="Complete" Type="Boolean" Nullable="false" />
           <Property Name="ParentTransaction" Type="Int32" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Transaction_Event" FromRole="Transaction" ToRole="Event" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1124,12 +1128,12 @@
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OrganisationID" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Organisation" Relationship="Self.FK_UserOrganisation_Organisation" FromRole="UserOrganisation" ToRole="Organisation" />
-          <NavigationProperty Name="User" Relationship="Self.FK_UserOrganisation_User" FromRole="UserOrganisation" ToRole="User" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
           <Property Name="Denied" Type="Boolean" Nullable="false" />
           <Property Name="Admin" Type="Boolean" Nullable="false" />
           <Property Name="Created" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Organisation" Relationship="Self.FK_UserOrganisation_Organisation" FromRole="UserOrganisation" ToRole="Organisation" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserOrganisation_User" FromRole="UserOrganisation" ToRole="User" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -1159,12 +1163,12 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EventID" Type="Int32" Nullable="false" />
           <Property Name="VolunteerID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Accepted" Type="Boolean" Nullable="false" />
           <Property Name="Confirmed" Type="Boolean" Nullable="false" />
           <Property Name="Rejected" Type="Boolean" Nullable="false" />
           <Property Name="Withdrawn" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Volunteer_Event" FromRole="Volunteer" ToRole="Event" />
           <NavigationProperty Name="User" Relationship="Self.FK_Volunteer_User" FromRole="Volunteer" ToRole="User" />
-          <Property Name="Accepted" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Address_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -1311,7 +1315,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Message_User_Recipient">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Message" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -1323,7 +1327,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Message_User_Sender">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Message" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -1504,7 +1508,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="VolunteerEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="CommunityEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="Audits" EntityType="Self.Audit" />
           <EntitySet Name="Bookmarkeds" EntityType="Self.Bookmarked" />
@@ -1641,20 +1645,20 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Volunteer" EntitySet="Volunteers" />
           </AssociationSet>
-          <FunctionImport Name="createGeoLocationAddress">
-          <Parameter Name="AddressID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="confirmVolunteer">
           <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="withdrawVolunteer">
-          <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
+          <FunctionImport Name="createGeoLocationAddress">
+          <Parameter Name="AddressID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="reduceSenderBalance">
+          <Parameter Name="TransactionID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="reverseTransaction">
           <Parameter Name="TransactionID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="reduceSenderBalance">
-          <Parameter Name="TransactionID" Mode="In" Type="Int32" />
+          <FunctionImport Name="withdrawVolunteer">
+          <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
       </Schema>
@@ -1662,11 +1666,10 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="VolunteerModelStoreContainer" CdmEntityContainer="VolunteerEntities">
+        <EntityContainerMapping StorageEntityContainer="CommunityModelStoreContainer" CdmEntityContainer="CommunityEntities">
           <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="VolunteerModel.Address">
+            <EntityTypeMapping TypeName="CommunityModel.Address">
               <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="GeoLocation" ColumnName="GeoLocation" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1680,11 +1683,12 @@
                 <ScalarProperty Name="Long" ColumnName="Long" />
                 <ScalarProperty Name="Lat" ColumnName="Lat" />
                 <ScalarProperty Name="Default" ColumnName="Default" />
+                <ScalarProperty Name="GeoLocation" ColumnName="GeoLocation" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Audits">
-            <EntityTypeMapping TypeName="VolunteerModel.Audit">
+            <EntityTypeMapping TypeName="CommunityModel.Audit">
               <MappingFragment StoreEntitySet="Audit">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -1696,7 +1700,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Bookmarkeds">
-            <EntityTypeMapping TypeName="VolunteerModel.Bookmarked">
+            <EntityTypeMapping TypeName="CommunityModel.Bookmarked">
               <MappingFragment StoreEntitySet="Bookmarked">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
@@ -1705,12 +1709,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Events">
-            <EntityTypeMapping TypeName="VolunteerModel.Event">
+            <EntityTypeMapping TypeName="CommunityModel.Event">
               <MappingFragment StoreEntitySet="Event">
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="PictureURL" ColumnName="PictureURL" />
-                <ScalarProperty Name="Points" ColumnName="Points" />
-                <ScalarProperty Name="VolunteerQuantity" ColumnName="VolunteerQuantity" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="HostID" ColumnName="HostID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -1720,9 +1720,10 @@
                 <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="Published" ColumnName="Published" />
                 <ScalarProperty Name="Edited" ColumnName="Edited" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Repeated" ColumnName="Repeated" />
                 <ScalarProperty Name="RepeatIncrement" ColumnName="RepeatIncrement" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Length" ColumnName="Length" />
                 <ScalarProperty Name="AM1" ColumnName="AM1" />
                 <ScalarProperty Name="AM2" ColumnName="AM2" />
@@ -1740,11 +1741,14 @@
                 <ScalarProperty Name="PM7" ColumnName="PM7" />
                 <ScalarProperty Name="DateInfo" ColumnName="DateInfo" />
                 <ScalarProperty Name="Suspended" ColumnName="Suspended" />
+                <ScalarProperty Name="VolunteerQuantity" ColumnName="VolunteerQuantity" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+                <ScalarProperty Name="PictureURL" ColumnName="PictureURL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EventTags">
-            <EntityTypeMapping TypeName="VolunteerModel.EventTag">
+            <EntityTypeMapping TypeName="CommunityModel.EventTag">
               <MappingFragment StoreEntitySet="EventTag">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
@@ -1753,7 +1757,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Information">
-            <EntityTypeMapping TypeName="VolunteerModel.Information">
+            <EntityTypeMapping TypeName="CommunityModel.Information">
               <MappingFragment StoreEntitySet="Information">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Label" ColumnName="Label" />
@@ -1763,7 +1767,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Interests">
-            <EntityTypeMapping TypeName="VolunteerModel.Interest">
+            <EntityTypeMapping TypeName="CommunityModel.Interest">
               <MappingFragment StoreEntitySet="Interest">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Label" ColumnName="Label" />
@@ -1771,9 +1775,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Messages">
-            <EntityTypeMapping TypeName="VolunteerModel.Message">
+            <EntityTypeMapping TypeName="CommunityModel.Message">
               <MappingFragment StoreEntitySet="Message">
-                <ScalarProperty Name="ParentMessage" ColumnName="ParentMessage" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="SenderID" ColumnName="SenderID" />
                 <ScalarProperty Name="RecipientID" ColumnName="RecipientID" />
@@ -1783,11 +1786,12 @@
                 <ScalarProperty Name="Read" ColumnName="Read" />
                 <ScalarProperty Name="Saved" ColumnName="Saved" />
                 <ScalarProperty Name="Admin" ColumnName="Admin" />
+                <ScalarProperty Name="ParentMessage" ColumnName="ParentMessage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="VolunteerModel.Notification">
+            <EntityTypeMapping TypeName="CommunityModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -1799,7 +1803,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Organisations">
-            <EntityTypeMapping TypeName="VolunteerModel.Organisation">
+            <EntityTypeMapping TypeName="CommunityModel.Organisation">
               <MappingFragment StoreEntitySet="Organisation">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1823,7 +1827,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Profiles">
-            <EntityTypeMapping TypeName="VolunteerModel.Profile">
+            <EntityTypeMapping TypeName="CommunityModel.Profile">
               <MappingFragment StoreEntitySet="Profile">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -1842,8 +1846,10 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Reports">
-            <EntityTypeMapping TypeName="VolunteerModel.Report">
+            <EntityTypeMapping TypeName="CommunityModel.Report">
               <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="Resolved" ColumnName="Resolved" />
+                <ScalarProperty Name="Sent" ColumnName="Sent" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ReportedEvent" ColumnName="ReportedEvent" />
@@ -1853,7 +1859,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="VolunteerModel.Role">
+            <EntityTypeMapping TypeName="CommunityModel.Role">
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1861,7 +1867,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Skills">
-            <EntityTypeMapping TypeName="VolunteerModel.Skill">
+            <EntityTypeMapping TypeName="CommunityModel.Skill">
               <MappingFragment StoreEntitySet="Skill">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Label" ColumnName="Label" />
@@ -1871,7 +1877,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tags">
-            <EntityTypeMapping TypeName="VolunteerModel.Tag">
+            <EntityTypeMapping TypeName="CommunityModel.Tag">
               <MappingFragment StoreEntitySet="Tag">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1881,10 +1887,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Transactions">
-            <EntityTypeMapping TypeName="VolunteerModel.Transaction">
+            <EntityTypeMapping TypeName="CommunityModel.Transaction">
               <MappingFragment StoreEntitySet="Transaction">
-                <ScalarProperty Name="ParentTransaction" ColumnName="ParentTransaction" />
-                <ScalarProperty Name="Cancelled" ColumnName="Cancelled" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="SenderID" ColumnName="SenderID" />
@@ -1892,12 +1896,14 @@
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="Gift" ColumnName="Gift" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Cancelled" ColumnName="Cancelled" />
                 <ScalarProperty Name="Complete" ColumnName="Complete" />
+                <ScalarProperty Name="ParentTransaction" ColumnName="ParentTransaction" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="VolunteerModel.User">
+            <EntityTypeMapping TypeName="CommunityModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -1916,7 +1922,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserClaims">
-            <EntityTypeMapping TypeName="VolunteerModel.UserClaim">
+            <EntityTypeMapping TypeName="CommunityModel.UserClaim">
               <MappingFragment StoreEntitySet="UserClaim">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1927,7 +1933,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserInterests">
-            <EntityTypeMapping TypeName="VolunteerModel.UserInterest">
+            <EntityTypeMapping TypeName="CommunityModel.UserInterest">
               <MappingFragment StoreEntitySet="UserInterest">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -1936,7 +1942,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserLogins">
-            <EntityTypeMapping TypeName="VolunteerModel.UserLogin">
+            <EntityTypeMapping TypeName="CommunityModel.UserLogin">
               <MappingFragment StoreEntitySet="UserLogin">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -1946,20 +1952,20 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserOrganisations">
-            <EntityTypeMapping TypeName="VolunteerModel.UserOrganisation">
+            <EntityTypeMapping TypeName="CommunityModel.UserOrganisation">
               <MappingFragment StoreEntitySet="UserOrganisation">
-                <ScalarProperty Name="Created" ColumnName="Created" />
-                <ScalarProperty Name="Admin" ColumnName="Admin" />
-                <ScalarProperty Name="Denied" ColumnName="Denied" />
-                <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="OrganisationID" ColumnName="OrganisationID" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Denied" ColumnName="Denied" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="VolunteerModel.UserRole">
+            <EntityTypeMapping TypeName="CommunityModel.UserRole">
               <MappingFragment StoreEntitySet="UserRole">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -1968,7 +1974,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserSkills">
-            <EntityTypeMapping TypeName="VolunteerModel.UserSkill">
+            <EntityTypeMapping TypeName="CommunityModel.UserSkill">
               <MappingFragment StoreEntitySet="UserSkill">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -1977,23 +1983,23 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Volunteers">
-            <EntityTypeMapping TypeName="VolunteerModel.Volunteer">
+            <EntityTypeMapping TypeName="CommunityModel.Volunteer">
               <MappingFragment StoreEntitySet="Volunteer">
-                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="VolunteerID" ColumnName="VolunteerID" />
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
                 <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
                 <ScalarProperty Name="Rejected" ColumnName="Rejected" />
                 <ScalarProperty Name="Withdrawn" ColumnName="Withdrawn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="createGeoLocationAddress" FunctionName="VolunteerModel.Store.createGeoLocationAddress" />
-          <FunctionImportMapping FunctionImportName="confirmVolunteer" FunctionName="VolunteerModel.Store.confirmVolunteer" />
-          <FunctionImportMapping FunctionImportName="withdrawVolunteer" FunctionName="VolunteerModel.Store.withdrawVolunteer" />
-          <FunctionImportMapping FunctionImportName="reverseTransaction" FunctionName="VolunteerModel.Store.reverseTransaction" />
-          <FunctionImportMapping FunctionImportName="reduceSenderBalance" FunctionName="VolunteerModel.Store.reduceSenderBalance" />
+          <FunctionImportMapping FunctionImportName="confirmVolunteer" FunctionName="CommunityModel.Store.confirmVolunteer" />
+          <FunctionImportMapping FunctionImportName="createGeoLocationAddress" FunctionName="CommunityModel.Store.createGeoLocationAddress" />
+          <FunctionImportMapping FunctionImportName="reduceSenderBalance" FunctionName="CommunityModel.Store.reduceSenderBalance" />
+          <FunctionImportMapping FunctionImportName="reverseTransaction" FunctionName="CommunityModel.Store.reverseTransaction" />
+          <FunctionImportMapping FunctionImportName="withdrawVolunteer" FunctionName="CommunityModel.Store.withdrawVolunteer" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,27 +1,41 @@
-﻿@model IEnumerable<Community.Models.Report>
-
+﻿@model PagedList.IPagedList<Community.Models.Report>
+@using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Reports";
 }
 
-<h2>Index</h2>
+<h2>Reports</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<ul class="nav nav-pills nav-justified">
+    <li class="@(ViewBag.Section == "index"?"active":"")"><a href="@Url.Action("Index")">All Reports</a></li>
+    <li class="@(ViewBag.Section == "event"?"active":"")"><a href="@Url.Action("Index", new { section = "event"})">Event Reports</a></li>
+    <li class="@(ViewBag.Section == "user"?"active":"")"><a href="@Url.Action("Index", new { section = "user"})">User Reports</a></li>
+</ul>
+<input type="hidden" name="showHidden" value="@ViewBag.ShowResolved"/>
+@if (ViewBag.ShowResolved == false)
+{
+    @Html.ActionLink("Show Resolved", "Index", new { section = ViewBag.Section, showResolved = !ViewBag.ShowResolved })
+}
+else {
+    @Html.ActionLink("Hide Resolved", "Index", new { section = ViewBag.Section, showResolved = !ViewBag.ShowResolved })
+}
 <table class="table">
     <tr>
+        <th></th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            ID
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Event.HostID)
+            Reported Event
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.Email)
+            Reported User
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User1.Email)
+            Reported By
+        </th>
+        <th>
+            Resolved
         </th>
         <th></th>
     </tr>
@@ -29,10 +43,21 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @if (item.ReportedEvent != null && item.ReportedID == null)
+            {
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            }
+            else if (item.ReportedEvent == null && item.ReportedID != null)
+            {
+                <span class="glyphicon glyphicon-glyphicon-user" aria-hidden="true"></span>
+            }
+
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Event.HostID)
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Event.Title)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.User.Email)
@@ -41,11 +66,15 @@
             @Html.DisplayFor(modelItem => item.User1.Email)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.DisplayFor(modelItem => item.Resolved)
+        </td>
+        <td>
+            @Html.ActionLink("View", "Details", new { id=item.ID })
         </td>
     </tr>
 }
-
 </table>
+<div class="pagerSection">
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort }))
+</div>

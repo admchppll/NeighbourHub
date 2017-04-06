@@ -11,7 +11,7 @@ namespace Community.Controllers
     [Authorize]
     public class AddressController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         // GET: Address
         public ActionResult Index()

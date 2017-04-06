@@ -16,7 +16,7 @@ namespace Community.Controllers
     public class RoleController : Controller
     {
         ApplicationDbContext context = new ApplicationDbContext();
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         /// <summary>
         /// Get All Roles

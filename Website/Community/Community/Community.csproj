@@ -256,93 +256,93 @@
     <Compile Include="Helpers\Volunteer.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Audit.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Bookmarked.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Community.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Community.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Community.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Community.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Community.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Community.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Event.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventTag.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Interest.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Notification.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Organisation.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profile.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Report.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Skill.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tag.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Transaction.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserClaim.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserInterest.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserLogin.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserOrganisation.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRole.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserSkill.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Volunteer.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Volunteer.Context.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Volunteer.cs">
-      <DependentUpon>Volunteer.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Volunteer.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Volunteer.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Volunteer1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Volunteer.tt</DependentUpon>
+      <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -357,15 +357,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Volunteer.Context.tt">
+    <Content Include="Models\Community.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Volunteer.edmx</DependentUpon>
-      <LastGenOutput>Volunteer.Context.cs</LastGenOutput>
+      <DependentUpon>Community.edmx</DependentUpon>
+      <LastGenOutput>Community.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Volunteer.tt">
+    <Content Include="Models\Community.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Volunteer.edmx</DependentUpon>
-      <LastGenOutput>Volunteer1.cs</LastGenOutput>
+      <DependentUpon>Community.edmx</DependentUpon>
+      <LastGenOutput>Community.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
@@ -380,12 +380,12 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <EntityDeploy Include="Models\Volunteer.edmx">
+    <EntityDeploy Include="Models\Community.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Volunteer.Designer.cs</LastGenOutput>
+      <LastGenOutput>Community.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Volunteer.edmx.diagram">
-      <DependentUpon>Volunteer.edmx</DependentUpon>
+    <Content Include="Models\Community.edmx.diagram">
+      <DependentUpon>Community.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -540,7 +540,9 @@
     <Content Include="Views\Message\Admin.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TextArea.cshtml" />
     <Content Include="Views\Message\Reply.cshtml" />
-    <Content Include="Views\Message\_PartialPage1.cshtml" />
+    <Content Include="Views\Report\ReportUser.cshtml" />
+    <Content Include="Views\Report\Event.cshtml" />
+    <Content Include="Views\Report\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

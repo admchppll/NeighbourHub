@@ -7,7 +7,7 @@ namespace Community.Helpers
     public class MessageHelper
     {
         public static int getUnreadMessages(string userID) {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             int count = db.Messages
                 .Where(m => m.RecipientID == userID 
@@ -20,7 +20,7 @@ namespace Community.Helpers
 
         public static int getAllMessages(string userID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             int count = db.Messages
                 .Where(m => (m.RecipientID == userID && m.Sent != null)
@@ -32,7 +32,7 @@ namespace Community.Helpers
 
         public static int getAllSentMessages(string userID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             int count = db.Messages
                 .Where(m => m.SenderID == userID 
@@ -44,7 +44,7 @@ namespace Community.Helpers
 
         public static int getAllReceivedMessages(string userID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             int count = db.Messages
                 .Where(m => m.RecipientID == userID
@@ -56,7 +56,7 @@ namespace Community.Helpers
 
         public static int getAllSavedMessages(string userID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
 
             int count = db.Messages
                 .Where(m => m.SenderID == userID
@@ -68,7 +68,7 @@ namespace Community.Helpers
 
         public static void setRead(string userID, int messageID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             Message message = db.Messages.Find(messageID);
             message.Read = true;
 

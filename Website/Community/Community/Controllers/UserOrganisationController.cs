@@ -12,7 +12,7 @@ namespace Community.Controllers
 {
     public class UserOrganisationController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         // GET: UserOrganisation
         public ActionResult Index()

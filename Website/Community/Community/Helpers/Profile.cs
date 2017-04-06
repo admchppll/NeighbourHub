@@ -12,7 +12,7 @@ namespace Community.Helpers
         /// <returns>True if a profile exists, otherwise False</returns>
         public static bool ProfileExists(string userID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             var exists = db.Profiles.Where(p => p.UserID == userID).Any();
             return exists;
         }
@@ -23,7 +23,7 @@ namespace Community.Helpers
         /// <returns></returns>
         public static int CurrentProfileID(string userID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             var profileID = db.Profiles
                 .Where(p => p.UserID == userID)
                 .Select(p => p.ID)
@@ -35,7 +35,7 @@ namespace Community.Helpers
         ///<summary>Check whether profile is suspended</summary>
         ///<returns></returns>
         public static bool isSuspended(string userID) {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             var exists = db.Profiles
                 .Where(p => p.UserID == userID
                     && p.Suspended == true)
@@ -47,7 +47,7 @@ namespace Community.Helpers
         ///<returns></returns>
         public static bool isActive(string userID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             var exists = db.Profiles
                 .Where(p => p.UserID == userID
                     && p.Active == true)
@@ -57,7 +57,7 @@ namespace Community.Helpers
 
         public static bool canAffordVolunteer(string userID, int eventID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             int balance = getBalance(userID);
             int required = VolunteerHelper.getVolunteerPointValue(eventID);
 
@@ -72,7 +72,7 @@ namespace Community.Helpers
 
         public static int getBalance(string userID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             var profile = db.Profiles
                 .Where(p => p.UserID == userID)
                 .Select(p => new { Balance = p.Balance })
@@ -82,7 +82,7 @@ namespace Community.Helpers
 
         public static string getProfileImage(string userID)
         {
-            VolunteerEntities db = new VolunteerEntities();
+            CommunityEntities db = new CommunityEntities();
             var profile = db.Profiles
                 .Where(p => p.UserID == userID)
                 .Select(p => new { Picture = p.PictureURL })

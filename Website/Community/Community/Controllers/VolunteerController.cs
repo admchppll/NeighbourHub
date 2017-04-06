@@ -15,7 +15,7 @@ namespace Community.Controllers
     [Authorize]
     public class VolunteerController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         // GET: Volunteer
         public ActionResult Index()

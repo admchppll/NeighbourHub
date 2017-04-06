@@ -11,14 +11,13 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    
     public partial class Message
     {
         public int ID { get; set; }
         public string SenderID { get; set; }
         public string RecipientID { get; set; }
         public string Title { get; set; }
-        [AllowHtml]
         public string Body { get; set; }
         public Nullable<System.DateTime> Sent { get; set; }
         public bool Read { get; set; }

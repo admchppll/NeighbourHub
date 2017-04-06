@@ -15,10 +15,10 @@ namespace Community.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class VolunteerEntities : DbContext
+    public partial class CommunityEntities : DbContext
     {
-        public VolunteerEntities()
-            : base("name=VolunteerEntities")
+        public CommunityEntities()
+            : base("name=CommunityEntities")
         {
         }
     
@@ -52,15 +52,6 @@ namespace Community.Models
         public virtual DbSet<UserSkill> UserSkills { get; set; }
         public virtual DbSet<Volunteer> Volunteers { get; set; }
     
-        public virtual int createGeoLocationAddress(Nullable<int> addressID)
-        {
-            var addressIDParameter = addressID.HasValue ?
-                new ObjectParameter("AddressID", addressID) :
-                new ObjectParameter("AddressID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("createGeoLocationAddress", addressIDParameter);
-        }
-    
         public virtual int confirmVolunteer(Nullable<int> volunteerID)
         {
             var volunteerIDParameter = volunteerID.HasValue ?
@@ -70,13 +61,22 @@ namespace Community.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("confirmVolunteer", volunteerIDParameter);
         }
     
-        public virtual int withdrawVolunteer(Nullable<int> volunteerID)
+        public virtual int createGeoLocationAddress(Nullable<int> addressID)
         {
-            var volunteerIDParameter = volunteerID.HasValue ?
-                new ObjectParameter("VolunteerID", volunteerID) :
-                new ObjectParameter("VolunteerID", typeof(int));
+            var addressIDParameter = addressID.HasValue ?
+                new ObjectParameter("AddressID", addressID) :
+                new ObjectParameter("AddressID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("withdrawVolunteer", volunteerIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("createGeoLocationAddress", addressIDParameter);
+        }
+    
+        public virtual int reduceSenderBalance(Nullable<int> transactionID)
+        {
+            var transactionIDParameter = transactionID.HasValue ?
+                new ObjectParameter("TransactionID", transactionID) :
+                new ObjectParameter("TransactionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("reduceSenderBalance", transactionIDParameter);
         }
     
         public virtual int reverseTransaction(Nullable<int> transactionID)
@@ -88,13 +88,13 @@ namespace Community.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("reverseTransaction", transactionIDParameter);
         }
     
-        public virtual int reduceSenderBalance(Nullable<int> transactionID)
+        public virtual int withdrawVolunteer(Nullable<int> volunteerID)
         {
-            var transactionIDParameter = transactionID.HasValue ?
-                new ObjectParameter("TransactionID", transactionID) :
-                new ObjectParameter("TransactionID", typeof(int));
+            var volunteerIDParameter = volunteerID.HasValue ?
+                new ObjectParameter("VolunteerID", volunteerID) :
+                new ObjectParameter("VolunteerID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("reduceSenderBalance", transactionIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("withdrawVolunteer", volunteerIDParameter);
         }
     }
 }

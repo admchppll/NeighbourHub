@@ -13,7 +13,7 @@ namespace Community.Controllers
     [Authorize]
     public class UserRoleController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         // GET: UserRole
         public ActionResult Index()

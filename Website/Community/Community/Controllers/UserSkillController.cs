@@ -13,7 +13,7 @@ namespace Community.Controllers
     [Authorize]
     public class UserSkillController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         // GET: UserSkill
         public ActionResult Index()

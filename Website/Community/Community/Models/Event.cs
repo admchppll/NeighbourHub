@@ -34,9 +34,10 @@ namespace Community.Models
         public System.DateTime Created { get; set; }
         public bool Published { get; set; }
         public Nullable<System.DateTime> Edited { get; set; }
+        public System.DateTime Date { get; set; }
+        public System.TimeSpan Time { get; set; }
         public Nullable<short> Repeated { get; set; }
         public Nullable<byte> RepeatIncrement { get; set; }
-        public System.DateTime Date { get; set; }
         public byte Length { get; set; }
         public bool AM1 { get; set; }
         public bool AM2 { get; set; }
@@ -54,10 +55,9 @@ namespace Community.Models
         public bool PM7 { get; set; }
         public string DateInfo { get; set; }
         public bool Suspended { get; set; }
-        public byte VolunteerQuantity { get; set; }
-        public byte Points { get; set; }
+        public short VolunteerQuantity { get; set; }
+        public short Points { get; set; }
         public string PictureURL { get; set; }
-        public System.TimeSpan Time { get; set; }
     
         public virtual Address Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

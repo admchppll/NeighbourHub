@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cd4a6b34c2c84b7289250f25f06f9df6" Name="Diagram1">
+        <EntityTypeShape EntityType="CommunityModel.Address" Width="1.5" PointX="3" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Audit" Width="1.5" PointX="7.5" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Bookmarked" Width="1.5" PointX="10.5" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Event" Width="1.5" PointX="5.25" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.EventTag" Width="1.5" PointX="10.5" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Information" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Interest" Width="1.5" PointX="3.75" PointY="41.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Message" Width="1.5" PointX="3" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Notification" Width="1.5" PointX="3" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Organisation" Width="1.5" PointX="5.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Profile" Width="1.5" PointX="3" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Report" Width="1.5" PointX="10.5" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Role" Width="1.5" PointX="5.75" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Skill" Width="1.5" PointX="3.75" PointY="44" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Tag" Width="1.5" PointX="8.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Transaction" Width="1.5" PointX="7.5" PointY="35" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.User" Width="1.5" PointX="0.75" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.UserClaim" Width="1.5" PointX="3" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.UserInterest" Width="1.5" PointX="6" PointY="29" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.UserLogin" Width="1.5" PointX="3" PointY="38.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.UserOrganisation" Width="1.5" PointX="8" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.UserRole" Width="1.5" PointX="8" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.UserSkill" Width="1.5" PointX="6" PointY="32" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Volunteer" Width="1.5" PointX="13.5" PointY="23.125" IsExpanded="true" />
+        <AssociationConnector Association="CommunityModel.FK_Address_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Event_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Audit_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Bookmarked_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Bookmarked_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Event_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_EventTag_Event1" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Report_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Transaction_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Volunteer_Event" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_EventTag_Tag" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_UserInterest_Interest" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Message_User_Recipient" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Message_User_Sender" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Notification_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_UserOrganisation_Organisation" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Profile_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Report_User_Reported" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Report_User_Reporter" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_dbo_UserRole_dbo_Role_RoleId" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_UserSkill_Skill" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_dbo_UserClaim_dbo_User_IdentityUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_dbo_UserLogin_dbo_User_IdentityUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_dbo_UserRole_dbo_User_IdentityUser_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_UserInterest_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_UserOrganisation_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_UserSkill_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Volunteer_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

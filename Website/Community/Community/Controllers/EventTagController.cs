@@ -12,7 +12,7 @@ namespace Community.Controllers
 {
     public class EventTagController : Controller
     {
-        private VolunteerEntities db = new VolunteerEntities();
+        private CommunityEntities db = new CommunityEntities();
 
         public ActionResult Display(int? eventID)
         {
