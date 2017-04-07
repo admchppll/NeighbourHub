@@ -1,0 +1,26 @@
+﻿@model Community.Models.Audit
+
+@using (Html.BeginForm("CreateAudit", "Audit"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Add Additional Notes</h4>
+        <hr />
+        @Html.HiddenFor(model => model.EventID, new { htmlAttributes = new { @value = ViewBag.EventID } })
+        @Html.HiddenFor(model => model.ReportID, new { htmlAttributes = new { @value = ViewBag.ReportID } })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AuditMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.AuditMessage, new { @class = "form-control no-resize", rows="5" })
+                @Html.ValidationMessageFor(model => model.AuditMessage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

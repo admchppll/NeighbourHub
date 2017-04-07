@@ -24,12 +24,12 @@
     <EntitySetMapping Name="Audits">
       <EntityTypeMapping TypeName="CommunityModel.Audit">
         <MappingFragment StoreEntitySet="Audit">
+          <ScalarProperty Name="ReportID" ColumnName="ReportID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="EventID" ColumnName="EventID" />
           <ScalarProperty Name="AuditMessage" ColumnName="AuditMessage" />
-          <ScalarProperty Name="AdminOnly" ColumnName="AdminOnly" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

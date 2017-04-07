@@ -24,11 +24,11 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="EventID" Type="int" />
     <Property Name="AuditMessage" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="AdminOnly" Type="bit" Nullable="false" />
+    <Property Name="ReportID" Type="int" />
   </EntityType>
   <EntityType Name="Bookmarked">
     <Key>
@@ -328,6 +328,18 @@
       </Principal>
       <Dependent Role="Audit">
         <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Audit_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Audit">
+        <PropertyRef Name="UserID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -691,6 +703,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Audit_Event" Association="Self.FK_Audit_Event">
       <End Role="Event" EntitySet="Event" />
+      <End Role="Audit" EntitySet="Audit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Audit_User" Association="Self.FK_Audit_User">
+      <End Role="User" EntitySet="User" />
       <End Role="Audit" EntitySet="Audit" />
     </AssociationSet>
     <AssociationSet Name="FK_Bookmarked_Event" Association="Self.FK_Bookmarked_Event">

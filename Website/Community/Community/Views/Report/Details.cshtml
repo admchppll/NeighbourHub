@@ -1,5 +1,5 @@
 ﻿@model Community.Models.Report
-
+@using Community.Helpers;
 @{
     ViewBag.Title = "Details";
 }
@@ -23,7 +23,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Event.Title)
+            <a class="btn btn-primary" href="@Url.Action("Details", "Event", new { id = Model.ReportedEvent })">View Event</a>@Html.DisplayFor(model => model.Event.Title)
         </dd>
 
         <dt>
@@ -31,7 +31,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.User.Email)
+            <a class="btn btn-primary" href="@Url.Action("Details", "Profile", new { id = ProfileHelper.CurrentProfileID(Model.ReportedID) })">View Profile</a>@Html.DisplayFor(model => model.User.Email)
         </dd>
 
         <dt>
@@ -39,12 +39,14 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.User1.Email)
+            <a class="btn btn-primary" href="@Url.Action("Details", "Profile", new { id = ProfileHelper.CurrentProfileID(Model.UserID) })">View Profile</a> @Html.DisplayFor(model => model.User1.UserName)
         </dd>
 
     </dl>
 </div>
+@{
+    Html.RenderAction("AuditReport", "Audit", new { reportId = Model.ID });
+}
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

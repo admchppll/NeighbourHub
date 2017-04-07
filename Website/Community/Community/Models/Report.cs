@@ -11,18 +11,15 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Web.Mvc;
+    
     public partial class Report
     {
         public int ID { get; set; }
         public string UserID { get; set; }
         public Nullable<int> ReportedEvent { get; set; }
         public string ReportedID { get; set; }
-        [AllowHtml]
         public string Description { get; set; }
-        public DateTime Sent { get; set; }
-        [DefaultValue(false)]
+        public System.DateTime Sent { get; set; }
         public bool Resolved { get; set; }
     
         public virtual Event Event { get; set; }

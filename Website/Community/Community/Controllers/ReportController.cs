@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Community.Models;
 using Microsoft.AspNet.Identity;
 using PagedList;
+using Community.Helpers;
 
 namespace Community.Controllers
 {
@@ -58,6 +59,7 @@ namespace Community.Controllers
             return View();
         }
 
+
         // GET: Report/Event
         public ActionResult Event(int? eventId)
         {
@@ -80,6 +82,10 @@ namespace Community.Controllers
             {
                 db.Reports.Add(report);
                 db.SaveChanges();
+
+                int repId = report.ReportedEvent ?? 0;
+
+                AuditHelper.addEventAudit(repId, "Event has been reported. Report ID: " + report.ID, report.ID);
                 return RedirectToAction("Confirmation");
             }
 
@@ -109,6 +115,8 @@ namespace Community.Controllers
             {
                 db.Reports.Add(report);
                 db.SaveChanges();
+
+                AuditHelper.addUserAudit(report.ReportedID, "User has been reported. Report ID: " + report.ID, report.ID);
                 return RedirectToAction("Confirmation");
             }
 
@@ -151,6 +159,7 @@ namespace Community.Controllers
             {
                 db.Reports.Add(report);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -160,67 +169,46 @@ namespace Community.Controllers
             return View(report);
         }
 
-        // GET: Report/Edit/5
-        public ActionResult Edit(int? id)
+        public class ReportData
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Report report = db.Reports.Find(id);
-            if (report == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ReportedEvent = new SelectList(db.Events, "ID", "HostID", report.ReportedEvent);
-            ViewBag.ReportedID = new SelectList(db.Users, "ID", "Email", report.ReportedID);
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Email", report.UserID);
-            return View(report);
+            public int ID { get; set; }
         }
 
-        // POST: Report/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserID,ReportedEvent,ReportedID,Description")] Report report)
+        [HttpPost, ValidateHeaderAntiForgeryToken]
+        public JsonResult Resolve(ReportData data)
         {
+            Report report = db.Reports.Find(data.ID);
+
+            if (report.Resolved == true) {
+                return Json(new
+                {
+                    success = false,
+                    title = "Resolved! ",
+                    message = "This report has already been marked as resolved!"
+                });
+            }
+
+            report.Resolved = true;
+
             if (ModelState.IsValid)
             {
                 db.Entry(report).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ReportedEvent = new SelectList(db.Events, "ID", "HostID", report.ReportedEvent);
-            ViewBag.ReportedID = new SelectList(db.Users, "ID", "Email", report.ReportedID);
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Email", report.UserID);
-            return View(report);
-        }
 
-        // GET: Report/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return Json(new
+                {
+                    success = true,
+                    title = "Success! ",
+                    message = "This report has been marked resolved!"
+                });
             }
-            Report report = db.Reports.Find(id);
-            if (report == null)
-            {
-                return HttpNotFound();
-            }
-            return View(report);
-        }
 
-        // POST: Report/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Report report = db.Reports.Find(id);
-            db.Reports.Remove(report);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            return Json(new
+            {
+                success = false,
+                title = "Something went wrong! ",
+                message = "We couldn't resolve this report."
+            });
         }
 
         protected override void Dispose(bool disposing)

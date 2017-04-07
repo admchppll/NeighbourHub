@@ -16,7 +16,7 @@
             {
                 <!--<img src="@Url.Content(picUrl)" class="img-circle" style="height:100%;max-height:20px;"/>-->
             }
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("My Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>

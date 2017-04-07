@@ -57,6 +57,7 @@
         <AssociationConnector Association="CommunityModel.FK_UserOrganisation_User" ManuallyRouted="false" />
         <AssociationConnector Association="CommunityModel.FK_UserSkill_User" ManuallyRouted="false" />
         <AssociationConnector Association="CommunityModel.FK_Volunteer_User" ManuallyRouted="false" />
+        <AssociationConnector Association="CommunityModel.FK_Audit_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

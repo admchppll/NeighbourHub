@@ -33,6 +33,7 @@ namespace Community.Models
             this.UserOrganisations = new HashSet<UserOrganisation>();
             this.UserSkills = new HashSet<UserSkill>();
             this.Volunteers = new HashSet<Volunteer>();
+            this.Audits = new HashSet<Audit>();
         }
     
         public string ID { get; set; }
@@ -81,5 +82,7 @@ namespace Community.Models
         public virtual ICollection<UserSkill> UserSkills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Volunteer> Volunteers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Audit> Audits { get; set; }
     }
 }

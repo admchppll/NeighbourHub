@@ -1,5 +1,6 @@
 ﻿@model PagedList.IPagedList<Community.Models.Report>
 @using PagedList.Mvc;
+@using Community.Helpers;
 @{
     ViewBag.Title = "Reports";
 }
@@ -7,9 +8,9 @@
 <h2>Reports</h2>
 
 <ul class="nav nav-pills nav-justified">
-    <li class="@(ViewBag.Section == "index"?"active":"")"><a href="@Url.Action("Index")">All Reports</a></li>
-    <li class="@(ViewBag.Section == "event"?"active":"")"><a href="@Url.Action("Index", new { section = "event"})">Event Reports</a></li>
-    <li class="@(ViewBag.Section == "user"?"active":"")"><a href="@Url.Action("Index", new { section = "user"})">User Reports</a></li>
+    <li class="@(ViewBag.Section == "index"?"active":"")"><a href="@Url.Action("Index")">All Reports <span class="badge">@ReportHelper.getUnresolved()</span></a></li>
+    <li class="@(ViewBag.Section == "event"?"active":"")"><a href="@Url.Action("Index", new { section = "event"})">Event Reports <span class="badge">@ReportHelper.getUnresolvedEvent()</span></a></li>
+    <li class="@(ViewBag.Section == "user"?"active":"")"><a href="@Url.Action("Index", new { section = "user"})">User Reports <span class="badge">@ReportHelper.getUnresolvedUser()</span></a></li>
 </ul>
 <input type="hidden" name="showHidden" value="@ViewBag.ShowResolved"/>
 @if (ViewBag.ShowResolved == false)
@@ -34,9 +35,12 @@ else {
         <th>
             Reported By
         </th>
+        @if (ViewBag.ShowResolved == true)
+        {
         <th>
             Resolved
         </th>
+        }
         <th></th>
     </tr>
 
@@ -65,9 +69,12 @@ else {
         <td>
             @Html.DisplayFor(modelItem => item.User1.Email)
         </td>
+        @if (ViewBag.ShowResolved == true)
+        {
         <td>
-            @Html.DisplayFor(modelItem => item.Resolved)
+            @Html.DisplayFor(modelItem => item.Resolved, "YesNo")
         </td>
+        }
         <td>
             @Html.ActionLink("View", "Details", new { id=item.ID })
         </td>

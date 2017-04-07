@@ -222,6 +222,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\AuditController.cs" />
     <Compile Include="Controllers\BookmarkController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventTagController.cs" />
@@ -249,9 +250,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Address.cs" />
+    <Compile Include="Helpers\Audit.cs" />
     <Compile Include="Helpers\Message.cs" />
     <Compile Include="Helpers\Notification.cs" />
     <Compile Include="Helpers\Profile.cs" />
+    <Compile Include="Helpers\Report.cs" />
     <Compile Include="Helpers\Transaction.cs" />
     <Compile Include="Helpers\Volunteer.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -489,7 +492,6 @@
     <Content Include="Views\Report\Create.cshtml" />
     <Content Include="Views\Report\Delete.cshtml" />
     <Content Include="Views\Report\Details.cshtml" />
-    <Content Include="Views\Report\Edit.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Transaction\Create.cshtml" />
     <Content Include="Views\Transaction\Delete.cshtml" />
@@ -543,6 +545,13 @@
     <Content Include="Views\Report\ReportUser.cshtml" />
     <Content Include="Views\Report\Event.cshtml" />
     <Content Include="Views\Report\Confirmation.cshtml" />
+    <Content Include="Views\Audit\Create.cshtml" />
+    <Content Include="Views\Audit\Details.cshtml" />
+    <Content Include="Views\Audit\Index.cshtml" />
+    <Content Include="Views\Audit\AuditUser.cshtml" />
+    <Content Include="Views\Audit\AuditEvent.cshtml" />
+    <Content Include="Views\Audit\AuditReport.cshtml" />
+    <Content Include="Views\Audit\ReportCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

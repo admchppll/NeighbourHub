@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Community.Models.Audit>
+@{
+    Layout = null;
+}
+
+<h3>Audit Logs</h3>
+<table class="table">
+    <tr>
+        <th>
+            User
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Message
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuditMessage)
+            </td>
+        </tr>
+    }
+
+</table>
+@{
+    Html.RenderAction("ReportCreate", "Audit", new { reportID = ViewBag.ReportID });
+}

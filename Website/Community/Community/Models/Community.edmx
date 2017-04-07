@@ -29,11 +29,11 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="EventID" Type="int" />
           <Property Name="AuditMessage" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="AdminOnly" Type="bit" Nullable="false" />
+          <Property Name="ReportID" Type="int" />
         </EntityType>
         <EntityType Name="Bookmarked">
           <Key>
@@ -333,6 +333,18 @@
             </Principal>
             <Dependent Role="Audit">
               <PropertyRef Name="EventID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Audit_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Audit">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -698,6 +710,10 @@
             <End Role="Event" EntitySet="Event" />
             <End Role="Audit" EntitySet="Audit" />
           </AssociationSet>
+          <AssociationSet Name="FK_Audit_User" Association="Self.FK_Audit_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Audit" EntitySet="Audit" />
+          </AssociationSet>
           <AssociationSet Name="FK_Bookmarked_Event" Association="Self.FK_Bookmarked_Event">
             <End Role="Event" EntitySet="Event" />
             <End Role="Bookmarked" EntitySet="Bookmarked" />
@@ -833,12 +849,13 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EventID" Type="Int32" />
           <Property Name="AuditMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AdminOnly" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_Audit_Event" FromRole="Audit" ToRole="Event" />
+          <Property Name="ReportID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="CommunityModel.FK_Audit_User" FromRole="Audit" ToRole="User" />
         </EntityType>
         <EntityType Name="Bookmarked">
           <Key>
@@ -1087,6 +1104,7 @@
           <NavigationProperty Name="UserOrganisations" Relationship="Self.FK_UserOrganisation_User" FromRole="User" ToRole="UserOrganisation" />
           <NavigationProperty Name="UserSkills" Relationship="Self.FK_UserSkill_User" FromRole="User" ToRole="UserSkill" />
           <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_User" FromRole="User" ToRole="Volunteer" />
+          <NavigationProperty Name="Audits" Relationship="CommunityModel.FK_Audit_User" FromRole="User" ToRole="Audit" />
         </EntityType>
         <EntityType Name="UserClaim">
           <Key>
@@ -1660,7 +1678,23 @@
           <FunctionImport Name="withdrawVolunteer">
           <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <AssociationSet Name="FK_Audit_User" Association="CommunityModel.FK_Audit_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Audit" EntitySet="Audits" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Audit_User">
+          <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
+          <End Type="CommunityModel.Audit" Role="Audit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Audit">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1690,12 +1724,12 @@
           <EntitySetMapping Name="Audits">
             <EntityTypeMapping TypeName="CommunityModel.Audit">
               <MappingFragment StoreEntitySet="Audit">
+                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />
                 <ScalarProperty Name="AuditMessage" ColumnName="AuditMessage" />
-                <ScalarProperty Name="AdminOnly" ColumnName="AdminOnly" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
