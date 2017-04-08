@@ -11,7 +11,7 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web.Mvc;
     public partial class Event
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,6 +29,7 @@ namespace Community.Models
         public string HostID { get; set; }
         public string Title { get; set; }
         public string ShortDescription { get; set; }
+        [AllowHtml]
         public string LongDescription { get; set; }
         public int AddressID { get; set; }
         public System.DateTime Created { get; set; }

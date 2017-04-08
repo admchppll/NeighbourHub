@@ -99,18 +99,18 @@ namespace Community.Controllers
 
         // POST: Profile/Edit/5
         [HttpPost,ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography")] Profile profile, [Bind(Include = "PictureURL")]HttpPostedFileBase PictureURL)
+        public ActionResult Edit([Bind(Include = "ID,UserID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography, PictureURL")] Profile profile, [Bind(Include = "PictureURL1")]HttpPostedFileBase PictureURL1)
         {
             DateTime current_date = DateTime.Now;
-            if (PictureURL != null && PictureURL.ContentLength > 0)
+            if (PictureURL1 != null && PictureURL1.ContentLength > 0)
             {
                 string currentDateString = current_date.ToString("ddMMyy");
                 Directory.CreateDirectory(Server.MapPath("~/Uploads/Profile/") + currentDateString);
 
-                string fileExtension = Path.GetExtension(PictureURL.FileName);
+                string fileExtension = Path.GetExtension(PictureURL1.FileName);
                 string fileName = Guid.NewGuid().ToString() + fileExtension;
                 string filePath = Path.Combine(Server.MapPath("~/Uploads/Profile/" + currentDateString), fileName);
-                PictureURL.SaveAs(filePath);
+                PictureURL1.SaveAs(filePath);
 
                 profile.PictureURL = "~/Uploads/Profile/" + currentDateString + "/" + fileName;
             }

@@ -222,6 +222,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuditController.cs" />
     <Compile Include="Controllers\BookmarkController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -552,9 +553,11 @@
     <Content Include="Views\Audit\AuditEvent.cshtml" />
     <Content Include="Views\Audit\AuditReport.cshtml" />
     <Content Include="Views\Audit\ReportCreate.cshtml" />
+    <Content Include="Views\Report\Reply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

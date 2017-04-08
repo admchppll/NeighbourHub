@@ -175,26 +175,36 @@ namespace Community.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AddressID = new SelectList(db.Addresses, "ID", "Name", @event.AddressID);
+
+            var userID = User.Identity.GetUserId();
+            var addresses = db.Addresses
+                .Where(a => a.UserID == userID)
+                .Select(a => new {
+                    AddressID = a.ID,
+                    Label = a.Name + " (" + a.Address1 + ")"
+                })
+                .ToList();
+
+            ViewBag.AddressID = new SelectList(addresses, "AddressID", "Label");
             return View(@event);
         }
 
         // POST: Event/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,HostID,Title,ShortDescription,LongDescription,AddressID,Published,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,Suspended")] Event @event,[Bind(Include = "PictureURL")]HttpPostedFileBase PictureURL)
+        public ActionResult Edit([Bind(Include = "ID,HostID,Title,ShortDescription,LongDescription,AddressID,Published,Repeated,RepeatIncrement,Created,Date,Time,Length,VolunteerQuantity,Points,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,PictureURL")] Event @event,[Bind(Include = "PictureURL1")]HttpPostedFileBase PictureURL1)
         {
             DateTime current_date = DateTime.Now;
 
-            if (PictureURL != null && PictureURL.ContentLength > 0)
+            if (PictureURL1 != null && PictureURL1.ContentLength > 0)
             {
                 string currentDateString = current_date.ToString("ddMMyy");
                 Directory.CreateDirectory(Server.MapPath("~/Uploads/Event/") + currentDateString);
 
-                string fileExtension = Path.GetExtension(PictureURL.FileName);
+                string fileExtension = Path.GetExtension(PictureURL1.FileName);
                 string fileName = Guid.NewGuid().ToString() + fileExtension;
                 string filePath = Path.Combine(Server.MapPath("~/Uploads/Event/" + currentDateString), fileName);
-                PictureURL.SaveAs(filePath);
+                PictureURL1.SaveAs(filePath);
 
                 @event.PictureURL = "~/Uploads/Event/" + currentDateString + "/" + fileName;
             }
@@ -206,7 +216,16 @@ namespace Community.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AddressID = new SelectList(db.Addresses, "ID", "UserID", @event.AddressID);
+            var userID = User.Identity.GetUserId();
+            var addresses = db.Addresses
+                .Where(a => a.UserID == userID)
+                .Select(a => new {
+                    AddressID = a.ID,
+                    Label = a.Name + " (" + a.Address1 + ")"
+                })
+                .ToList();
+
+            ViewBag.AddressID = new SelectList(addresses, "AddressID", "Label");
             return View(@event);
         }
 

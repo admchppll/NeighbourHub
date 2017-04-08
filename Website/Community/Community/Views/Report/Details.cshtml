@@ -117,4 +117,5 @@
 
 @{
     Html.RenderAction("AuditReport", "Audit", new { reportId = Model.ID });
+    Html.RenderAction("Reply", "Report", new { reportID = Model.ID });
 }

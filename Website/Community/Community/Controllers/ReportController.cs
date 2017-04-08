@@ -60,6 +60,51 @@ namespace Community.Controllers
             return View();
         }
 
+        // GET: Report/Reply
+        public ActionResult Reply(int reportID)
+        {
+            Report report = db.Reports.Find(reportID);
+            ViewBag.RecipientID = report.UserID;
+            ViewBag.Title = "RE: Report #" + report.ID;
+            ViewBag.ReportID = reportID;
+            return PartialView("Reply");
+        }
+
+        //POST: Report/MessageCreate
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MessageCreate([Bind(Include = "ID,RecipientID,Title,Body,Admin")] Message message, int ReportID)
+        {
+            message.SenderID = User.Identity.GetUserId();
+            message.Read = false;
+
+            if (message.Saved == false)
+            {
+                message.Sent = DateTime.Now;
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.Messages.Add(message);
+                db.SaveChanges();
+
+                
+                    message.Sent = DateTime.Now;
+                    NotificationHelper.Create(
+                        message.RecipientID,
+                        "New Message",
+                        "You have received a new message!",
+                        "~/Message/Read/" + message.ID);
+
+                AuditHelper.addUserAudit(message.SenderID, "Message sent to reporter:" + message.Body, ReportID);
+
+
+                return RedirectToAction("Details", "Report", new { id = ReportID });
+            }
+
+            ViewBag.RecipientID = new SelectList(db.Users, "ID", "Email", message.RecipientID);
+            return View(message);
+        }
 
         // GET: Report/Event
         public ActionResult Event(int? eventId)

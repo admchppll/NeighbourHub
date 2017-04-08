@@ -16,12 +16,13 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
         @Html.HiddenFor(model => model.UserID)
+        @Html.HiddenFor(model => model.Balance)
+        @Html.HiddenFor(model => model.Gender)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Balance, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.Balance)
-                @Html.HiddenFor(model => model.Balance)
             </div>
         </div>
 
@@ -54,7 +55,6 @@
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.DisplayFor(model => model.Gender)
-                    @Html.HiddenFor(model => model.Gender)
                 </div>
             </div>
         </div>
@@ -85,6 +85,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.PictureURL, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.HiddenFor(model => model.PictureURL)
             @if (Model.PictureURL != null && Model.PictureURL != "")
             {
                 <div class="col-md-4">
@@ -92,7 +93,7 @@
                 </div>
             }
             <div class="col-md-6">
-                @Html.TextBoxFor(model => model.PictureURL, new { type = "file", accept = "image/*" })
+                @Html.TextBox("PictureURL1", null, new { type = "file", accept = "image/*" })
             </div>
         </div>
 
