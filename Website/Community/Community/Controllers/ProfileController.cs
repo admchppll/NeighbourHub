@@ -99,8 +99,22 @@ namespace Community.Controllers
 
         // POST: Profile/Edit/5
         [HttpPost,ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography,PictureURL")] Profile profile)
+        public ActionResult Edit([Bind(Include = "ID,UserID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography")] Profile profile, [Bind(Include = "PictureURL")]HttpPostedFileBase PictureURL)
         {
+            DateTime current_date = DateTime.Now;
+            if (PictureURL != null && PictureURL.ContentLength > 0)
+            {
+                string currentDateString = current_date.ToString("ddMMyy");
+                Directory.CreateDirectory(Server.MapPath("~/Uploads/Profile/") + currentDateString);
+
+                string fileExtension = Path.GetExtension(PictureURL.FileName);
+                string fileName = Guid.NewGuid().ToString() + fileExtension;
+                string filePath = Path.Combine(Server.MapPath("~/Uploads/Profile/" + currentDateString), fileName);
+                PictureURL.SaveAs(filePath);
+
+                profile.PictureURL = "~/Uploads/Profile/" + currentDateString + "/" + fileName;
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(profile).State = EntityState.Modified;
@@ -110,30 +124,87 @@ namespace Community.Controllers
             return View(profile);
         }
 
-        // GET: Profile/Delete/5
-        public ActionResult Delete(int? id)
+        public class ProfilePostData
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Profile profile = db.Profiles.Find(id);
-            if (profile == null)
-            {
-                return HttpNotFound();
-            }
-            return View(profile);
+            public string ID { get; set; }
         }
 
-        // POST: Profile/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost, ValidateHeaderAntiForgeryToken]
+        public JsonResult Suspend(ProfilePostData data)
         {
-            Profile profile = db.Profiles.Find(id);
-            db.Profiles.Remove(profile);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            int profileId = ProfileHelper.CurrentProfileID(data.ID);
+            Profile profile = db.Profiles.Find(profileId);
+
+            if (profile.Suspended == true)
+            {
+                return Json(new
+                {
+                    success = false,
+                    title = "Suspended! ",
+                    message = "This profile was already suspended!"
+                });
+            }
+
+            profile.Suspended = true;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(profile).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Json(new
+                {
+                    success = true,
+                    title = "Success! ",
+                    message = "This profile has been suspended!"
+                });
+            }
+
+            return Json(new
+            {
+                success = false,
+                title = "Something went wrong! ",
+                message = "We couldn't suspend this profile."
+            });
+        }
+
+        [HttpPost, ValidateHeaderAntiForgeryToken]
+        public JsonResult Restore(ProfilePostData data)
+        {
+            int profileId = ProfileHelper.CurrentProfileID(data.ID);
+            Profile profile = db.Profiles.Find(profileId);
+
+            if (profile.Suspended == false)
+            {
+                return Json(new
+                {
+                    success = false,
+                    title = "",
+                    message = "This profile is not suspended."
+                });
+            }
+
+            profile.Suspended = false;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(profile).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Json(new
+                {
+                    success = true,
+                    title = "Success! ",
+                    message = "This profile has been removed from suspension!"
+                });
+            }
+
+            return Json(new
+            {
+                success = false,
+                title = "Something went wrong! ",
+                message = "This profile could not be restored."
+            });
         }
 
         protected override void Dispose(bool disposing)

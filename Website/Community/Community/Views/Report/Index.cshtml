@@ -13,13 +13,15 @@
     <li class="@(ViewBag.Section == "user"?"active":"")"><a href="@Url.Action("Index", new { section = "user"})">User Reports <span class="badge">@ReportHelper.getUnresolvedUser()</span></a></li>
 </ul>
 <input type="hidden" name="showHidden" value="@ViewBag.ShowResolved"/>
-@if (ViewBag.ShowResolved == false)
-{
-    @Html.ActionLink("Show Resolved", "Index", new { section = ViewBag.Section, showResolved = !ViewBag.ShowResolved })
-}
-else {
-    @Html.ActionLink("Hide Resolved", "Index", new { section = ViewBag.Section, showResolved = !ViewBag.ShowResolved })
-}
+<div id="resolvedLink">
+    @if (ViewBag.ShowResolved == false)
+    {
+        @Html.ActionLink("Show Resolved", "Index", new { section = ViewBag.Section, showResolved = !ViewBag.ShowResolved })
+    }
+    else {
+        @Html.ActionLink("Hide Resolved", "Index", new { section = ViewBag.Section, showResolved = !ViewBag.ShowResolved })
+    }
+</div>
 <table class="table">
     <tr>
         <th></th>
@@ -58,7 +60,7 @@ else {
 
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ID)
+            @Html.ActionLink(item.ID.ToString(), "Details", new { id = item.ID })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Event.Title)
@@ -67,7 +69,7 @@ else {
             @Html.DisplayFor(modelItem => item.User.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.User1.Email)
+            @Html.DisplayFor(modelItem => item.User1.UserName)
         </td>
         @if (ViewBag.ShowResolved == true)
         {

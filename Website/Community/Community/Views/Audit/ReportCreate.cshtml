@@ -11,8 +11,7 @@
         @Html.HiddenFor(model => model.ReportID, new { htmlAttributes = new { @value = ViewBag.ReportID } })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AuditMessage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-12">
+            <div class="col-xs-12">
                 @Html.TextAreaFor(model => model.AuditMessage, new { @class = "form-control no-resize", rows="5" })
                 @Html.ValidationMessageFor(model => model.AuditMessage, "", new { @class = "text-danger" })
             </div>

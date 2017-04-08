@@ -23,9 +23,10 @@ namespace Community.Controllers
         public ActionResult Index(int? page, string section, bool? showResolved)
         {
             int pageNumber = (page ?? 1);
+            showResolved = showResolved != null ? showResolved : false;
             ViewBag.Section = string.IsNullOrEmpty(section) ? "index" : section;
             ViewBag.PageNumber = pageNumber;
-            ViewBag.ShowResolved = showResolved != null ? showResolved : false;
+            ViewBag.ShowResolved = showResolved;
 
             var reports = db.Reports
                 .Include(r => r.Event)

@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Community.Helpers
 @{
-    string picUrl = ProfileHelper.getProfileImage(User.Identity.GetUserId());
+    //string picUrl = ProfileHelper.getProfileImage(User.Identity.GetUserId());
 }
 
 @if (Request.IsAuthenticated)
@@ -12,10 +12,7 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @if (picUrl != null && picUrl != "")
-            {
-                <!--<img src="@Url.Content(picUrl)" class="img-circle" style="height:100%;max-height:20px;"/>-->
-            }
+            
             @Html.ActionLink("My Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>

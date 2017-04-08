@@ -38,6 +38,25 @@ function ajaxVolunteer(url, parameters) {
     });
 }
 
+function ajaxSimple(url, parameters, resultArea) {
+    $.ajax({
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(parameters),
+        dataType: "json",
+        method: "POST",
+        headers: {
+            "__RequestVerificationToken": getRequestVerificationToken()
+        },
+        success: function (data) {
+            resultMessage(data.title, data.message, data.success, resultArea);
+        },
+        error: function (data) {
+            resultMessage(data.title, data.message, data.success, resultArea);
+        }
+    });
+}
+
 function createCookie(name, value, days) {
     var expires = "";
     if (days) {

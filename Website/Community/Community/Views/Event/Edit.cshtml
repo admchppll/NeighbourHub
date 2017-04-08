@@ -256,6 +256,19 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.PictureURL, htmlAttributes: new { @class = "control-label col-md-2" })
+            @if (Model.PictureURL != null && Model.PictureURL != "")
+            {
+                <div class="col-md-4">
+                    <img src="@Url.Content(Model.PictureURL)" class="img-responsive" alt="" />
+                </div>
+            }
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.PictureURL, new { type = "file", accept = "image/*" })
+            </div>
+        </div>
+
         @{Html.RenderAction("Utility", "EventTag", new { eventId = Model.ID });}
 
         <div class="form-group">

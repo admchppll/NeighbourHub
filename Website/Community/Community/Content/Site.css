@@ -120,7 +120,24 @@ textarea {
     text-align:center;
 }
 
+.vertical-sm-padding {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
 .vertical-padding {
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.remove-margin {
+    margin: 0;
+}
+
+#resolve {
+    margin-top: 25px;
+}
+
+#resolvedLink {
+    text-align: right;
 }

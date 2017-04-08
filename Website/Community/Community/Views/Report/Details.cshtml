@@ -3,50 +3,118 @@
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Report</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.Description)
-        </dd>
-
-        <dt>
-            Reported Event
-        </dt>
-
-        <dd>
-            <a class="btn btn-primary" href="@Url.Action("Details", "Event", new { id = Model.ReportedEvent })">View Event</a>@Html.DisplayFor(model => model.Event.Title)
-        </dd>
-
-        <dt>
-            Reported User
-        </dt>
-
-        <dd>
-            <a class="btn btn-primary" href="@Url.Action("Details", "Profile", new { id = ProfileHelper.CurrentProfileID(Model.ReportedID) })">View Profile</a>@Html.DisplayFor(model => model.User.Email)
-        </dd>
-
-        <dt>
-            Reported By
-        </dt>
-
-        <dd>
-            <a class="btn btn-primary" href="@Url.Action("Details", "Profile", new { id = ProfileHelper.CurrentProfileID(Model.UserID) })">View Profile</a> @Html.DisplayFor(model => model.User1.UserName)
-        </dd>
-
-    </dl>
+<div class="col-xs-12">
+    <h2>Report</h2>
+    <h4>#@Model.ID</h4>
 </div>
+<hr />
+@if (Model.Resolved != true)
+{
+    <div class="col-xs-12">
+        <button id="resolveBtn" class="btn btn-success">Resolve</button>
+        <input type="hidden" id="reportID" value="@Model.ID" />
+    </div>
+}
+<div class="row">
+    <div class="col-xs-12 alert hidden" id="reportMessage">
+        <strong id="reportMsgTitle"></strong>
+        <span id="reportMsgContent"></span>
+    </div>
+</div>
+<div class="col-xs-12">
+    <div class="col-xs-12 col-md-6 vertical-padding">
+        @if (Model.ReportedEvent != null)
+            {
+            <div class="col-xs-12 col-sm-8 vertical-sm-padding">
+                <b>Reported Event:</b> @Html.DisplayFor(model => model.Event.Title)
+                <input type="hidden" id="eventID" value="@Model.ReportedEvent" />
+            </div>
+
+            <div class="col-xs-12 col-sm-4 btn-group-vertical">
+                <button class="btn btn-primary" href="@Url.Action("Details", "Event", new { id = Model.ReportedEvent })">View Event</button>
+                @if (Model.Resolved != true && Model.Event.Suspended != true)
+                {
+                <button id="suspendEventBtn" class="btn btn-danger">Suspend</button>
+                }
+            </div>
+        }
+    </div>
+    <div class="col-xs-12 col-md-6 vertical-padding">
+        <div class="col-xs-12 col-sm-8 vertical-sm-padding">
+            <b>Reported User:</b> @Html.DisplayFor(model => model.User.UserName)
+            <input type="hidden" id="userID" value="@Model.ReportedID" />
+        </div>
+
+        <div class="col-xs-12 col-sm-4 btn-group-vertical">
+            <button class="btn btn-primary" href="@Url.Action("Details", "Profile", new { id = ProfileHelper.CurrentProfileID(Model.ReportedID) })">View Profile</button>
+            @if (Model.Resolved != true && ProfileHelper.isSuspended(Model.ReportedID) != true)
+            {
+                <button id="suspendUserBtn" class="btn btn-danger">Suspend</button>
+            }
+        </div>
+    </div>
+</div>
+<div class="col-xs-12">
+    <div class="col-xs-12 col-md-6 vertical-padding">
+        <div class="col-xs-9 vertical-sm-padding">
+            <b>Report Description</b>
+        </div>
+
+        <div class="col-xs-12">
+            @Html.Raw(Model.Description)
+        </div>
+    </div>
+</div>
+<div class="col-xs-12">
+    <div class="col-xs-12 col-md-6 vertical-padding">
+        <div class="col-xs-12 col-sm-8 vertical-sm-padding">
+            <b>Reported By:</b> @Html.DisplayFor(model => model.User1.UserName)
+        </div>
+
+        <div class="col-xs-12 col-sm-4 btn-group-vertical">
+            <a class="btn btn-primary" href="@Url.Action("Details", "Profile", new { id = ProfileHelper.CurrentProfileID(Model.UserID) })">View Profile</a>
+        </div>
+    </div>
+</div>
+@Html.AntiForgeryToken()
+<script>
+    function resolve(reportID) {
+        var data = {
+            ID: reportID
+        };
+
+        ajaxSimple("/Report/Resolve", data, "report")
+    }
+
+    function suspendEvent(eventID) {
+        var data = {
+            ID: eventID
+        };
+
+        ajaxSimple("/Event/Suspend", data, "report")
+    }
+
+    function suspendUser(userID) {
+        var data = {
+            ID: userID
+        };
+
+        ajaxSimple("/Profile/Suspend", data, "report")
+    }
+
+    $('#resolveBtn').on('click', function () {
+        resolve($('#reportID').val());
+    });
+
+    $('#suspendEventBtn').on('click', function () {
+        suspendEvent($('#eventID').val());
+    });
+
+    $('#suspendUserBtn').on('click', function () {
+        suspendUser($('#userID').val());
+    });
+</script>
+
 @{
     Html.RenderAction("AuditReport", "Audit", new { reportId = Model.ID });
 }
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
