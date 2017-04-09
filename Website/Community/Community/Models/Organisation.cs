@@ -18,6 +18,7 @@ namespace Community.Models
         public Organisation()
         {
             this.UserOrganisations = new HashSet<UserOrganisation>();
+            this.Points = new HashSet<Point>();
         }
     
         public short ID { get; set; }
@@ -41,5 +42,7 @@ namespace Community.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserOrganisation> UserOrganisations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Point> Points { get; set; }
     }
 }

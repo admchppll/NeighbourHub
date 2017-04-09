@@ -169,6 +169,7 @@
     <Property Name="CharityNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Approved" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="UserOrganisations" Relationship="Self.FK_UserOrganisation_Organisation" FromRole="Organisation" ToRole="UserOrganisation" />
+    <NavigationProperty Name="Points" Relationship="CommunityModel.FK_Points_Organisation" FromRole="Organisation" ToRole="Point" />
   </EntityType>
   <EntityType Name="Profile">
     <Key>
@@ -247,6 +248,8 @@
     <Property Name="Complete" Type="Boolean" Nullable="false" />
     <Property Name="ParentTransaction" Type="Int32" />
     <NavigationProperty Name="Event" Relationship="Self.FK_Transaction_Event" FromRole="Transaction" ToRole="Event" />
+    <NavigationProperty Name="User" Relationship="CommunityModel.FK_Transaction_RecipientUser" FromRole="Transaction" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="CommunityModel.FK_Transaction_User" FromRole="Transaction" ToRole="User" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -282,6 +285,9 @@
     <NavigationProperty Name="UserSkills" Relationship="Self.FK_UserSkill_User" FromRole="User" ToRole="UserSkill" />
     <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_User" FromRole="User" ToRole="Volunteer" />
     <NavigationProperty Name="Audits" Relationship="CommunityModel.FK_Audit_User" FromRole="User" ToRole="Audit" />
+    <NavigationProperty Name="Points" Relationship="CommunityModel.FK_Points_User" FromRole="User" ToRole="Point" />
+    <NavigationProperty Name="Transactions" Relationship="CommunityModel.FK_Transaction_RecipientUser" FromRole="User" ToRole="Transaction" />
+    <NavigationProperty Name="Transactions1" Relationship="CommunityModel.FK_Transaction_User" FromRole="User" ToRole="Transaction" />
   </EntityType>
   <EntityType Name="UserClaim">
     <Key>
@@ -859,6 +865,23 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Audit" EntitySet="Audits" />
     </AssociationSet>
+    <EntitySet Name="Points" EntityType="CommunityModel.Point" />
+    <AssociationSet Name="FK_Points_Organisation" Association="CommunityModel.FK_Points_Organisation">
+      <End Role="Organisation" EntitySet="Organisations" />
+      <End Role="Point" EntitySet="Points" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Points_User" Association="CommunityModel.FK_Points_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Point" EntitySet="Points" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaction_RecipientUser" Association="CommunityModel.FK_Transaction_RecipientUser">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Transaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaction_User" Association="CommunityModel.FK_Transaction_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Transaction" EntitySet="Transactions" />
+    </AssociationSet>
   </EntityContainer>
   <Association Name="FK_Audit_User">
     <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
@@ -869,6 +892,66 @@
       </Principal>
       <Dependent Role="Audit">
         <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Point">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="OrganisationID" Type="Int16" />
+    <Property Name="DayOfMonth" Type="Byte" Nullable="false" />
+    <Property Name="Expiry" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Organisation" Relationship="CommunityModel.FK_Points_Organisation" FromRole="Point" ToRole="Organisation" />
+    <NavigationProperty Name="User" Relationship="CommunityModel.FK_Points_User" FromRole="Point" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Points_Organisation">
+    <End Type="CommunityModel.Organisation" Role="Organisation" Multiplicity="0..1" />
+    <End Type="CommunityModel.Point" Role="Point" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisation">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Point">
+        <PropertyRef Name="OrganisationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Points_User">
+    <End Type="CommunityModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="CommunityModel.Point" Role="Point" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Point">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaction_RecipientUser">
+    <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
+    <End Type="CommunityModel.Transaction" Role="Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="RecipientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaction_User">
+    <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
+    <End Type="CommunityModel.Transaction" Role="Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="SenderID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

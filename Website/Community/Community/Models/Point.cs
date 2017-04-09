@@ -12,21 +12,15 @@ namespace Community.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Transaction
+    public partial class Point
     {
         public int ID { get; set; }
-        public System.DateTime Date { get; set; }
-        public string SenderID { get; set; }
-        public string RecipientID { get; set; }
-        public Nullable<int> EventID { get; set; }
-        public bool Gift { get; set; }
-        public short Amount { get; set; }
-        public bool Cancelled { get; set; }
-        public bool Complete { get; set; }
-        public Nullable<int> ParentTransaction { get; set; }
+        public string UserID { get; set; }
+        public Nullable<short> OrganisationID { get; set; }
+        public byte DayOfMonth { get; set; }
+        public System.DateTime Expiry { get; set; }
     
-        public virtual Event Event { get; set; }
+        public virtual Organisation Organisation { get; set; }
         public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
     }
 }

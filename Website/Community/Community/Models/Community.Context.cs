@@ -51,6 +51,7 @@ namespace Community.Models
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserSkill> UserSkills { get; set; }
         public virtual DbSet<Volunteer> Volunteers { get; set; }
+        public virtual DbSet<Point> Points { get; set; }
     
         public virtual int confirmVolunteer(Nullable<int> volunteerID)
         {

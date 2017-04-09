@@ -306,6 +306,9 @@
     <Compile Include="Models\Organisation.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Point.cs">
+      <DependentUpon>Community.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Profile.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>

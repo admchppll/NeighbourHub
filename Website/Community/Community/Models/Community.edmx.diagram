@@ -58,6 +58,11 @@
         <AssociationConnector Association="CommunityModel.FK_UserSkill_User" ManuallyRouted="false" />
         <AssociationConnector Association="CommunityModel.FK_Volunteer_User" ManuallyRouted="false" />
         <AssociationConnector Association="CommunityModel.FK_Audit_User" />
+        <EntityTypeShape EntityType="CommunityModel.Point" Width="1.5" PointX="11" PointY="16.625" />
+        <AssociationConnector Association="CommunityModel.FK_Points_Organisation" />
+        <AssociationConnector Association="CommunityModel.FK_Points_User" />
+        <AssociationConnector Association="CommunityModel.FK_Transaction_RecipientUser" />
+        <AssociationConnector Association="CommunityModel.FK_Transaction_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -87,6 +87,10 @@ textarea {
     padding-top: 10px;
 }
 
+.table-center, .table-center td, .table-center th {
+    text-align: center;
+}
+
 #longDescription {
     padding-top: 10px;
 }

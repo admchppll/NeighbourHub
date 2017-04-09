@@ -1,64 +1,125 @@
-﻿@model IEnumerable<Community.Models.Transaction>
+﻿@model PagedList.IPagedList<Community.Models.Transaction>
 @using Microsoft.AspNet.Identity;
-<table class="table">
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Your Transactions";
+    string userID = User.Identity.GetUserId();
+}
+<h3>Your Transactions</h3>
+<ul class="nav nav-pills nav-justified">
+    <li class="@(ViewBag.Section == "index"?"active":"")">
+        <a href="@Url.Action("UserTransactions")">All Reports <span class="badge"></span></a>
+    </li>
+    <li class="@(ViewBag.Section == "received"?"active":"")">
+        <a href="@Url.Action("UserTransactions", new { section = "received"})">Received<span class="badge"></span></a>
+    </li>
+    <li class="@(ViewBag.Section == "sent"?"active":"")">
+        <a href="@Url.Action("UserTransactions", new { section = "sent"})">Sent<span class="badge"></span></a>
+    </li>
+</ul>
+<table class="table table-center">
     <tr>
+        <th></th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.ActionLink("Date", "UserTransactions", new { section = ViewBag.Section, sortOrder = ViewBag.DateSortParm })
         </th>
+        @if (ViewBag.Section != "sent")
+        {
+            <th>
+                Sender
+            </th>
+        }
+        @if (ViewBag.Section != "received")
+        {
+            <th>
+                Receiver
+            </th>
+        }
         <th>
-            @Html.DisplayNameFor(model => model.Event.Title)
+            Label
         </th>
         <th>
             Transaction Type
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gift)
+            @Html.ActionLink("Amount", "UserTransactions", new { section = ViewBag.Section, sortOrder = ViewBag.AmountSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Complete)
+            Completed
         </th>
     </tr>
 
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @if (item.Gift == false)
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    if (item.RecipientID == userID)
+                    {
+                        <span class="glyphicon glyphicon-arrow-right"></span>
+                    }
+                    else if (item.SenderID == userID)
+                    {
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            @if (ViewBag.Section != "sent")
             {
-                Html.DisplayFor(modelItem => item.Event.Title);
+                <td>
+                    @Html.DisplayFor(modelItem => item.User1.UserName)
+                </td>
             }
-            else {
-                Html.Raw("Gift");
+            @if (ViewBag.Section != "received")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
             }
-        </td>
-        <td>
-            @{
-                string userID = User.Identity.GetUserId();
-                if (item.RecipientID == userID)
+            <td>
+                @if (item.Gift == false)
                 {
-                    Html.Raw("Recieved");
+                    Html.DisplayFor(modelItem => item.Event.Title);
                 }
-                else if (item.SenderID == userID){
-                    Html.Raw("Sent");
+                else {
+                    <span>Gift</span>
                 }
-            }
-        </td>
-        <td>
-            
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Complete, "YesNo")
-        </td>  
-    </tr>
-}
-
+            </td>
+            <td>
+                @{
+                    if (item.RecipientID == userID)
+                    {
+                        <span>Recieved</span>
+                    }
+                    else if (item.SenderID == userID)
+                    {
+                        <span>Sent</span>
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @if (item.ParentTransaction != null && item.Complete == true)
+                {
+                    <span>Reversed</span>
+                }
+                else if (item.Cancelled == true)
+                {
+                    <span>Cancelled</span>
+                }
+                else {
+                    @Html.DisplayFor(modelItem => item.Complete, "YesNo")
+                }
+            </td>
+        </tr>
+                    }
 </table>
+<div class="pagerSection">
+    @Html.PagedListPager(Model, page => Url.Action("UserTransactions",
+    new { page = page, section = ViewBag.Section, sortOrder = ViewBag.CurrentSort }))
+</div>

@@ -149,6 +149,16 @@
     <Property Name="CharityNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Approved" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Points">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="nvarchar" MaxLength="128" />
+    <Property Name="OrganisationID" Type="smallint" />
+    <Property Name="DayOfMonth" Type="tinyint" Nullable="false" />
+    <Property Name="Expiry" Type="date" Nullable="false" />
+  </EntityType>
   <EntityType Name="Profile">
     <Key>
       <PropertyRef Name="ID" />
@@ -501,6 +511,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Points_Organisation">
+    <End Role="Organisation" Type="Self.Organisation" Multiplicity="0..1" />
+    <End Role="Points" Type="Self.Points" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisation">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Points">
+        <PropertyRef Name="OrganisationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Points_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Points" Type="Self.Points" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Points">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Profile_User">
     <End Role="User" Type="Self.User" Multiplicity="1" />
     <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
@@ -558,6 +592,30 @@
       </Principal>
       <Dependent Role="Transaction">
         <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaction_RecipientUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="RecipientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transaction_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="SenderID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -683,6 +741,7 @@
     <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Organisation" EntityType="Self.Organisation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Points" EntityType="Self.Points" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
@@ -761,6 +820,14 @@
       <End Role="User" EntitySet="User" />
       <End Role="Notification" EntitySet="Notification" />
     </AssociationSet>
+    <AssociationSet Name="FK_Points_Organisation" Association="Self.FK_Points_Organisation">
+      <End Role="Organisation" EntitySet="Organisation" />
+      <End Role="Points" EntitySet="Points" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Points_User" Association="Self.FK_Points_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Points" EntitySet="Points" />
+    </AssociationSet>
     <AssociationSet Name="FK_Profile_User" Association="Self.FK_Profile_User">
       <End Role="User" EntitySet="User" />
       <End Role="Profile" EntitySet="Profile" />
@@ -779,6 +846,14 @@
     </AssociationSet>
     <AssociationSet Name="FK_Transaction_Event" Association="Self.FK_Transaction_Event">
       <End Role="Event" EntitySet="Event" />
+      <End Role="Transaction" EntitySet="Transaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaction_RecipientUser" Association="Self.FK_Transaction_RecipientUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="Transaction" EntitySet="Transaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transaction_User" Association="Self.FK_Transaction_User">
+      <End Role="User" EntitySet="User" />
       <End Role="Transaction" EntitySet="Transaction" />
     </AssociationSet>
     <AssociationSet Name="FK_UserInterest_Interest" Association="Self.FK_UserInterest_Interest">

@@ -1,69 +1,79 @@
-﻿@model IEnumerable<Community.Models.Transaction>
-
+﻿@model PagedList.IPagedList<Community.Models.Transaction>
+@using Microsoft.AspNet.Identity;
+@using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Transactions";
 }
 
-<h2>Index</h2>
+<h2>Transactions</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-center">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.ActionLink("Date", "Index", new { sortOrder = ViewBag.DateSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SenderID)
+            Sender @Html.ActionLink("Sender", "Index", new { sortOrder = ViewBag.SenderSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RecipientID)
+            Receiver @Html.ActionLink("Receiver", "Index", new { sortOrder = ViewBag.ReceiveSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gift)
+            Label
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Amount)
+            @Html.ActionLink("Amount", "Index", new { sortOrder = ViewBag.AmountSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Complete)
+            Completed
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Event.HostID)
-        </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SenderID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RecipientID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gift)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Complete)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Event.HostID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User1.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @if (item.Gift == false)
+                {
+                    Html.DisplayFor(modelItem => item.Event.Title);
+                }
+                else {
+                    <span>Gift</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @if (item.ParentTransaction != null && item.Complete == true)
+                {
+                    <span>Reversed</span>
+                }
+                else if (item.Cancelled == true)
+                {
+                    <span>Cancelled</span>
+                }
+                else {
+                    @Html.DisplayFor(modelItem => item.Complete, "YesNo")
+                }
+            </td>
+        </tr>
+                    }
 
 </table>
+<div class="pagerSection">
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page = page, sortOrder = ViewBag.CurrentSort }))
+</div>
