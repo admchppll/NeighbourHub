@@ -104,3 +104,6 @@ F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\PagedList.d
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\PagedList.Mvc.dll
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\PagedList.xml
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\PagedList.Mvc.xml
+F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\AngleSharp.dll
+F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\HtmlSanitizer.dll
+F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\AngleSharp.xml

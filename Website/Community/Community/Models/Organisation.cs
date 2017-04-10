@@ -39,6 +39,7 @@ namespace Community.Models
         public string Youtube { get; set; }
         public string CharityNumber { get; set; }
         public bool Approved { get; set; }
+        public bool Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserOrganisation> UserOrganisations { get; set; }

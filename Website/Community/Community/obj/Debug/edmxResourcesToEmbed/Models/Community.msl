@@ -139,6 +139,7 @@
     <EntitySetMapping Name="Organisations">
       <EntityTypeMapping TypeName="CommunityModel.Organisation">
         <MappingFragment StoreEntitySet="Organisation">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />

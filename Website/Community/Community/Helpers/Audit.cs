@@ -38,15 +38,13 @@ namespace Community.Helpers
             db.SaveChanges();
         }
 
-        public static void addAudit(int eventId, string message)
+        public static void addAudit(string userID, string message)
         {
             CommunityEntities db = new CommunityEntities();
-            var e = db.Events.Find(eventId);
 
             Audit audit = new Audit();
             audit.Date = DateTime.Now;
-            audit.UserID = e.HostID;
-            audit.EventID = eventId;
+            audit.UserID = userID;
             audit.AuditMessage = message;
 
             db.Audits.Add(audit);

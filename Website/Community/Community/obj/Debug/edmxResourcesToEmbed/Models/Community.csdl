@@ -170,6 +170,7 @@
     <Property Name="Approved" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="UserOrganisations" Relationship="Self.FK_UserOrganisation_Organisation" FromRole="Organisation" ToRole="UserOrganisation" />
     <NavigationProperty Name="Points" Relationship="CommunityModel.FK_Points_Organisation" FromRole="Organisation" ToRole="Point" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Profile">
     <Key>

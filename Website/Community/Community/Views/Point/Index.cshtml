@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Community.Models.Point>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DayOfMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Expiry)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Organisation.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Email)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DayOfMonth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Expiry)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Organisation.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

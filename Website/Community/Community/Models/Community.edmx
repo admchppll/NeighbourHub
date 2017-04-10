@@ -153,6 +153,7 @@
           <Property Name="Youtube" Type="nvarchar" MaxLength="200" />
           <Property Name="CharityNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Points">
           <Key>
@@ -285,7 +286,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="OrganisationID" Type="smallint" Nullable="false" />
           <Property Name="Approved" Type="bit" Nullable="false" />
@@ -1068,6 +1069,7 @@
           <Property Name="Approved" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="UserOrganisations" Relationship="Self.FK_UserOrganisation_Organisation" FromRole="Organisation" ToRole="UserOrganisation" />
           <NavigationProperty Name="Points" Relationship="CommunityModel.FK_Points_Organisation" FromRole="Organisation" ToRole="Point" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
@@ -1997,6 +1999,7 @@
           <EntitySetMapping Name="Organisations">
             <EntityTypeMapping TypeName="CommunityModel.Organisation">
               <MappingFragment StoreEntitySet="Organisation">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
