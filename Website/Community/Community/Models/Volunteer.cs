@@ -11,15 +11,21 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Volunteer
     {
         public int ID { get; set; }
+        [Required]
         public int EventID { get; set; }
+        [Required]
         public string VolunteerID { get; set; }
+        [Required]
         public bool Accepted { get; set; }
+        [Required]
         public bool Confirmed { get; set; }
+        [Required]
         public bool Rejected { get; set; }
+        [Required]
         public bool Withdrawn { get; set; }
     
         public virtual Event Event { get; set; }

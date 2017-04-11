@@ -16,9 +16,12 @@ namespace Community.Models
     public partial class Message
     {
         public int ID { get; set; }
+        [Required]
         public string SenderID { get; set; }
+        [Required]
         public string RecipientID { get; set; }
         public string Title { get; set; }
+        [Required]
         [AllowHtml]
         public string Body { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]

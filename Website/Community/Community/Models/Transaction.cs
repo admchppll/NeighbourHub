@@ -15,14 +15,18 @@ namespace Community.Models
     public partial class Transaction
     {
         public int ID { get; set; }
+        [Required]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Date { get; set; }
         public string SenderID { get; set; }
+        [Required]
         public string RecipientID { get; set; }
         public Nullable<int> EventID { get; set; }
         public bool Gift { get; set; }
+        [Required]
         public short Amount { get; set; }
         public bool Cancelled { get; set; }
+        [Required]
         public bool Complete { get; set; }
         public Nullable<int> ParentTransaction { get; set; }
     

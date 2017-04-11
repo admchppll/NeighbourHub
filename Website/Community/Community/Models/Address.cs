@@ -11,7 +11,7 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Address
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,17 +21,31 @@ namespace Community.Models
         }
     
         public int ID { get; set; }
+        [Required]
         public string UserID { get; set; }
+        [Required]
+        [StringLength(20, ErrorMessage = "Name cannot be longer than 20 characters.")]
         public string Name { get; set; }
+        [Required]
+        [StringLength(50, ErrorMessage = "Address line 1 cannot be longer than 50 characters.")]
         public string Address1 { get; set; }
+        [StringLength(50, ErrorMessage = "Address line 2 cannot be longer than 50 characters.")]
         public string Address2 { get; set; }
+        [Required]
+        [StringLength(50, ErrorMessage = "City cannot be longer than 50 characters.")]
         public string City { get; set; }
+        [StringLength(50, ErrorMessage = "County cannot be longer than 50 characters.")]
         public string County { get; set; }
+        [Required]
+        [StringLength(50, ErrorMessage = "Country cannot be longer than 50 characters.")]
         public string Country { get; set; }
+        [Required]
+        [StringLength(15, ErrorMessage = "Postcode cannot be longer than 50 characters.")]
         public string Postcode { get; set; }
         public string Notes { get; set; }
         public Nullable<double> Long { get; set; }
         public Nullable<double> Lat { get; set; }
+        [Required]
         public bool Default { get; set; }
         public System.Data.Entity.Spatial.DbGeography GeoLocation { get; set; }
     
