@@ -11,7 +11,8 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     public partial class Profile
     {
         public int ID { get; set; }
@@ -21,8 +22,10 @@ namespace Community.Models
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public bool Gender { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime BirthDate { get; set; }
         public string Phone { get; set; }
+        [AllowHtml]
         public string Biography { get; set; }
         public string PictureURL { get; set; }
         public bool Active { get; set; }

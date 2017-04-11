@@ -11,12 +11,15 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     public partial class Information
     {
         public int ID { get; set; }
         public string Label { get; set; }
+        [AllowHtml]
         public string Data { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Edited { get; set; }
     }
 }

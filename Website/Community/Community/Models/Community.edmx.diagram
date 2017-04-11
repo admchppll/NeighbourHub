@@ -10,15 +10,15 @@
         <EntityTypeShape EntityType="CommunityModel.Bookmarked" Width="1.5" PointX="10.5" PointY="23.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.Event" Width="1.5" PointX="5.25" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.EventTag" Width="1.5" PointX="10.5" PointY="20.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CommunityModel.Information" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CommunityModel.Interest" Width="1.5" PointX="3.75" PointY="41.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Information" Width="1.5" PointX="3.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Interest" Width="1.5" PointX="4.75" PointY="41.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.Message" Width="1.5" PointX="3" PointY="21.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.Notification" Width="1.5" PointX="3" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.Organisation" Width="1.5" PointX="5.75" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.Profile" Width="1.5" PointX="3" PointY="28.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.Report" Width="1.5" PointX="10.5" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.Role" Width="1.5" PointX="5.75" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CommunityModel.Skill" Width="1.5" PointX="3.75" PointY="44" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommunityModel.Skill" Width="1.5" PointX="6.625" PointY="41.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.Tag" Width="1.5" PointX="8.25" PointY="14.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.Transaction" Width="1.5" PointX="7.5" PointY="35" IsExpanded="true" />
         <EntityTypeShape EntityType="CommunityModel.User" Width="1.5" PointX="0.75" PointY="23.625" IsExpanded="true" />

@@ -11,6 +11,7 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     public partial class Event
     {
@@ -32,9 +33,12 @@ namespace Community.Models
         [AllowHtml]
         public string LongDescription { get; set; }
         public int AddressID { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Created { get; set; }
         public bool Published { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Edited { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Date { get; set; }
         public System.TimeSpan Time { get; set; }
         public Nullable<short> Repeated { get; set; }

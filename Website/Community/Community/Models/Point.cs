@@ -11,13 +11,14 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Point
     {
         public int ID { get; set; }
         public string UserID { get; set; }
         public Nullable<short> OrganisationID { get; set; }
         public byte DayOfMonth { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Expiry { get; set; }
     
         public virtual Organisation Organisation { get; set; }

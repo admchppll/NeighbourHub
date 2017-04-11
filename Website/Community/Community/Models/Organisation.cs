@@ -11,7 +11,7 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web.Mvc;
     public partial class Organisation
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,6 +23,7 @@ namespace Community.Models
     
         public short ID { get; set; }
         public string Name { get; set; }
+        [AllowHtml]
         public string Description { get; set; }
         public short Balance { get; set; }
         public string Email { get; set; }
