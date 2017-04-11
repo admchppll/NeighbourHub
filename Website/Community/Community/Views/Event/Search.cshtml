@@ -21,7 +21,7 @@
                         <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
                         <p>@Html.DisplayFor(modelItem => item.ShortDescription)</p>
                         <h4>@Html.DisplayFor(modelItem => item.Date)</h4>
-                        <button href="@Url.Action("Details", "Details", new { id = item.ID })" class="btn btn-success">Details</button>
+                        <a href="@Url.Action("Details", "Event", new { id = item.ID })" class="btn btn-success">Details</a>
                     </div>
                 </div>
             }

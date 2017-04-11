@@ -6,7 +6,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="Name" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
     <Property Name="Address1" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Address2" Type="nvarchar" MaxLength="50" />
     <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
