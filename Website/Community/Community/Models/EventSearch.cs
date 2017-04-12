@@ -12,21 +12,18 @@ namespace Community.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Transaction
+    public partial class EventSearch
     {
         public int ID { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
         public System.DateTime Date { get; set; }
-        public string SenderID { get; set; }
-        public string RecipientID { get; set; }
-        public Nullable<int> EventID { get; set; }
-        public bool Gift { get; set; }
-        public short Amount { get; set; }
-        public bool Cancelled { get; set; }
-        public bool Complete { get; set; }
-        public Nullable<int> ParentTransaction { get; set; }
-    
-        public virtual Event Event { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
+        public System.TimeSpan Time { get; set; }
+        public System.Data.Entity.Spatial.DbGeography Location { get; set; }
+        public short VolunteerQuantity { get; set; }
+        public int Volunteers { get; set; }
+        public byte Length { get; set; }
+        public bool Published { get; set; }
+        public bool Suspended { get; set; }
     }
 }

@@ -296,10 +296,14 @@
     <Compile Include="Models\Event.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventSearch.cs">
+      <DependentUpon>Community.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EventTag.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IndexViewModels.cs" />
     <Compile Include="Models\Information.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
@@ -310,12 +314,14 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MetaData.cs" />
     <Compile Include="Models\Notification.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Organisation.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\Point.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>

@@ -11,8 +11,7 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
+    
     public partial class Event
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,33 +27,17 @@ namespace Community.Models
     
         public int ID { get; set; }
         public string HostID { get; set; }
-        [Required]
-        [StringLength(100, ErrorMessage = "Title cannot be longer than 100 characters.")]
         public string Title { get; set; }
-        [StringLength(200, ErrorMessage = "Surname cannot be longer than 200 characters.")]
         public string ShortDescription { get; set; }
-        [Required]
-        [AllowHtml]
         public string LongDescription { get; set; }
-        [Required]
         public int AddressID { get; set; }
-        [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Created { get; set; }
-        [Required]
         public bool Published { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Edited { get; set; }
-        [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Date { get; set; }
-        [Required(ErrorMessage = "Time is a required field in the format HH:MM (24 hour time) E.g. 14:15")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public System.TimeSpan Time { get; set; }
         public Nullable<short> Repeated { get; set; }
         public Nullable<byte> RepeatIncrement { get; set; }
-        [Required]
-        [Range(1,12, ErrorMessage = "An event needs to be between 1 and 12 hours in length.")]
         public byte Length { get; set; }
         public bool AM1 { get; set; }
         public bool AM2 { get; set; }
@@ -70,12 +53,9 @@ namespace Community.Models
         public bool PM5 { get; set; }
         public bool PM6 { get; set; }
         public bool PM7 { get; set; }
-        [StringLength(200, ErrorMessage = "Date Information cannot be longer than 200 characters.")]
         public string DateInfo { get; set; }
         public bool Suspended { get; set; }
-        [Required]
         public short VolunteerQuantity { get; set; }
-        [Required]
         public short Points { get; set; }
         public string PictureURL { get; set; }
     

@@ -11,20 +11,12 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
+    
     public partial class Information
     {
         public int ID { get; set; }
-        [Required]
-        [MinLength(4, ErrorMessage = "Label must be at least 4 characters long.")]
-        [StringLength(50, ErrorMessage = "Label cannot be longer than 50 characters.")]
         public string Label { get; set; }
-        [Required]
-        [AllowHtml]
         public string Data { get; set; }
-        [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Edited { get; set; }
     }
 }

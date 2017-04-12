@@ -11,7 +11,7 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class UserOrganisation
     {
         public int ID { get; set; }
@@ -20,7 +20,6 @@ namespace Community.Models
         public bool Approved { get; set; }
         public bool Denied { get; set; }
         public bool Admin { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Created { get; set; }
     
         public virtual Organisation Organisation { get; set; }

@@ -11,38 +11,21 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
+    
     public partial class Profile
     {
         public int ID { get; set; }
         public string UserID { get; set; }
         public short Balance { get; set; }
-        [Required]
-        [StringLength(5, ErrorMessage ="Title cannot be longer than 5 characters.")]
         public string Title { get; set; }
-        [Required]
-        [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
-        [MinLength(2, ErrorMessage = "First name must contain at least 2 characters ")]
         public string FirstName { get; set; }
-        [Required]
-        [StringLength(50, ErrorMessage = "Surname cannot be longer than 50 characters.")]
-        [MinLength(2, ErrorMessage = "Surname must contain at least 2 characters ")]
         public string Surname { get; set; }
-        [Required]
         public bool Gender { get; set; }
-        [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime BirthDate { get; set; }
-        [RegularExpression("^[0-9 ]*$", ErrorMessage = "Phone number can only contain numbers and spaces.")]
-        [StringLength(20, ErrorMessage = "Phone number cannot be longer than 20 digits.")]
+        public System.DateTime BirthDate { get; set; }
         public string Phone { get; set; }
-        [AllowHtml]
         public string Biography { get; set; }
         public string PictureURL { get; set; }
-        [Required]
         public bool Active { get; set; }
-        [Required]
         public bool Suspended { get; set; }
     
         public virtual User User { get; set; }

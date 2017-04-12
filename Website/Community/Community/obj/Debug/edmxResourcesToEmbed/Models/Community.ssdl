@@ -6,7 +6,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="Name" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="Address1" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Address2" Type="nvarchar" MaxLength="50" />
     <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -317,6 +317,32 @@
     <Property Name="Confirmed" Type="bit" Nullable="false" />
     <Property Name="Rejected" Type="bit" Nullable="false" />
     <Property Name="Withdrawn" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="EventSearch">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Title" />
+      <PropertyRef Name="Date" />
+      <PropertyRef Name="Time" />
+      <PropertyRef Name="VolunteerQuantity" />
+      <PropertyRef Name="Volunteers" />
+      <PropertyRef Name="Length" />
+      <PropertyRef Name="Published" />
+      <PropertyRef Name="Suspended" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Time" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Location" Type="geography" />
+    <Property Name="VolunteerQuantity" Type="smallint" Nullable="false" />
+    <Property Name="Volunteers" Type="int" Nullable="false" />
+    <Property Name="Length" Type="tinyint" Nullable="false" />
+    <Property Name="Published" Type="bit" Nullable="false" />
+    <Property Name="Suspended" Type="bit" Nullable="false" />
   </EntityType>
   <Association Name="FK_Address_User">
     <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -716,6 +742,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="clearNotifications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="confirmVolunteer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="VolunteerID" Type="int" Mode="In" />
   </Function>
@@ -757,6 +784,21 @@
     <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserSkill" EntityType="Self.UserSkill" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Volunteer" EntityType="Self.Volunteer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EventSearch" EntityType="Self.EventSearch" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [EventSearch].[ID] AS [ID], 
+    [EventSearch].[Title] AS [Title], 
+    [EventSearch].[Description] AS [Description], 
+    [EventSearch].[Date] AS [Date], 
+    [EventSearch].[Time] AS [Time], 
+    [EventSearch].[Location] AS [Location], 
+    [EventSearch].[VolunteerQuantity] AS [VolunteerQuantity], 
+    [EventSearch].[Volunteers] AS [Volunteers], 
+    [EventSearch].[Length] AS [Length], 
+    [EventSearch].[Published] AS [Published], 
+    [EventSearch].[Suspended] AS [Suspended]
+    FROM [dbo].[EventSearch] AS [EventSearch]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
       <End Role="User" EntitySet="User" />
       <End Role="Address" EntitySet="Address" />

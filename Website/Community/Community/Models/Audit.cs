@@ -11,19 +11,13 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
+    
     public partial class Audit
     {
         public int ID { get; set; }
-        [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Date { get; set; }
-        [Required]
         public string UserID { get; set; }
         public Nullable<int> EventID { get; set; }
-        [Required]
-        [AllowHtml]
         public string AuditMessage { get; set; }
         public Nullable<int> ReportID { get; set; }
     

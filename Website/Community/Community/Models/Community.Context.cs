@@ -52,6 +52,7 @@ namespace Community.Models
         public virtual DbSet<UserSkill> UserSkills { get; set; }
         public virtual DbSet<Volunteer> Volunteers { get; set; }
         public virtual DbSet<Point> Points { get; set; }
+        public virtual DbSet<EventSearch> EventSearches { get; set; }
     
         public virtual int confirmVolunteer(Nullable<int> volunteerID)
         {
@@ -96,6 +97,11 @@ namespace Community.Models
                 new ObjectParameter("VolunteerID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("withdrawVolunteer", volunteerIDParameter);
+        }
+    
+        public virtual int clearNotifications()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("clearNotifications");
         }
     }
 }

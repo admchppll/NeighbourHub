@@ -11,6 +11,7 @@ using Community.Helpers;
 using System.Web;
 using System.IO;
 using PagedList;
+using System.Linq.Expressions;
 
 namespace Community.Controllers
 {
@@ -18,7 +19,7 @@ namespace Community.Controllers
     public class EventController : Controller
     {
         private CommunityEntities db = new CommunityEntities();
-        private const int pageSize = 10;
+        private const int pageSize = 15;
         private const double mile = 1609.34;
 
         [AllowAnonymous]
@@ -35,17 +36,16 @@ namespace Community.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Search() {
-            ViewBag.Search = false;
-            return View();
-        }
-
-        [AllowAnonymous, HttpPost]
         // POST: Event
-        public ActionResult Search(string postcode, double distance, int? page)
+        public ActionResult Search(string postcode, double? distance, int? page)
         {
             int pageNumber = (page ?? 1);
             var resultRadius = distance * mile;
+
+            if (postcode == "" || distance == null && page == null) {
+                ViewBag.Search = false;
+                return View();
+            }
 
             ViewBag.Postcode = postcode;
             ViewBag.Distance = distance;
@@ -59,12 +59,15 @@ namespace Community.Controllers
             Postcode code = new Postcode(postcode);
             DbGeography geog = Postcode.CreateGeographyPoint(code.latitude, code.longitude);
 
-            var events = db.Events
-                .Include(y => y.Address)
-                .Include(z => z.User)
-                .Where(y => y.Address.GeoLocation.Distance(geog) < resultRadius)
-                .Where(y => y.Suspended != true && y.Published == true)
-                .OrderBy(e => e.ID);
+            var events = db.EventSearches
+                .Where(e => e.Published == true) 
+                .Where(e => e.Suspended != true)
+                .Where(e => e.VolunteerQuantity > e.Volunteers)
+                .Where(e => e.Location.Distance(geog) < resultRadius);
+
+            events = events.OrderBy(e => e.Date);
+
+            //var events = db.spSearchEvents(geog, resultRadius).OrderBy(e => e.Date).ToPagedList(pageNumber, pageSize);
             return View(events.ToPagedList(pageNumber, pageSize));
         }
 

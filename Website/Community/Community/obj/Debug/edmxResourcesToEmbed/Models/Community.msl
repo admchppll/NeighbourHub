@@ -346,5 +346,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="clearNotifications" FunctionName="CommunityModel.Store.clearNotifications" />
+    <EntitySetMapping Name="EventSearches">
+      <EntityTypeMapping TypeName="CommunityModel.EventSearch">
+        <MappingFragment StoreEntitySet="EventSearch">
+          <ScalarProperty Name="Suspended" ColumnName="Suspended" />
+          <ScalarProperty Name="Published" ColumnName="Published" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Volunteers" ColumnName="Volunteers" />
+          <ScalarProperty Name="VolunteerQuantity" ColumnName="VolunteerQuantity" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

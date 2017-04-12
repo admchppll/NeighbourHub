@@ -11,20 +11,13 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class Notification
     {
         public int ID { get; set; }
-        [Required]
         public string UserID { get; set; }
-        [Required]
-        [StringLength(20, ErrorMessage = "Title cannot be longer than 20 characters.")]
         public string Title { get; set; }
-        [Required]
-        [StringLength(50, ErrorMessage = "Description cannot be longer than 50 characters.")]
         public string Description { get; set; }
-        [Required]
-        [StringLength(20, ErrorMessage = "Link cannot be longer than 200 characters.")]
         public string Link { get; set; }
         public bool Viewed { get; set; }
     

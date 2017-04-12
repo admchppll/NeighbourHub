@@ -6,7 +6,7 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -883,6 +883,12 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Transaction" EntitySet="Transactions" />
     </AssociationSet>
+    <FunctionImport Name="clearNotifications" />
+    <FunctionImport Name="spSearchEvents" ReturnType="Collection(CommunityModel.spSearchEvents_Result)">
+      <Parameter Name="Location" Mode="In" Type="Geography" />
+      <Parameter Name="Radius" Mode="In" Type="Double" />
+    </FunctionImport>
+    <EntitySet Name="EventSearches" EntityType="CommunityModel.EventSearch" />
   </EntityContainer>
   <Association Name="FK_Audit_User">
     <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
@@ -956,4 +962,36 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <ComplexType Name="spSearchEvents_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Title" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="200" />
+    <Property Type="DateTime" Name="Date" Nullable="false" />
+    <Property Type="Time" Name="Time" Nullable="false" />
+    <Property Type="Double" Name="Distance" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="EventSearch">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Title" />
+      <PropertyRef Name="Date" />
+      <PropertyRef Name="Time" />
+      <PropertyRef Name="VolunteerQuantity" />
+      <PropertyRef Name="Volunteers" />
+      <PropertyRef Name="Length" />
+      <PropertyRef Name="Published" />
+      <PropertyRef Name="Suspended" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Location" Type="Geography" />
+    <Property Name="VolunteerQuantity" Type="Int16" Nullable="false" />
+    <Property Name="Volunteers" Type="Int32" Nullable="false" />
+    <Property Name="Length" Type="Byte" Nullable="false" />
+    <Property Name="Published" Type="Boolean" Nullable="false" />
+    <Property Name="Suspended" Type="Boolean" Nullable="false" />
+  </EntityType>
 </Schema>

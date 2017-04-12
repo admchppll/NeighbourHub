@@ -11,18 +11,13 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class Point
     {
         public int ID { get; set; }
-        [Required]
         public string UserID { get; set; }
         public Nullable<short> OrganisationID { get; set; }
-        [Required]
-        [Range(1,28, ErrorMessage ="Day of month must be between 1 and 28")]
         public byte DayOfMonth { get; set; }
-        [Required]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Expiry { get; set; }
     
         public virtual Organisation Organisation { get; set; }

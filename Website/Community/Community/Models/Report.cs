@@ -11,18 +11,14 @@ namespace Community.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
+    
     public partial class Report
     {
         public int ID { get; set; }
         public string UserID { get; set; }
         public Nullable<int> ReportedEvent { get; set; }
         public string ReportedID { get; set; }
-        [Required]
-        [AllowHtml]
         public string Description { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Sent { get; set; }
         public bool Resolved { get; set; }
     

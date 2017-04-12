@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Community.Models.Event>
+﻿@model PagedList.IPagedList<Community.Models.EventSearch>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Search";
@@ -9,7 +10,40 @@
 </p>
 <div class="row">
     <div class="col-xs-12 col-md-3 @if (ViewBag.Search != true) { Html.Raw("col-md-offset-3"); } ">
-        @Html.Partial("_Sidebar")
+        @using (Html.BeginForm("Search", "Event"))
+        {
+            <div class="col-xs-12">
+                <h4>Postcode</h4>
+                <input class="form-control" aria-label="" name="postcode" placeholder="Postcode" type="text" value="@ViewBag.Postcode">
+            </div>
+            <div class="col-xs-12">
+                <h4>Search Radius</h4>
+                <select id="distanceSelect" name="distance" class="form-control">
+                    <option value="0.5">0.5 Miles</option>
+                    <option value="1">1 Mile</option>
+                    <option value="2">2 Miles</option>
+                    <option value="3">3 Miles</option>
+                    <option value="4">4 Miles</option>
+                    <option value="5">5 Miles</option>
+                    <option value="10">10 Miles</option>
+                </select>
+            </div>
+            <div class="col-xs-12">
+                <h4>Sort Filter</h4>
+                <div class="sortFilter">
+                    <span>@Html.RadioButton("Sort", "Date Added") Date Added</span>
+                    <span>@Html.RadioButton("Sort", "Date Soonest") Date Soonest</span>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-primary col-xs-12">Search</button>
+            </div>
+            <script type="text/javascript">
+                //choose previously searched value
+                var distanceSelect = document.getElementById("distanceSelect");
+                distanceSelect.value = @ViewBag.Distance;
+            </script>
+        }
     </div>
     <div class="col-xs-12 col-md-9">
         @if (ViewBag.Search == true)
@@ -19,7 +53,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
-                        <p>@Html.DisplayFor(modelItem => item.ShortDescription)</p>
+                        <p>@Html.DisplayFor(modelItem => item.Description)</p>
                         <h4>@Html.DisplayFor(modelItem => item.Date)</h4>
                         <a href="@Url.Action("Details", "Event", new { id = item.ID })" class="btn btn-success">Details</a>
                     </div>
@@ -36,6 +70,9 @@
                         <li>Try searching in another location</li>
                     </ul>
                 </p>
+            }
+            else {
+                @Html.PagedListPager(Model, page => Url.Action("Search", new { page, postcode = ViewBag.Postcode, distance = ViewBag.Distance }))
             }
         }
     </div>

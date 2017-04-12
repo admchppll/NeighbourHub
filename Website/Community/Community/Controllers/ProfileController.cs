@@ -17,6 +17,7 @@ namespace Community.Controllers
         private CommunityEntities db = new CommunityEntities();
 
         // GET: Profile
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var profiles = db.Profiles.Include(p => p.User);
@@ -129,7 +130,7 @@ namespace Community.Controllers
             public string ID { get; set; }
         }
 
-        [HttpPost, ValidateHeaderAntiForgeryToken]
+        [HttpPost, ValidateHeaderAntiForgeryToken, Authorize(Roles = "Admin")]
         public JsonResult Suspend(ProfilePostData data)
         {
             int profileId = ProfileHelper.CurrentProfileID(data.ID);
@@ -168,7 +169,7 @@ namespace Community.Controllers
             });
         }
 
-        [HttpPost, ValidateHeaderAntiForgeryToken]
+        [HttpPost, ValidateHeaderAntiForgeryToken, Authorize(Roles = "Admin")]
         public JsonResult Restore(ProfilePostData data)
         {
             int profileId = ProfileHelper.CurrentProfileID(data.ID);

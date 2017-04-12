@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Community.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,6 +26,18 @@ namespace Community.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Contact([Bind(Include="Name, Email, ConfirmEmail, Message")] ContactModel contact)
+        {
+            ViewBag.Message = "Your contact page.";
+
+            if (ModelState.IsValid) {
+
+            }
+
+            return View(contact);
         }
     }
 }
