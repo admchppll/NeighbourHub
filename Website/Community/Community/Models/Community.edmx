@@ -43,6 +43,16 @@
           <Property Name="EventID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Replied" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="ID" />
@@ -80,6 +90,7 @@
           <Property Name="VolunteerQuantity" Type="smallint" Nullable="false" />
           <Property Name="Points" Type="smallint" Nullable="false" />
           <Property Name="PictureURL" Type="nvarchar(max)" />
+          <Property Name="Cancelled" Type="bit" />
         </EntityType>
         <EntityType Name="EventTag">
           <Key>
@@ -767,6 +778,7 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bookmarked" EntityType="Self.Bookmarked" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventTag" EntityType="Self.EventTag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Information" EntityType="Self.Information" Schema="dbo" store:Type="Tables" />
@@ -1030,6 +1042,7 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
           <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Event" FromRole="Event" ToRole="Report" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Event" FromRole="Event" ToRole="Transaction" />
           <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_Event" FromRole="Event" ToRole="Volunteer" />
+          <Property Name="Cancelled" Type="Boolean" />
         </EntityType>
         <EntityType Name="EventTag">
           <Key>
@@ -1830,6 +1843,7 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
             <Parameter Name="Radius" Mode="In" Type="Double" />
           </FunctionImport>
           <EntitySet Name="EventSearches" EntityType="CommunityModel.EventSearch" />
+          <EntitySet Name="Contacts" EntityType="CommunityModel.Contact" />
         </EntityContainer>
         <Association Name="FK_Audit_User">
           <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
@@ -1935,6 +1949,16 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
           <Property Name="Published" Type="Boolean" Nullable="false" />
           <Property Name="Suspended" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Replied" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1985,6 +2009,7 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="CommunityModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Cancelled" ColumnName="Cancelled" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="HostID" ColumnName="HostID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -2300,6 +2325,17 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="CommunityModel.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="Replied" ColumnName="Replied" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

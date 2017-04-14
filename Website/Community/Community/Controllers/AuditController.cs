@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Community.Models;
 using Microsoft.AspNet.Identity;
+using Ganss.XSS;
 
 namespace Community.Controllers
 {
@@ -69,8 +70,10 @@ namespace Community.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult CreateAudit([Bind(Include = "ID,Date,UserID,EventID,AuditMessage,ReportID")] Audit audit)
         {
+            var sanitizer = new HtmlSanitizer();
             audit.UserID = User.Identity.GetUserId();
             audit.Date = DateTime.Now;
+            audit.AuditMessage = sanitizer.Sanitize(audit.AuditMessage);
 
             if (ModelState.IsValid)
             {
@@ -100,8 +103,10 @@ namespace Community.Controllers
         [HttpPost,ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Date,UserID,EventID,AuditMessage,ReportID")] Audit audit)
         {
+            var sanitizer = new HtmlSanitizer();
             if (ModelState.IsValid)
             {
+                audit.AuditMessage = sanitizer.Sanitize(audit.AuditMessage);
                 db.Audits.Add(audit);
                 db.SaveChanges();
                 return RedirectToAction("Index");

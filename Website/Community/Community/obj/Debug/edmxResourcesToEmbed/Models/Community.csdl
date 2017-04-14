@@ -89,6 +89,7 @@
     <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Event" FromRole="Event" ToRole="Report" />
     <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Event" FromRole="Event" ToRole="Transaction" />
     <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_Event" FromRole="Event" ToRole="Volunteer" />
+    <Property Name="Cancelled" Type="Boolean" />
   </EntityType>
   <EntityType Name="EventTag">
     <Key>
@@ -889,6 +890,7 @@
       <Parameter Name="Radius" Mode="In" Type="Double" />
     </FunctionImport>
     <EntitySet Name="EventSearches" EntityType="CommunityModel.EventSearch" />
+    <EntitySet Name="Contacts" EntityType="CommunityModel.Contact" />
   </EntityContainer>
   <Association Name="FK_Audit_User">
     <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
@@ -993,5 +995,15 @@
     <Property Name="Length" Type="Byte" Nullable="false" />
     <Property Name="Published" Type="Boolean" Nullable="false" />
     <Property Name="Suspended" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Replied" Type="Boolean" Nullable="false" />
   </EntityType>
 </Schema>

@@ -12,6 +12,7 @@ using System.Web;
 using System.IO;
 using PagedList;
 using System.Linq.Expressions;
+using Ganss.XSS;
 
 namespace Community.Controllers
 {
@@ -68,6 +69,21 @@ namespace Community.Controllers
 
             return View(events.ToPagedList(pageNumber, pageSize));
         }
+
+        // GET: Event/List
+        public ActionResult List(int? page)
+        {
+            int pageNumber = (page ?? 1);
+            var user = User.Identity.GetUserId();
+
+            var events = db.Events
+                .Include(y => y.Address)
+                .Include(z => z.User)
+                .Where(e => e.HostID == user)
+                .OrderBy(e => e.ID);
+            return View(events.ToPagedList(pageNumber, pageSize));
+        }
+
 
         [AllowAnonymous]
         // GET: Event/Details/5
@@ -157,6 +173,8 @@ namespace Community.Controllers
             @event.Created = current_date;
             @event.Edited = current_date;
 
+            var sanitizer = new HtmlSanitizer();
+            @event.LongDescription = sanitizer.Sanitize(@event.LongDescription);
             if (ModelState.IsValid)
             {
                 db.Events.Add(@event);
@@ -223,6 +241,8 @@ namespace Community.Controllers
                 @event.PictureURL = "~/Uploads/Event/" + currentDateString + "/" + fileName;
             }
             @event.Edited = current_date;
+            var sanitizer = new HtmlSanitizer();
+            @event.LongDescription = sanitizer.Sanitize(@event.LongDescription);
 
             if (ModelState.IsValid)
             {
@@ -348,6 +368,58 @@ namespace Community.Controllers
                 success = false,
                 title = "Something went wrong! ",
                 message = "We couldn't restore this event."
+            });
+        }
+
+        [HttpPost, ValidateHeaderAntiForgeryToken]
+        public JsonResult Cancel(EventPostData data)
+        {
+            Event @event = db.Events.Find(data.ID);
+
+            if (@event.Cancelled == true)
+            {
+                return Json(new
+                {
+                    success = false,
+                    title = "Cancelled! ",
+                    message = "This event was already cancelled!"
+                });
+            }
+
+            @event.Cancelled = true;
+            @event.Published = false;
+
+            var volunteers = db.Volunteers.Where(v => v.EventID == data.ID).ToList();
+            foreach (var v in volunteers) {
+                v.Rejected = true;
+                NotificationHelper.Create(v.VolunteerID, "Event Cancelled", "An event you have volunteered for has been cancelled.", String.Format("~/Event/Details/{0}", @event.ID));
+            }
+
+            var transactions = db.Transactions.Where(t => t.EventID == data.ID && t.Complete == false && t.Cancelled != true && t.ParentTransaction == null).ToList();
+            foreach (var t in transactions) {
+                db.reverseTransaction(t.ID);
+            }
+
+            AuditHelper.addEventAudit(@event.ID, String.Format("Event Cancelled: #{0}", @event.ID), null);
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(@event).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Json(new
+                {
+                    success = true,
+                    title = "Success! ",
+                    message = "This event has been marked as cancelled!"
+                });
+            }
+
+            return Json(new
+            {
+                success = false,
+                title = "Something went wrong! ",
+                message = "We couldn't cancel this event."
             });
         }
 

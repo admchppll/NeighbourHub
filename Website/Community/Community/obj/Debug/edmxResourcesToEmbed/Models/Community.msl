@@ -45,6 +45,7 @@
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="CommunityModel.Event">
         <MappingFragment StoreEntitySet="Event">
+          <ScalarProperty Name="Cancelled" ColumnName="Cancelled" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="HostID" ColumnName="HostID" />
           <ScalarProperty Name="Title" ColumnName="Title" />
@@ -360,6 +361,17 @@
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="CommunityModel.Contact">
+        <MappingFragment StoreEntitySet="Contact">
+          <ScalarProperty Name="Replied" ColumnName="Replied" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

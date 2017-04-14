@@ -113,8 +113,6 @@ namespace Community.Controllers
         }
 
         // POST: Address/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,UserID,Name,Address1,Address2,City,County,Country,Postcode,Notes,Long,Lat,Default")] Address address)
@@ -127,7 +125,7 @@ namespace Community.Controllers
                 {
                     AddressHelper.SetDefault(address.ID);
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Manage");
             }
             ViewBag.UserID = new SelectList(db.Users, "ID", "Email", address.UserID);
             return View(address);
@@ -154,7 +152,7 @@ namespace Community.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Address address = db.Addresses.Find(id);
-            db.Addresses.Remove(address);
+            address.UserID = null;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

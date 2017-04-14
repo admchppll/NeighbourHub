@@ -58,6 +58,7 @@ namespace Community.Models
         public short VolunteerQuantity { get; set; }
         public short Points { get; set; }
         public string PictureURL { get; set; }
+        public Nullable<bool> Cancelled { get; set; }
     
         public virtual Address Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

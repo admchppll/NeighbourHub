@@ -1,64 +1,79 @@
 ﻿@model Community.Models.ContactModel
+@using reCAPTCHA.MVC;
 @{
     ViewBag.Title = "Contact";
 }
 <script src='https://www.google.com/recaptcha/api.js'></script>
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>Contact</h2>
 
+<h3>Our Contact Details</h3>
 <address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
+    <strong>Address:</strong><br/>
+    NeighbourHub<br />
+    Loughborough University<br />
+    Epinal Way<br/>
+    Loughborough<br />
+    LE11 3TU
 </address>
 
 <address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    <strong>Email:</strong><br />   <a href="mailto:info@theneighbourhub.online">info@theneighbourhub.online</a>
 </address>
+@if (ViewBag.Success == true) {
+    <div class="col-xs-12 alert alert-success">
+        <strong>Success!</strong> Your message has been received, you should also receive an email confirmation to the email address provided. 
+    </div>
+}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+    <div class="form-group col-xs-12">
+        @Html.LabelFor(m => m.Name, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-xs-12">
             @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+    <div class="form-group col-xs-12 col-md-6">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+        <div class="col-xs-12">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type="email" })
             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmEmail, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+    <div class="form-group col-xs-12 col-md-6">
+        @Html.LabelFor(m => m.ConfirmEmail, new { @class = "col-md-4 control-label" })
+        <div class="col-xs-12">
             @Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control", type = "email" })
             @Html.ValidationMessageFor(m => m.ConfirmEmail, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Message, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(m => m.Message, new { htmlAttributes = new { @class = "form-control" } })
+    <div class="form-group col-xs-12">
+        @Html.LabelFor(m => m.Message, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-xs-12">
+            @Html.TextAreaFor(m => m.Message, new { htmlAttributes = new { @class = "form-control", rows = 15 } })
             @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <!--<div class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["ReCaptchaSite"]"></div>-->
+    <div class="col-xs-12">
+        @Html.Recaptcha()
+        @Html.ValidationMessage("ReCaptcha")
+    </div>
+
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Send" class="btn btn-default" />
         </div>
     </div>
 }
+<script>
+        CKEDITOR.replaceAll();
+</script>

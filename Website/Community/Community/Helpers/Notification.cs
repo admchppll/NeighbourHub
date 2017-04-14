@@ -23,7 +23,7 @@ namespace Community.Helpers
         //returns the number of unread notifications a user has
         public static int Unread(string userId) {
             CommunityEntities db = new CommunityEntities();
-            var query = db.Notifications.Where(n => n.UserID == userId).Count();
+            var query = db.Notifications.Where(n => n.UserID == userId && n.Viewed != true).Count();
             return query;
         }
     }

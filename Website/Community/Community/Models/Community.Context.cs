@@ -53,6 +53,7 @@ namespace Community.Models
         public virtual DbSet<Volunteer> Volunteers { get; set; }
         public virtual DbSet<Point> Points { get; set; }
         public virtual DbSet<EventSearch> EventSearches { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
     
         public virtual int confirmVolunteer(Nullable<int> volunteerID)
         {
@@ -102,6 +103,19 @@ namespace Community.Models
         public virtual int clearNotifications()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("clearNotifications");
+        }
+    
+        public virtual ObjectResult<spSearchEvents_Result> spSearchEvents(System.Data.Entity.Spatial.DbGeography location, Nullable<double> radius)
+        {
+            var locationParameter = location != null ?
+                new ObjectParameter("Location", location) :
+                new ObjectParameter("Location", typeof(System.Data.Entity.Spatial.DbGeography));
+    
+            var radiusParameter = radius.HasValue ?
+                new ObjectParameter("Radius", radius) :
+                new ObjectParameter("Radius", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spSearchEvents_Result>("spSearchEvents", locationParameter, radiusParameter);
         }
     }
 }

@@ -38,6 +38,16 @@
     <Property Name="EventID" Type="int" Nullable="false" />
     <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
   </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Replied" Type="bit" Nullable="false" />
+  </EntityType>
   <EntityType Name="Event">
     <Key>
       <PropertyRef Name="ID" />
@@ -75,6 +85,7 @@
     <Property Name="VolunteerQuantity" Type="smallint" Nullable="false" />
     <Property Name="Points" Type="smallint" Nullable="false" />
     <Property Name="PictureURL" Type="nvarchar(max)" />
+    <Property Name="Cancelled" Type="bit" />
   </EntityType>
   <EntityType Name="EventTag">
     <Key>
@@ -762,6 +773,7 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
     <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Bookmarked" EntityType="Self.Bookmarked" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EventTag" EntityType="Self.EventTag" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Information" EntityType="Self.Information" Schema="dbo" store:Type="Tables" />

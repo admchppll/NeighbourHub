@@ -31,5 +31,10 @@ namespace Community.Helpers
                 return count;
             }
         }
+
+        public static bool isAdmin(string userID) {
+
+            return true;
+        }
     }
 }
