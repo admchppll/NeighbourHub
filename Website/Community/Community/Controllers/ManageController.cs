@@ -320,6 +320,23 @@ namespace Community.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
+        public ActionResult ChangeEmail() {
+            return View();
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeEmail([Bind(Include = "Email,ConfirmEmail")] ChangeEmailViewModel email)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                var user = await UserManager.FindByIdAsync(userId);
+                
+                return RedirectToAction("Index", "Manage");
+            }
+            return View(email);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)

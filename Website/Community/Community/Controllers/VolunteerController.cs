@@ -38,6 +38,21 @@ namespace Community.Controllers
             return PartialView(volunteers.ToList());
         }
 
+        public ActionResult UserPartial()
+        {
+            string userID = User.Identity.GetUserId();
+
+            var events = db.Volunteers
+                .Include(e => e.Event)
+                .Include(y => y.Event.Address)
+                .Where(v => v.VolunteerID == userID)
+                .Where(v => v.Event.Date >= DateTime.Now)
+                .OrderBy(v => v.Event.Date)
+                .Take(3);
+
+            return View(events.ToList());
+        }
+
         // GET: Volunteer/Details/5
         public ActionResult Details(int? id)
         {

@@ -27,6 +27,7 @@ namespace Community
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/font-awesome/css/font-awesome.min.css",
                       "~/Content/site.css"));
         }
     }

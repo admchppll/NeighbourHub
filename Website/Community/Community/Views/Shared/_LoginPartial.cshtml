@@ -1,22 +1,27 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Community.Helpers
 @{
-    //string picUrl = ProfileHelper.getProfileImage(User.Identity.GetUserId());
+    string user = User.Identity.GetUserId();
 }
 
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            
-            @Html.ActionLink("My Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="@Url.Action("Index", "Manage")"><i class="fa fa-home"></i> My Hub</a>
+            </li>
+            <li>
+                <a class="hidden-xs"><i class="fa fa-bell"></i><span class="label label-danger">@NotificationHelper.Unread(user)</span></a>
+                <a class="visible-xs"><i class="fa fa-bell"></i> Notifications <span class="label label-danger">@NotificationHelper.Unread(user)</span></a>
+            </li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </li>
+        </ul>
     }
 }
 else

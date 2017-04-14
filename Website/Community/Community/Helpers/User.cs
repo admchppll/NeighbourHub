@@ -21,4 +21,15 @@ namespace Community.Helpers
             }
         }
     }
+
+    public class UserHelper {
+        public static int externalLogins(string userID) {
+            using (CommunityEntities db = new CommunityEntities())
+            {
+
+                int count = db.UserLogins.Where(u => u.UserId == userID).Count();
+                return count;
+            }
+        }
+    }
 }

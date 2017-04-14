@@ -240,6 +240,7 @@
     <Compile Include="Controllers\InterestController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\PointController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -266,7 +267,7 @@
     <Compile Include="Helpers\Profile.cs" />
     <Compile Include="Helpers\Report.cs" />
     <Compile Include="Helpers\Transaction.cs" />
-    <Compile Include="Helpers\UserRole.cs" />
+    <Compile Include="Helpers\User.cs" />
     <Compile Include="Helpers\Volunteer.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs">
@@ -375,6 +376,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\user-substitute.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -578,9 +581,25 @@
     <Content Include="Views\Point\Index.cshtml" />
     <Content Include="Views\Organisation\Approve.cshtml" />
     <Content Include="Views\Organisation\Deactivate.cshtml" />
+    <Content Include="Views\Transaction\UserPartial.cshtml" />
+    <Content Include="Views\Message\UserPartial.cshtml" />
+    <Content Include="Views\Event\UserPartial.cshtml" />
+    <Content Include="Views\Volunteer\UserPartial.cshtml" />
+    <Content Include="Views\Volunteer\UserEvents.cshtml" />
+    <Content Include="Views\Profile\UserPartial.cshtml" />
+    <Content Include="Views\Address\UserPartial.cshtml" />
+    <Content Include="Views\Notification\Create.cshtml" />
+    <Content Include="Views\Notification\Delete.cshtml" />
+    <Content Include="Views\Notification\Details.cshtml" />
+    <Content Include="Views\Notification\Edit.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Notification\UserPartial.cshtml" />
+    <Content Include="Views\Manage\ChangeEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\font-awesome\css\" />
+    <Folder Include="Content\font-awesome\fonts\" />
     <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>

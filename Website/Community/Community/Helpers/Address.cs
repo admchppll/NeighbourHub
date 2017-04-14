@@ -76,5 +76,18 @@ namespace Community.Helpers
                     .Any();
             return exists;   
         }
+
+        public static void SetDefault(int addressID) {
+            CommunityEntities db = new CommunityEntities();
+            var address = db.Addresses.Find(addressID);
+
+            var addresses = db.Addresses.Where(p => p.UserID == address.UserID).ToList();
+
+            foreach (var a in addresses) {
+                a.Default = (a.ID == addressID) ? true : false;
+            }
+
+            db.SaveChanges();
+        }
     }
 }

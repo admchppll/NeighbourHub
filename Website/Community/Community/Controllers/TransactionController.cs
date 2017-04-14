@@ -109,6 +109,20 @@ namespace Community.Controllers
             return View(transactions.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult UserPartial() {
+            string userID = User.Identity.GetUserId();
+
+            var transactions = db.Transactions
+                .Include(m => m.User)
+                .Include(m => m.User1)
+                .Where(m => m.RecipientID == userID || m.SenderID == userID)
+                .OrderByDescending(m => m.Date)
+                .Take(3);
+
+
+            return View(transactions.ToList());
+        }
+
         // GET: Transaction/Details/5
         public ActionResult Details(int? id)
         {

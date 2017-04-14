@@ -85,6 +85,19 @@ namespace Community.Controllers
             return View(messages.ToList());
         }
 
+        public ActionResult UserPartial()
+        {
+            string userID = User.Identity.GetUserId();
+
+            var messages = db.Messages
+                .Include(m => m.User)
+                .Include(m => m.User1)
+                .Where(m => m.Sent != null && m.RecipientID == userID)
+                .OrderByDescending(m => m.Sent)
+                .Take(3);
+            return PartialView(messages.ToList());
+        }
+
         // GET: Message/Read/5
         public ActionResult Read(int? id)
         {

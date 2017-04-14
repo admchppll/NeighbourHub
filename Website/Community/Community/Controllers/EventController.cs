@@ -36,7 +36,6 @@ namespace Community.Controllers
         }
 
         [AllowAnonymous]
-        // POST: Event
         public ActionResult Search(string postcode, double? distance, int? page)
         {
             int pageNumber = (page ?? 1);
@@ -67,7 +66,6 @@ namespace Community.Controllers
 
             events = events.OrderBy(e => e.Date);
 
-            //var events = db.spSearchEvents(geog, resultRadius).OrderBy(e => e.Date).ToPagedList(pageNumber, pageSize);
             return View(events.ToPagedList(pageNumber, pageSize));
         }
 
@@ -87,6 +85,19 @@ namespace Community.Controllers
                 return HttpNotFound();
             }
             return View(@event);
+        }
+
+        public ActionResult UserPartial()
+        {
+            string userID = User.Identity.GetUserId();
+
+            var events = db.Events
+                .Include(y => y.Address)
+                .Where(e => e.HostID == userID && e.Date >= DateTime.Now)
+                .OrderBy(e => e.Date)
+                .Take(3);
+
+            return View(events.ToList());
         }
 
         // GET: Event/Create

@@ -20,6 +20,18 @@ namespace Community.Models
         public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
 
+    public class ChangeEmailViewModel {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        [Required]
+        [EmailAddress]
+        [Compare("Email", ErrorMessage = "Emails do not match.")]
+        [Display(Name = "Confirm Email")]
+        public string ConfirmEmail { get; set; }
+    }
+
     public class FactorViewModel
     {
         public string Purpose { get; set; }

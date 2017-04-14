@@ -1,0 +1,36 @@
+﻿@model Community.Models.Profile
+@using Microsoft.AspNet.Identity;
+@using Community.Helpers;
+@{
+    var image = "";
+    var userId = User.Identity.GetUserId();
+    var profile = ProfileHelper.CurrentProfileID(userId);
+    Layout = null;
+}
+<div class="row text-center">
+    <h3>Profile</h3>
+</div>
+<div class="col-xs-12 col-sm-6">
+    <div class="col-xs-4 img-thumbnail">
+        @if (Model.PictureURL != null && Model.PictureURL != "")
+            {
+                image = Url.Content(Model.PictureURL);
+            }
+            else
+            {
+                image = "/Content/Images/user-substitute.png";
+            }
+        <img src="@image" class="img-responsive" alt="@Model.User.UserName's profile image" />
+    </div>
+    <div class="col-xs-8">
+        <h3>@Model.User.UserName</h3>
+        <h4>@Model.FirstName @Model.Surname</h4>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-6">
+    <h4>Current Tokens: @Model.Balance</h4>
+    <div class="btn-group">
+        @Html.ActionLink("Edit Profile", "Edit", new { id = profile }, new { @class = "btn btn-warning" })
+        @Html.ActionLink("View Profile", "Details", new { id = profile }, new { @class = "btn btn-info" })
+    </div>
+</div>

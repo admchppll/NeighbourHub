@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Community.Models.Transaction>
+@using Microsoft.AspNet.Identity;
+@{
+    string userID = User.Identity.GetUserId();
+    Layout = null;
+}
+<div class="row text-center">
+    <h3>Recent Transactions</h3>
+</div>
+<table class="table table-center">
+    <tr>
+        <th></th>
+        <th>Date</th>
+        <th>Tokens</th>
+        <th>Complete</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    if (item.RecipientID == userID)
+                    {
+                        <span class="glyphicon glyphicon-arrow-right"></span>
+                    }
+                    else if (item.SenderID == userID)
+                    {
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @if (item.ParentTransaction != null && item.Complete == true)
+                {
+                    <span>Reversed</span>
+                }
+                else if (item.Cancelled == true)
+                {
+                    <span>Cancelled</span>
+                }
+                else {
+                    @Html.DisplayFor(modelItem => item.Complete, "YesNo")
+                }
+            </td>
+        </tr>
+                    }
+</table>
+<div class="row text-center">
+    @Html.ActionLink("View All", "UserTransactions")
+</div>

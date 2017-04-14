@@ -35,6 +35,18 @@ namespace Community.Controllers
             return View(address);
         }
 
+        public ActionResult UserPartial()
+        {
+            string userID = User.Identity.GetUserId();
+
+            var addresses = db.Addresses
+                .Where(a => a.UserID == userID)
+                .OrderByDescending(a => a.Default)
+                .ThenBy(a => a.Name);
+
+            return View(addresses.ToList());
+        }
+
         // GET: Address/Create
         public ActionResult Create()
         {
@@ -60,11 +72,28 @@ namespace Community.Controllers
                 db.Addresses.Add(address);
                 db.SaveChanges();
                 db.createGeoLocationAddress(address.ID);
+                if (address.Default == true) {
+                    AddressHelper.SetDefault(address.ID);
+                }
                 return RedirectToAction("Index");
             }
 
             ViewBag.UserID = new SelectList(db.Users, "ID", "Email", address.UserID);
             return View(address);
+        }
+
+        public class AddressPostData {
+            public int AddressID { get; set; }
+        }
+
+        //Handle AJAX MakeDefault requests
+        [HttpPost, ValidateHeaderAntiForgeryToken]
+        public JsonResult MakeDefault(AddressPostData data) {
+            AddressHelper.SetDefault(data.AddressID);
+            return Json(new
+            {
+                success = true
+            });
         }
 
         // GET: Address/Edit/5
@@ -94,6 +123,10 @@ namespace Community.Controllers
             {
                 db.Entry(address).State = EntityState.Modified;
                 db.SaveChanges();
+                if (address.Default == true)
+                {
+                    AddressHelper.SetDefault(address.ID);
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.UserID = new SelectList(db.Users, "ID", "Email", address.UserID);

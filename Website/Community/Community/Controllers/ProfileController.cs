@@ -54,6 +54,15 @@ namespace Community.Controllers
             }
         }
 
+        public ActionResult UserPartial() {
+            string userID = User.Identity.GetUserId();
+            int profileID = ProfileHelper.CurrentProfileID(userID);
+
+            var profile = db.Profiles.Find(profileID);
+
+            return View(profile);
+        }
+
         // POST: Profile/Create
         [HttpPost,ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography")] Profile profile, [Bind(Include = "PictureURL")]HttpPostedFileBase PictureURL)
