@@ -1,9 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using System.Configuration;
+@{ 
+    var image = ViewBag.SocialImage != "" && ViewBag.SocialImage != null ? ViewBag.SocialImage : "~/Content/Images/fb-tile-rectangle";
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - NeighbourHub</title>
+    <meta property="og:site_name" content="NeighbourHub">
+    <meta property="og:title" content="@ViewBag.Title - NeighbourHub">
+    <meta property="og:description" content="@ViewBag.Description">
+    <meta property="og:image" content="@Url.Content(image)">
+    <meta property="og:url" content="@Request.Url.AbsoluteUri">
+    <meta property="fb:app_id" content="@ConfigurationManager.AppSettings["FacebookAppId"]" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")

@@ -212,6 +212,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="VolunteerID" Type="varchar" MaxLength="128" />
           <Property Name="EventID" Type="int" />
           <Property Name="Rating" Type="tinyint" />
           <Property Name="Review" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -2024,6 +2025,7 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
           <Property Name="Review1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Event" Relationship="CommunityModel.FK_Review_Event" FromRole="Review" ToRole="Event" />
           <NavigationProperty Name="User" Relationship="CommunityModel.FK_Review_User" FromRole="Review" ToRole="User" />
+          <Property Name="VolunteerID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Review_Event">
           <End Type="CommunityModel.Event" Role="Event" Multiplicity="0..1" />
@@ -2433,6 +2435,7 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
           <EntitySetMapping Name="Reviews">
             <EntityTypeMapping TypeName="CommunityModel.Review">
               <MappingFragment StoreEntitySet="Review">
+                <ScalarProperty Name="VolunteerID" ColumnName="VolunteerID" />
                 <ScalarProperty Name="Review1" ColumnName="Review" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="EventID" ColumnName="EventID" />

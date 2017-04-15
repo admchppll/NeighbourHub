@@ -207,6 +207,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserID" Type="nvarchar" MaxLength="128" />
+    <Property Name="VolunteerID" Type="varchar" MaxLength="128" />
     <Property Name="EventID" Type="int" />
     <Property Name="Rating" Type="tinyint" />
     <Property Name="Review" Type="nvarchar" MaxLength="200" Nullable="false" />

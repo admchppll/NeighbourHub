@@ -1028,6 +1028,7 @@
     <Property Name="Review1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Event" Relationship="CommunityModel.FK_Review_Event" FromRole="Review" ToRole="Event" />
     <NavigationProperty Name="User" Relationship="CommunityModel.FK_Review_User" FromRole="Review" ToRole="User" />
+    <Property Name="VolunteerID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK_Review_Event">
     <End Type="CommunityModel.Event" Role="Event" Multiplicity="0..1" />

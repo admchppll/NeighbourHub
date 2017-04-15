@@ -611,7 +611,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\fb-tile-ractangle.jpg" />
+    <Content Include="Content\Images\email-logo.png" />
+    <Content Include="Content\Images\fb-tile-rectangle.jpg" />
+    <Content Include="Content\Images\logo-greyscale.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\user-substitute.png" />
     <Content Include="Content\PagedList.css" />
@@ -827,7 +829,6 @@
     <Content Include="Views\Profile\UserPartial.cshtml" />
     <Content Include="Views\Address\UserPartial.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
-    <Content Include="Views\Notification\UserPartial.cshtml" />
     <Content Include="Views\Manage\ChangeEmail.cshtml" />
     <Content Include="Views\Event\List.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />

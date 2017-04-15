@@ -379,6 +379,7 @@
     <EntitySetMapping Name="Reviews">
       <EntityTypeMapping TypeName="CommunityModel.Review">
         <MappingFragment StoreEntitySet="Review">
+          <ScalarProperty Name="VolunteerID" ColumnName="VolunteerID" />
           <ScalarProperty Name="Review1" ColumnName="Review" />
           <ScalarProperty Name="Rating" ColumnName="Rating" />
           <ScalarProperty Name="EventID" ColumnName="EventID" />

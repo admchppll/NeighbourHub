@@ -19,6 +19,7 @@ namespace Community.Models
         public Nullable<int> EventID { get; set; }
         public Nullable<byte> Rating { get; set; }
         public string Review1 { get; set; }
+        public string VolunteerID { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual User User { get; set; }
