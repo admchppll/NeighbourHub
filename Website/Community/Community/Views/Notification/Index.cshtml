@@ -1,57 +1,40 @@
 ﻿@model IEnumerable<Community.Models.Notification>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Notifications";
 }
 
-<h2>Index</h2>
+<h2>My Notifications</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Link)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Viewed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.Email)
-        </th>
-        <th></th>
-    </tr>
+<table class="table vertical-center">
 
 @foreach (var item in Model) {
-    <tr>
+    <tr id="not-@item.ID" data-notification-id="@item.ID" data-read="@item.Viewed" class="notification @(item.Viewed != true?"active":"")">
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            <h4>@item.Title</h4>
+            <p>@item.Description</p>
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Link)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Viewed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Email)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        <td class="vertical-center">
+            <a href="@Url.Content(@item.Link)" class="btn btn-info vertical-center">Follow Action</a>
         </td>
     </tr>
 }
 
 </table>
+
+<script>
+    $('.notification').on("mouseover", function () {
+        var id = $(this).attr("data-notification-id");
+        if ($(this).attr("data-read") != "True") {
+            var data = {
+                ID: id
+            };
+            var success = function () {
+                $('#not-' + id).removeClass("active");
+            };
+            var fail = function () { };
+
+            ajax("/Notification/Read", data, success, fail);
+        }
+    });
+</script>

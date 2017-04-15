@@ -151,9 +151,12 @@ namespace Community.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var user = User.Identity.GetUserId();
             Address address = db.Addresses.Find(id);
             address.UserID = null;
             db.SaveChanges();
+
+            AuditHelper.addAudit(user, "Address Disassociated with User. Address ID: #" + address.ID);
             return RedirectToAction("Index");
         }
 

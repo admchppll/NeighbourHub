@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Community.Models;
+using System.Net.Mail;
 
 namespace Community
 {
@@ -19,6 +20,8 @@ namespace Community
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
+            Helpers.EmailHelper.Create(message.Destination, message.Subject, message.Body);
+
             return Task.FromResult(0);
         }
     }

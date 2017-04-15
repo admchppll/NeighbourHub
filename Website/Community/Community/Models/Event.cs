@@ -23,6 +23,7 @@ namespace Community.Models
             this.Reports = new HashSet<Report>();
             this.Transactions = new HashSet<Transaction>();
             this.Volunteers = new HashSet<Volunteer>();
+            this.Reviews = new HashSet<Review>();
         }
     
         public int ID { get; set; }
@@ -74,5 +75,7 @@ namespace Community.Models
         public virtual ICollection<Transaction> Transactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Volunteer> Volunteers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

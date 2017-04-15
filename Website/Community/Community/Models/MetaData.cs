@@ -186,6 +186,7 @@ namespace Community.Models
         [StringLength(5, ErrorMessage = "Title cannot be longer than 5 characters.")]
         public string Title { get; set; }
         [Required]
+        [Display(Name ="First Name")]
         [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
         [MinLength(2, ErrorMessage = "First name must contain at least 2 characters ")]
         public string FirstName { get; set; }
@@ -196,13 +197,16 @@ namespace Community.Models
         [Required]
         public bool Gender { get; set; }
         [Required]
+        [Display(Name = "Date of Birth")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
+        [Display(Name = "Phone Number")]
         [RegularExpression("^[0-9 ]*$", ErrorMessage = "Phone number can only contain numbers and spaces.")]
         [StringLength(20, ErrorMessage = "Phone number cannot be longer than 20 digits.")]
         public string Phone { get; set; }
         [AllowHtml]
         public string Biography { get; set; }
+        [Display(Name ="Profile Image")]
         public string PictureURL { get; set; }
         [Required]
         public bool Active { get; set; }
@@ -216,6 +220,7 @@ namespace Community.Models
         [Required]
         [AllowHtml]
         public string Description { get; set; }
+        [Display(Name = "Reported Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Sent { get; set; }
     }

@@ -41,11 +41,12 @@ namespace Community.Controllers
         }
 
         // GET: Profile/Create
-        public ActionResult Create()
+        public ActionResult Create(string message = "")
         {
             string userID = User.Identity.GetUserId();
             if (ProfileHelper.ProfileExists(userID) == false)
             {
+                ViewBag.Message = message != ""? message : null;
                 ViewBag.UserID = new SelectList(db.Users, "ID", "Email");
                 return View();
             }

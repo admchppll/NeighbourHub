@@ -1,0 +1,28 @@
+﻿@using Community.Helpers;
+    Content-Type: text/html; charset=utf-8
+
+    <html>
+    <body>
+        <nav>
+            <div style="width:100%;max-width:100%; background-color: #47146a;">
+                <a href="https://theneighbourhub.online" style="max-height:70px;padding-left:1em;">
+                    @Html.EmbedImage("~/Content/Images/email-logo.png", "NeighbourHub Logo")
+                </a>
+            </div>
+        </nav>
+        <article>
+            <p>Hi,</p>
+            <div>@Html.Raw(Model.Html)</div>
+            <p>
+                Kind Regards,
+                <br />
+                <br />
+                The NeighbourHub Team
+            </p>
+        </article>
+        <footer>
+            <p>Please do not reply to this email. Emails to this address will not be will not be answered.</p>
+            <p>Copyright &copy; @DateTime.Now.Year NeighbourHub</p>
+        </footer>
+    </body>
+</html>

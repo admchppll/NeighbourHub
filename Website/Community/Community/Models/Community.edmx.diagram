@@ -65,6 +65,9 @@
         <AssociationConnector Association="CommunityModel.FK_Transaction_User" />
         <EntityTypeShape EntityType="CommunityModel.EventSearch" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="CommunityModel.Contact" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CommunityModel.Review" Width="1.5" PointX="13.5" PointY="26.75" />
+        <AssociationConnector Association="CommunityModel.FK_Review_Event" />
+        <AssociationConnector Association="CommunityModel.FK_Review_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

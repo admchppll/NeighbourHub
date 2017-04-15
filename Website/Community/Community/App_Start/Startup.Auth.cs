@@ -53,9 +53,9 @@ namespace Community
             //    clientId: "",
             //    clientSecret: "");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            app.UseTwitterAuthentication(
+               consumerKey: "qUvUWqrf98Q5OfVIqpo68Ybky",
+               consumerSecret: "E79iLXweCmuEugBFSLU33wYbooqrQhyXiPNEITztpCGT2pM6gd");
 
             var facebookOptions = new FacebookAuthenticationOptions() {
                 AppId = "360676600940973",

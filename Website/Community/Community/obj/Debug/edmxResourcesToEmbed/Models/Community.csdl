@@ -90,6 +90,7 @@
     <NavigationProperty Name="Transactions" Relationship="Self.FK_Transaction_Event" FromRole="Event" ToRole="Transaction" />
     <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_Event" FromRole="Event" ToRole="Volunteer" />
     <Property Name="Cancelled" Type="Boolean" />
+    <NavigationProperty Name="Reviews" Relationship="CommunityModel.FK_Review_Event" FromRole="Event" ToRole="Review" />
   </EntityType>
   <EntityType Name="EventTag">
     <Key>
@@ -290,6 +291,7 @@
     <NavigationProperty Name="Points" Relationship="CommunityModel.FK_Points_User" FromRole="User" ToRole="Point" />
     <NavigationProperty Name="Transactions" Relationship="CommunityModel.FK_Transaction_RecipientUser" FromRole="User" ToRole="Transaction" />
     <NavigationProperty Name="Transactions1" Relationship="CommunityModel.FK_Transaction_User" FromRole="User" ToRole="Transaction" />
+    <NavigationProperty Name="Reviews" Relationship="CommunityModel.FK_Review_User" FromRole="User" ToRole="Review" />
   </EntityType>
   <EntityType Name="UserClaim">
     <Key>
@@ -891,6 +893,15 @@
     </FunctionImport>
     <EntitySet Name="EventSearches" EntityType="CommunityModel.EventSearch" />
     <EntitySet Name="Contacts" EntityType="CommunityModel.Contact" />
+    <EntitySet Name="Reviews" EntityType="CommunityModel.Review" />
+    <AssociationSet Name="FK_Review_Event" Association="CommunityModel.FK_Review_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Review_User" Association="CommunityModel.FK_Review_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
   </EntityContainer>
   <Association Name="FK_Audit_User">
     <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
@@ -1006,4 +1017,40 @@
     <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Replied" Type="Boolean" Nullable="false" />
   </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="EventID" Type="Int32" />
+    <Property Name="Rating" Type="Byte" />
+    <Property Name="Review1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Event" Relationship="CommunityModel.FK_Review_Event" FromRole="Review" ToRole="Event" />
+    <NavigationProperty Name="User" Relationship="CommunityModel.FK_Review_User" FromRole="Review" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Review_Event">
+    <End Type="CommunityModel.Event" Role="Event" Multiplicity="0..1" />
+    <End Type="CommunityModel.Review" Role="Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Review_User">
+    <End Type="CommunityModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="CommunityModel.Review" Role="Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

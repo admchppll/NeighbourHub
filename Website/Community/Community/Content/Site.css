@@ -151,6 +151,10 @@ textarea {
     padding-bottom: 15px;
 }
 
+.vertical-center {
+    vertical-align: middle !important;
+}
+
 @media screen and (min-width: 768px) {
     .navbar div div ul li a {
         padding-bottom: 20px;

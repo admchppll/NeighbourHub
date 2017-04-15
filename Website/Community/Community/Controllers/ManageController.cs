@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Community.Models;
+using Community.Helpers;
 
 namespace Community.Controllers
 {
@@ -64,6 +65,11 @@ namespace Community.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+
+            if (ProfileHelper.ProfileExists(userId) == false) {
+                return RedirectToAction("Create", "Profile", new { message = "You need to create a profile before you can access your hub!" });
+            }
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),

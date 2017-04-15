@@ -54,6 +54,7 @@ namespace Community.Models
         public virtual DbSet<Point> Points { get; set; }
         public virtual DbSet<EventSearch> EventSearches { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
     
         public virtual int confirmVolunteer(Nullable<int> volunteerID)
         {

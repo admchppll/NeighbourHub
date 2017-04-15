@@ -2,6 +2,7 @@
 @using Community.Helpers
 @{
     string user = User.Identity.GetUserId();
+    int notifications = @NotificationHelper.Unread(user);
 }
 
 @if (Request.IsAuthenticated)
@@ -15,8 +16,8 @@
                 <a href="@Url.Action("Index", "Manage")"><i class="fa fa-home"></i> My Hub</a>
             </li>
             <li>
-                <a class="hidden-xs"><i class="fa fa-bell"></i><span class="label label-danger">@NotificationHelper.Unread(user)</span></a>
-                <a class="visible-xs"><i class="fa fa-bell"></i> Notifications <span class="label label-danger">@NotificationHelper.Unread(user)</span></a>
+                <a class="hidden-xs" href="@Url.Action("Index", "Notification")"><i class="fa fa-bell"></i>@if(notifications > 0) {<span class="label label-danger">@notifications</span>}</a>
+                <a class="visible-xs" href="@Url.Action("Index", "Notification")"><i class="fa fa-bell"></i> Notifications @if (notifications > 0){<span class="label label-danger">@notifications</span>}</a>
             </li>
             <li>
                 <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>

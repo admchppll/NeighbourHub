@@ -126,6 +126,11 @@ namespace Community.Controllers
             //    return HttpNotFound();
             //}
 
+            if (ProfileHelper.ProfileExists(userID) == false)
+            {
+                return RedirectToAction("Create", "Profile", new { message = "You need to create a profile before you create an event!" });
+            }
+
             var addresses = db.Addresses
                 .Where(a => a.UserID == userID)
                 .Select(a => new {
