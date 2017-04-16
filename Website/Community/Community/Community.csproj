@@ -680,6 +680,8 @@
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\global.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -864,6 +866,8 @@
     <Content Include="Views\Emails\EmailExtendedModel.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Contact\Reply.cshtml" />
+    <Content Include="Views\Admin\ReportTile.cshtml" />
+    <Content Include="Views\Admin\EventTile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />

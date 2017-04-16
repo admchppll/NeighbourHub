@@ -30,3 +30,4 @@ F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\Community.d
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\bin\Community.pdb
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\obj\Debug\Community.dll
 F:\Documents\GitHub\Volunteering-App\Website\Community\Community\obj\Debug\Community.pdb
+F:\Documents\GitHub\Volunteering-App\Website\Community\Community\obj\Debug\Community.csprojResolveAssemblyReference.cache

@@ -406,6 +406,7 @@
     <EntitySetMapping Name="ReportStatistics">
       <EntityTypeMapping TypeName="CommunityModel.ReportStatistic">
         <MappingFragment StoreEntitySet="ReportStatistics">
+          <ScalarProperty Name="UresolvedCount" ColumnName="UresolvedCount" />
           <ScalarProperty Name="ResolvedCount" ColumnName="ResolvedCount" />
           <ScalarProperty Name="ReportedCount" ColumnName="ReportedCount" />
           <ScalarProperty Name="Year" ColumnName="Year" />

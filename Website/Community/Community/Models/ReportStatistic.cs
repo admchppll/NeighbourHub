@@ -17,7 +17,8 @@ namespace Community.Models
         public Nullable<int> Month { get; set; }
         public string MonthName { get; set; }
         public Nullable<int> Year { get; set; }
-        public Nullable<int> ReportedCount { get; set; }
+        public int ReportedCount { get; set; }
         public int ResolvedCount { get; set; }
+        public int UresolvedCount { get; set; }
     }
 }

@@ -1,7 +1,10 @@
 ﻿@model Community.Models.AdminIndex
-
+@Scripts.Render("~/bundles/Chart")
 @{
+    ViewBag.Title = "Dashboard";
     Html.RenderAction("ContactTile");
+    Html.RenderAction("ReportTile");
+    Html.RenderAction("EventTile");
 }
 
 

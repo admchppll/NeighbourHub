@@ -1081,8 +1081,9 @@
     <Property Name="Month" Type="Int32" />
     <Property Name="MonthName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <Property Name="Year" Type="Int32" />
-    <Property Name="ReportedCount" Type="Int32" />
+    <Property Name="ReportedCount" Type="Int32" Nullable="false" />
     <Property Name="ResolvedCount" Type="Int32" Nullable="false" />
+    <Property Name="UresolvedCount" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="UserStatistic">
     <Key>

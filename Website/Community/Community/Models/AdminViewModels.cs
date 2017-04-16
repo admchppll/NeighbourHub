@@ -12,29 +12,26 @@ namespace Community.Models
         public string UserID { get; set; }
     }
 
-    public class AdminReportMonth {
-        public string Month { get; set; }
-        public int Total { get; set; }
-        public int Open { get; set; }
-        public int Resolved { get; set; }
-    }
-
     public class ReportPartialView {
-        public int Past7Days { get; set; }
-        public int Past14Days { get; set; }
-        public int ThisMonth { get; set; }
-        public int PreviousMonth { get; set; }
-        public int ResolvedPast7Days { get; set; }
-        public int ResolvedPast14Days { get; set; }
-        public int ResolvedThisMonth { get; set; }
-        public int ResolvedLastMonth { get; set; }
-        public int TotalOpen { get; set; }
-        public List<AdminReportMonth> Statistics {get;set;}
+        public int TotalUnresolved { get; set; }
+        public string Labels { get; set; }
+        public string Reported { get; set; }
+        public string Resolved { get; set; }
+        public string Unresolved { get; set; }
     }
 
     public class ContactPartialView {
         public int TotalOpen { get; set; }
         public List<Contact> Contacts { get; set;}
+    }
+
+    public class EventPartialView {
+        public string Labels { get; set; }
+        public string TotalCreated { get; set; }
+        public string TotalUnpublished { get; set; }
+        public string TotalCancelled { get; set; }
+        public string TotalSuspended { get; set; }
+        public int Total { get; set; }
     }
 
     public class ContactAdminView {

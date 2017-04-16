@@ -29,6 +29,7 @@ namespace Community
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome/css/font-awesome.min.css",
                       "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/bundles/Chart").Include("~/Scripts/Chart.min.js"));
         }
     }
 }

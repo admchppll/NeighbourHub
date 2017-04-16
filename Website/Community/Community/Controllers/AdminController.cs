@@ -16,20 +16,75 @@ namespace Community.Controllers
             return View();
         }
 
-        public ActionResult ContactTile() {
+        public ActionResult ContactTile()
+        {
             ContactPartialView model = new ContactPartialView();
             model.TotalOpen = db.Contacts.Where(c => c.LinkedEmail == null && c.Replied == false).Count();
             model.Contacts = db.Contacts.Where(c => c.LinkedEmail == null && c.Replied == false).OrderBy(c => c.Date).Take(3).ToList();
             return View(model);
         }
 
-        public ActionResult ReportPartial() {
+        public ActionResult ReportTile()
+        {
             ReportPartialView model = new ReportPartialView();
 
+            model.TotalUnresolved = db.Reports.Where(r => r.ResolvedDate == null).Count();
 
+            var Statistics = db.ReportStatistics.OrderByDescending(r => r.Year).ThenByDescending(r => r.Month).Take(6).ToList();
+            Statistics = Statistics.OrderBy(s => s.Year).ThenBy(s => s.Month).ToList();
 
-            return PartialView();
+            List<int> Reported = new List<int>();
+            List<int> Resolved = new List<int>();
+            List<int> Unresolved = new List<int>();
+            List<string> Labels = new List<string>();
+
+            foreach (var stat in Statistics)
+            {
+                Reported.Add(stat.ReportedCount);
+                Resolved.Add(stat.ResolvedCount);
+                Unresolved.Add(stat.UresolvedCount);
+                Labels.Add(String.Format("{0} {1}", stat.MonthName, stat.Year));
+            }
+
+            model.Reported = string.Join(",", Reported);
+            model.Resolved = string.Join(",", Resolved);
+            model.Unresolved = string.Join(",", Unresolved);
+            model.Labels = string.Join(",", Labels);
+
+            return View(model);
         }
 
+        public ActionResult EventTile()
+        {
+            EventPartialView model = new EventPartialView();
+
+            model.Total = db.Events.Count();
+
+            var Statistics = db.EventStatistics.OrderByDescending(r => r.Year).ThenByDescending(r => r.Month).Take(6).ToList();
+            Statistics = Statistics.OrderBy(s => s.Year).ThenBy(s => s.Month).ToList();
+
+            List<int> TotalCreated = new List<int>();
+            List<int> TotalUnpublished = new List<int>();
+            List<int> TotalCancelled = new List<int>();
+            List<int> TotalSuspended = new List<int>();
+            List<string> Labels = new List<string>();
+
+            foreach (var stat in Statistics)
+            {
+                Labels.Add(String.Format("{0} {1}", stat.MonthName, stat.Year));
+                TotalCreated.Add(stat.Total);
+                TotalUnpublished.Add(stat.UnpublishedCount);
+                TotalCancelled.Add(stat.CancelledCount);
+                TotalSuspended.Add(stat.SuspendedCount);
+            }
+
+            model.Labels = string.Join(",", Labels);
+            model.TotalCreated = string.Join(",", TotalCreated);
+            model.TotalUnpublished = string.Join(",", TotalUnpublished);
+            model.TotalCancelled = string.Join(",", TotalCancelled);
+            model.TotalSuspended = string.Join(",", TotalSuspended);
+
+            return View(model);
+        }
     }
 }

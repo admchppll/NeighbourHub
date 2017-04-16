@@ -13,8 +13,10 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @if (UserHelper.isAdmin(user) == true) {
-                    <a href="@Url.Action("Index", "Admin")" title="Dashboard"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
+                @if (UserHelper.isAdmin(user) == true)
+                {
+                    <a href="@Url.Action("Index", "Admin")" title="Dashboard" class="hidden-xs"><i class="fa fa-tachometer" aria-hidden="true"></i></a>
+                    <a href="@Url.Action("Index", "Admin")" title="Dashboard" class="visible-xs"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
                 }
                 else {
                     <a href="@Url.Action("Index", "Manage")" title="My Hub"><i class="fa fa-home" aria-hidden="true"></i> My Hub</a>
