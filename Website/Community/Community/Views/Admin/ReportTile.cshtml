@@ -9,93 +9,95 @@
             Reports
             <span class="label label-warning">@Model.TotalUnresolved</span>
         </h3>
-        <canvas id="reportChart" width="400" height="200"></canvas>
+        <div class="col-xs-12">
+            <canvas id="reportChart" width="400" height="200"></canvas>
+        </div>
         <script>
             var Labels = "@Model.Labels".split(",");
             var reported = "@Model.Reported".split(",");
             var resolved = "@Model.Resolved".split(",");
             var unresolved = "@Model.Unresolved".split(",");
 
-var ctx = document.getElementById("reportChart");
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: Labels,
-        datasets: [
-            {
+            var ctx = document.getElementById("reportChart");
+            var myChart = new Chart(ctx, {
                 type: 'line',
-                label: 'Reports Resolved',
-                data: resolved,
-                fill: true,
-                lineTension: 0.1,
-                backgroundColor: "rgba(223, 240, 216,0.5)",
-                borderColor: "rgba(92, 184, 92,1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: "rgba(92, 184, 92,1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(92, 184, 92,1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                spanGaps: false,
-            },
-            {
-                type: 'line',
-                label: 'Reports Submitted',
-                data: reported,
-                fill: true,
-                lineTension: 0.1,
-                backgroundColor: "rgba(252, 248, 227,0.5)",
-                borderColor: "rgba(240, 173, 78,1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: "rgba(240, 173, 78,1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(240, 173, 78,1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                spanGaps: false,
-            },
-            {
-                type: 'line',
-                label: 'Unresolved Reports',
-                data: unresolved,
-                backgroundColour: "rgba(242, 222, 222,1)",
-                pointBackgroundColor: "rgba(217, 83, 79,1)",
-                pointBorderColor: "rgba(217, 83, 79,1)",
-                fill: true,
-                lineTension: 0.1,
-                borderColor: "rgba(217, 83, 79,1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                spanGaps: false
-            }]
-    },
-    options: {
-        responsive: true,
-    }
-});
+                data: {
+                    labels: Labels,
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: 'Reports Resolved',
+                            data: resolved,
+                            fill: false,
+                            lineTension: 0.1,
+                            backgroundColor: "rgba(223, 240, 216,0.5)",
+                            borderColor: "rgba(92, 184, 92,1)",
+                            borderCapStyle: 'butt',
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            borderJoinStyle: 'miter',
+                            pointBorderColor: "rgba(92, 184, 92,1)",
+                            pointBackgroundColor: "#fff",
+                            pointBorderWidth: 1,
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: "rgba(92, 184, 92,1)",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 1,
+                            pointHitRadius: 10,
+                            spanGaps: false,
+                        },
+                        {
+                            type: 'line',
+                            label: 'Reports Submitted',
+                            data: reported,
+                            fill: false,
+                            lineTension: 0.1,
+                            backgroundColor: "rgba(252, 248, 227,0.5)",
+                            borderColor: "rgba(240, 173, 78,1)",
+                            borderCapStyle: 'butt',
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            borderJoinStyle: 'miter',
+                            pointBorderColor: "rgba(240, 173, 78,1)",
+                            pointBackgroundColor: "#fff",
+                            pointBorderWidth: 1,
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: "rgba(240, 173, 78,1)",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 1,
+                            pointHitRadius: 10,
+                            spanGaps: false,
+                        },
+                        {
+                            type: 'line',
+                            label: 'Unresolved Reports',
+                            data: unresolved,
+                            backgroundColour: "rgba(242, 222, 222,1)",
+                            pointBackgroundColor: "rgba(217, 83, 79,1)",
+                            pointBorderColor: "rgba(217, 83, 79,1)",
+                            fill: false,
+                            lineTension: 0.1,
+                            borderColor: "rgba(217, 83, 79,1)",
+                            borderCapStyle: 'butt',
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            borderJoinStyle: 'miter',
+                            pointBackgroundColor: "#fff",
+                            pointBorderWidth: 1,
+                            pointHoverRadius: 5,
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 1,
+                            pointHitRadius: 10,
+                            spanGaps: false
+                        }]
+                },
+                options: {
+                    responsive: true,
+                }
+            });
         </script>
     </div>
 </div>

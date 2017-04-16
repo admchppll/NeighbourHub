@@ -872,6 +872,7 @@
     <Content Include="Views\Admin\ReportTile.cshtml" />
     <Content Include="Views\Admin\EventTile.cshtml" />
     <Content Include="Views\Admin\VolunteerTile.cshtml" />
+    <Content Include="Views\Admin\UserTile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />

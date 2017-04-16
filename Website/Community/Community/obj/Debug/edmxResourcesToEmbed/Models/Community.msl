@@ -446,5 +446,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spUsersWithoutProfile" FunctionName="CommunityModel.Store.spUsersWithoutProfile" />
   </EntityContainerMapping>
 </Mapping>

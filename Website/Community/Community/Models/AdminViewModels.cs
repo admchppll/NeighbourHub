@@ -46,6 +46,14 @@ namespace Community.Models
         public int Total { get; set; }
     }
 
+    public class UserAdminView {
+        public int TotalUsers { get; set; }
+        public int TotalWithoutProfile { get; set; }
+        public int TotalActiveUsers { get; set; }
+        public int TotalInactiveUsers { get; set; }
+        public int TotalSuspendedUsers { get; set; }
+    }
+
     public class ContactAdminView {
         public int Total { get; set; }
         public int TotalOpen { get; set; }

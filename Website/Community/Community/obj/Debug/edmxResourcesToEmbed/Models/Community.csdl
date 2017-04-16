@@ -906,6 +906,7 @@
     <EntitySet Name="ReportStatistics" EntityType="CommunityModel.ReportStatistic" />
     <EntitySet Name="IndividualUserStatistics" EntityType="CommunityModel.IndividualUserStatistic" />
     <EntitySet Name="VolunteerStatistics" EntityType="CommunityModel.VolunteerStatistic" />
+    <FunctionImport Name="spUsersWithoutProfile" ReturnType="Collection(Int32)" />
   </EntityContainer>
   <Association Name="FK_Audit_User">
     <End Type="CommunityModel.User" Role="User" Multiplicity="1" />

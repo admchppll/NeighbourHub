@@ -7,9 +7,11 @@
     <div class="row text-center">
         <h3>
             Events
+            <span class="label label-success">@Model.Total</span>
         </h3>
-        <h4>Created to Date: <span class="label label-success">@Model.Total</span></h4>
-        <canvas id="eventChart" width="400" height="200"></canvas>
+        <div class="col-xs-12">
+            <canvas id="eventChart" width="400" height="200"></canvas>
+        </div>
         <script>
             var Labels = "@Model.Labels".split(",");
             var TotalCreated = "@Model.TotalCreated".split(",");
@@ -50,7 +52,7 @@
                             type: 'line',
                             label: 'Unpublished',
                             data: TotalUnpublished,
-                            fill: true,
+                            fill: false,
                             lineTension: 0.1,
                             backgroundColor: "rgba(252, 248, 227,0.5)",
                             borderColor: "rgba(240, 173, 78,1)",
@@ -76,7 +78,7 @@
                             backgroundColour: "rgba(250, 255, 157,1)",
                             pointBackgroundColor: "rgba(245, 255, 0,1)",
                             pointBorderColor: "rgba(245, 255, 0,1)",
-                            fill: true,
+                            fill: false,
                             lineTension: 0.1,
                             borderColor: "rgba(245, 255, 0,1)",
                             borderCapStyle: 'butt',
@@ -99,7 +101,7 @@
                             backgroundColour: "rgba(242, 222, 222,1)",
                             pointBackgroundColor: "rgba(217, 83, 79,1)",
                             pointBorderColor: "rgba(217, 83, 79,1)",
-                            fill: true,
+                            fill: false,
                             lineTension: 0.1,
                             borderColor: "rgba(217, 83, 79,1)",
                             borderCapStyle: 'butt',
