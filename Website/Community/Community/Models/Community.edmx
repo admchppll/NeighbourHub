@@ -391,6 +391,28 @@ warning 6002: The table/view 'Volunteer.dbo.EventStatistics' does not have a pri
           <Property Name="SuspendedCount" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'Volunteer.dbo.IndividualUserStatistics' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IndividualUserStatistics">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="VolunteerCount" />
+            <PropertyRef Name="WithdrawnCount" />
+            <PropertyRef Name="RejectedCount" />
+            <PropertyRef Name="ConfirmedCount" />
+            <PropertyRef Name="PendingConfirmationCount" />
+          </Key>
+          <Property Name="Month" Type="int" />
+          <Property Name="MonthName" Type="nvarchar" MaxLength="30" />
+          <Property Name="Year" Type="int" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="HostedCount" Type="int" />
+          <Property Name="VolunteerCount" Type="int" Nullable="false" />
+          <Property Name="WithdrawnCount" Type="int" Nullable="false" />
+          <Property Name="RejectedCount" Type="int" Nullable="false" />
+          <Property Name="ConfirmedCount" Type="int" Nullable="false" />
+          <Property Name="PendingConfirmationCount" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'Volunteer.dbo.ReportStatistics' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ReportStatistics">
           <Key>
@@ -406,10 +428,10 @@ warning 6002: The table/view 'Volunteer.dbo.ReportStatistics' does not have a pr
           <Property Name="UresolvedCount" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'Volunteer.dbo.UserStatistics' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="UserStatistics">
+warning 6002: The table/view 'Volunteer.dbo.VolunteerStatistics' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VolunteerStatistics">
           <Key>
-            <PropertyRef Name="UserID" />
+            
             <PropertyRef Name="VolunteerCount" />
             <PropertyRef Name="WithdrawnCount" />
             <PropertyRef Name="RejectedCount" />
@@ -419,8 +441,7 @@ warning 6002: The table/view 'Volunteer.dbo.UserStatistics' does not have a prim
           <Property Name="Month" Type="int" />
           <Property Name="MonthName" Type="nvarchar" MaxLength="30" />
           <Property Name="Year" Type="int" />
-          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="HostedCount" Type="int" />
+          <Property Name="Potential" Type="int" Nullable="false" />
           <Property Name="VolunteerCount" Type="int" Nullable="false" />
           <Property Name="WithdrawnCount" Type="int" Nullable="false" />
           <Property Name="RejectedCount" Type="int" Nullable="false" />
@@ -919,6 +940,20 @@ warning 6002: The table/view 'Volunteer.dbo.UserStatistics' does not have a prim
     [EventStatistics].[SuspendedCount] AS [SuspendedCount]
     FROM [dbo].[EventStatistics] AS [EventStatistics]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="IndividualUserStatistics" EntityType="Self.IndividualUserStatistics" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [IndividualUserStatistics].[Month] AS [Month], 
+    [IndividualUserStatistics].[MonthName] AS [MonthName], 
+    [IndividualUserStatistics].[Year] AS [Year], 
+    [IndividualUserStatistics].[UserID] AS [UserID], 
+    [IndividualUserStatistics].[HostedCount] AS [HostedCount], 
+    [IndividualUserStatistics].[VolunteerCount] AS [VolunteerCount], 
+    [IndividualUserStatistics].[WithdrawnCount] AS [WithdrawnCount], 
+    [IndividualUserStatistics].[RejectedCount] AS [RejectedCount], 
+    [IndividualUserStatistics].[ConfirmedCount] AS [ConfirmedCount], 
+    [IndividualUserStatistics].[PendingConfirmationCount] AS [PendingConfirmationCount]
+    FROM [dbo].[IndividualUserStatistics] AS [IndividualUserStatistics]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ReportStatistics" EntityType="Self.ReportStatistics" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ReportStatistics].[Month] AS [Month], 
@@ -929,19 +964,18 @@ warning 6002: The table/view 'Volunteer.dbo.UserStatistics' does not have a prim
     [ReportStatistics].[UresolvedCount] AS [UresolvedCount]
     FROM [dbo].[ReportStatistics] AS [ReportStatistics]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="UserStatistics" EntityType="Self.UserStatistics" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="VolunteerStatistics" EntityType="Self.VolunteerStatistics" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [UserStatistics].[Month] AS [Month], 
-    [UserStatistics].[MonthName] AS [MonthName], 
-    [UserStatistics].[Year] AS [Year], 
-    [UserStatistics].[UserID] AS [UserID], 
-    [UserStatistics].[HostedCount] AS [HostedCount], 
-    [UserStatistics].[VolunteerCount] AS [VolunteerCount], 
-    [UserStatistics].[WithdrawnCount] AS [WithdrawnCount], 
-    [UserStatistics].[RejectedCount] AS [RejectedCount], 
-    [UserStatistics].[ConfirmedCount] AS [ConfirmedCount], 
-    [UserStatistics].[PendingConfirmationCount] AS [PendingConfirmationCount]
-    FROM [dbo].[UserStatistics] AS [UserStatistics]</DefiningQuery>
+    [VolunteerStatistics].[Month] AS [Month], 
+    [VolunteerStatistics].[MonthName] AS [MonthName], 
+    [VolunteerStatistics].[Year] AS [Year], 
+    [VolunteerStatistics].[Potential] AS [Potential], 
+    [VolunteerStatistics].[VolunteerCount] AS [VolunteerCount], 
+    [VolunteerStatistics].[WithdrawnCount] AS [WithdrawnCount], 
+    [VolunteerStatistics].[RejectedCount] AS [RejectedCount], 
+    [VolunteerStatistics].[ConfirmedCount] AS [ConfirmedCount], 
+    [VolunteerStatistics].[PendingConfirmationCount] AS [PendingConfirmationCount]
+    FROM [dbo].[VolunteerStatistics] AS [VolunteerStatistics]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
             <End Role="User" EntitySet="User" />
@@ -1992,7 +2026,8 @@ warning 6002: The table/view 'Volunteer.dbo.UserStatistics' does not have a prim
           </AssociationSet>
           <EntitySet Name="EventStatistics" EntityType="CommunityModel.EventStatistic" />
           <EntitySet Name="ReportStatistics" EntityType="CommunityModel.ReportStatistic" />
-          <EntitySet Name="UserStatistics" EntityType="CommunityModel.UserStatistic" />
+          <EntitySet Name="IndividualUserStatistics" EntityType="CommunityModel.IndividualUserStatistic" />
+          <EntitySet Name="VolunteerStatistics" EntityType="CommunityModel.VolunteerStatistic" />
         </EntityContainer>
         <Association Name="FK_Audit_User">
           <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
@@ -2173,7 +2208,7 @@ warning 6002: The table/view 'Volunteer.dbo.UserStatistics' does not have a prim
           <Property Name="ResolvedCount" Type="Int32" Nullable="false" />
           <Property Name="UresolvedCount" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserStatistic">
+        <EntityType Name="IndividualUserStatistic">
           <Key>
             <PropertyRef Name="UserID" />
             <PropertyRef Name="VolunteerCount" />
@@ -2187,6 +2222,24 @@ warning 6002: The table/view 'Volunteer.dbo.UserStatistics' does not have a prim
           <Property Name="Year" Type="Int32" />
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="HostedCount" Type="Int32" />
+          <Property Name="VolunteerCount" Type="Int32" Nullable="false" />
+          <Property Name="WithdrawnCount" Type="Int32" Nullable="false" />
+          <Property Name="RejectedCount" Type="Int32" Nullable="false" />
+          <Property Name="ConfirmedCount" Type="Int32" Nullable="false" />
+          <Property Name="PendingConfirmationCount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VolunteerStatistic">
+          <Key>
+            <PropertyRef Name="VolunteerCount" />
+            <PropertyRef Name="WithdrawnCount" />
+            <PropertyRef Name="RejectedCount" />
+            <PropertyRef Name="ConfirmedCount" />
+            <PropertyRef Name="PendingConfirmationCount" />
+          </Key>
+          <Property Name="Month" Type="Int32" />
+          <Property Name="MonthName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Potential" Type="Int32" Nullable="false" />
           <Property Name="VolunteerCount" Type="Int32" Nullable="false" />
           <Property Name="WithdrawnCount" Type="Int32" Nullable="false" />
           <Property Name="RejectedCount" Type="Int32" Nullable="false" />
@@ -2613,9 +2666,9 @@ warning 6002: The table/view 'Volunteer.dbo.UserStatistics' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserStatistics">
-            <EntityTypeMapping TypeName="CommunityModel.UserStatistic">
-              <MappingFragment StoreEntitySet="UserStatistics">
+          <EntitySetMapping Name="IndividualUserStatistics">
+            <EntityTypeMapping TypeName="CommunityModel.IndividualUserStatistic">
+              <MappingFragment StoreEntitySet="IndividualUserStatistics">
                 <ScalarProperty Name="PendingConfirmationCount" ColumnName="PendingConfirmationCount" />
                 <ScalarProperty Name="ConfirmedCount" ColumnName="ConfirmedCount" />
                 <ScalarProperty Name="RejectedCount" ColumnName="RejectedCount" />
@@ -2623,6 +2676,21 @@ warning 6002: The table/view 'Volunteer.dbo.UserStatistics' does not have a prim
                 <ScalarProperty Name="VolunteerCount" ColumnName="VolunteerCount" />
                 <ScalarProperty Name="HostedCount" ColumnName="HostedCount" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="MonthName" ColumnName="MonthName" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VolunteerStatistics">
+            <EntityTypeMapping TypeName="CommunityModel.VolunteerStatistic">
+              <MappingFragment StoreEntitySet="VolunteerStatistics">
+                <ScalarProperty Name="PendingConfirmationCount" ColumnName="PendingConfirmationCount" />
+                <ScalarProperty Name="ConfirmedCount" ColumnName="ConfirmedCount" />
+                <ScalarProperty Name="RejectedCount" ColumnName="RejectedCount" />
+                <ScalarProperty Name="WithdrawnCount" ColumnName="WithdrawnCount" />
+                <ScalarProperty Name="VolunteerCount" ColumnName="VolunteerCount" />
+                <ScalarProperty Name="Potential" ColumnName="Potential" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="MonthName" ColumnName="MonthName" />
                 <ScalarProperty Name="Month" ColumnName="Month" />

@@ -415,9 +415,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserStatistics">
-      <EntityTypeMapping TypeName="CommunityModel.UserStatistic">
-        <MappingFragment StoreEntitySet="UserStatistics">
+    <EntitySetMapping Name="IndividualUserStatistics">
+      <EntityTypeMapping TypeName="CommunityModel.IndividualUserStatistic">
+        <MappingFragment StoreEntitySet="IndividualUserStatistics">
           <ScalarProperty Name="PendingConfirmationCount" ColumnName="PendingConfirmationCount" />
           <ScalarProperty Name="ConfirmedCount" ColumnName="ConfirmedCount" />
           <ScalarProperty Name="RejectedCount" ColumnName="RejectedCount" />
@@ -425,6 +425,21 @@
           <ScalarProperty Name="VolunteerCount" ColumnName="VolunteerCount" />
           <ScalarProperty Name="HostedCount" ColumnName="HostedCount" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="MonthName" ColumnName="MonthName" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VolunteerStatistics">
+      <EntityTypeMapping TypeName="CommunityModel.VolunteerStatistic">
+        <MappingFragment StoreEntitySet="VolunteerStatistics">
+          <ScalarProperty Name="PendingConfirmationCount" ColumnName="PendingConfirmationCount" />
+          <ScalarProperty Name="ConfirmedCount" ColumnName="ConfirmedCount" />
+          <ScalarProperty Name="RejectedCount" ColumnName="RejectedCount" />
+          <ScalarProperty Name="WithdrawnCount" ColumnName="WithdrawnCount" />
+          <ScalarProperty Name="VolunteerCount" ColumnName="VolunteerCount" />
+          <ScalarProperty Name="Potential" ColumnName="Potential" />
           <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="MonthName" ColumnName="MonthName" />
           <ScalarProperty Name="Month" ColumnName="Month" />

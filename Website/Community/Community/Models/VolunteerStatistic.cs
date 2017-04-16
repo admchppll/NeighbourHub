@@ -12,13 +12,12 @@ namespace Community.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UserStatistic
+    public partial class VolunteerStatistic
     {
         public Nullable<int> Month { get; set; }
         public string MonthName { get; set; }
         public Nullable<int> Year { get; set; }
-        public string UserID { get; set; }
-        public Nullable<int> HostedCount { get; set; }
+        public int Potential { get; set; }
         public int VolunteerCount { get; set; }
         public int WithdrawnCount { get; set; }
         public int RejectedCount { get; set; }

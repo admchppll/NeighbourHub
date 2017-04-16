@@ -328,6 +328,9 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IndexViewModels.cs" />
+    <Compile Include="Models\IndividualUserStatistic.cs">
+      <DependentUpon>Community.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Information.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
@@ -397,10 +400,10 @@
     <Compile Include="Models\UserSkill.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UserStatistic.cs">
+    <Compile Include="Models\Volunteer.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Volunteer.cs">
+    <Compile Include="Models\VolunteerStatistic.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -868,6 +871,7 @@
     <Content Include="Views\Contact\Reply.cshtml" />
     <Content Include="Views\Admin\ReportTile.cshtml" />
     <Content Include="Views\Admin\EventTile.cshtml" />
+    <Content Include="Views\Admin\VolunteerTile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />

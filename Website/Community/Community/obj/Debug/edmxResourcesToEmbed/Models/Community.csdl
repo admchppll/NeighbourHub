@@ -904,7 +904,8 @@
     </AssociationSet>
     <EntitySet Name="EventStatistics" EntityType="CommunityModel.EventStatistic" />
     <EntitySet Name="ReportStatistics" EntityType="CommunityModel.ReportStatistic" />
-    <EntitySet Name="UserStatistics" EntityType="CommunityModel.UserStatistic" />
+    <EntitySet Name="IndividualUserStatistics" EntityType="CommunityModel.IndividualUserStatistic" />
+    <EntitySet Name="VolunteerStatistics" EntityType="CommunityModel.VolunteerStatistic" />
   </EntityContainer>
   <Association Name="FK_Audit_User">
     <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
@@ -1085,7 +1086,7 @@
     <Property Name="ResolvedCount" Type="Int32" Nullable="false" />
     <Property Name="UresolvedCount" Type="Int32" Nullable="false" />
   </EntityType>
-  <EntityType Name="UserStatistic">
+  <EntityType Name="IndividualUserStatistic">
     <Key>
       <PropertyRef Name="UserID" />
       <PropertyRef Name="VolunteerCount" />
@@ -1099,6 +1100,24 @@
     <Property Name="Year" Type="Int32" />
     <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="HostedCount" Type="Int32" />
+    <Property Name="VolunteerCount" Type="Int32" Nullable="false" />
+    <Property Name="WithdrawnCount" Type="Int32" Nullable="false" />
+    <Property Name="RejectedCount" Type="Int32" Nullable="false" />
+    <Property Name="ConfirmedCount" Type="Int32" Nullable="false" />
+    <Property Name="PendingConfirmationCount" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VolunteerStatistic">
+    <Key>
+      <PropertyRef Name="VolunteerCount" />
+      <PropertyRef Name="WithdrawnCount" />
+      <PropertyRef Name="RejectedCount" />
+      <PropertyRef Name="ConfirmedCount" />
+      <PropertyRef Name="PendingConfirmationCount" />
+    </Key>
+    <Property Name="Month" Type="Int32" />
+    <Property Name="MonthName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="Potential" Type="Int32" Nullable="false" />
     <Property Name="VolunteerCount" Type="Int32" Nullable="false" />
     <Property Name="WithdrawnCount" Type="Int32" Nullable="false" />
     <Property Name="RejectedCount" Type="Int32" Nullable="false" />

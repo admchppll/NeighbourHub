@@ -34,6 +34,18 @@ namespace Community.Models
         public int Total { get; set; }
     }
 
+    public class VolunteerPartialView
+    {
+        public string Labels { get; set; }
+        public string PotentialVolunteers { get; set; }
+        public string VolunteerCount { get; set; }
+        public string WithdrawnCount { get; set; }
+        public string RejectedCount { get; set; }
+        public string ConfirmedCount { get; set; }
+        public string PendingConfirmationCount { get; set; }
+        public int Total { get; set; }
+    }
+
     public class ContactAdminView {
         public int Total { get; set; }
         public int TotalOpen { get; set; }

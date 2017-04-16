@@ -70,7 +70,8 @@
         <AssociationConnector Association="CommunityModel.FK_Review_User" />
         <EntityTypeShape EntityType="CommunityModel.EventStatistic" Width="1.5" PointX="3.75" PointY="3.75" />
         <EntityTypeShape EntityType="CommunityModel.ReportStatistic" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="CommunityModel.UserStatistic" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CommunityModel.IndividualUserStatistic" Width="1.5" PointX="6.75" PointY="2.75" />
+        <EntityTypeShape EntityType="CommunityModel.VolunteerStatistic" Width="1.5" PointX="0.75" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

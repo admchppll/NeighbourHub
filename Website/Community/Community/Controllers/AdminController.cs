@@ -86,5 +86,44 @@ namespace Community.Controllers
 
             return View(model);
         }
+
+        public ActionResult VolunteerTile()
+        {
+            VolunteerPartialView model = new VolunteerPartialView();
+
+            model.Total = db.Events.Count();
+
+            var Statistics = db.VolunteerStatistics.OrderByDescending(r => r.Year).ThenByDescending(r => r.Month).Take(6).ToList();
+            Statistics = Statistics.OrderBy(s => s.Year).ThenBy(s => s.Month).ToList();
+
+            List<int> PotentialVolunteers = new List<int>();
+            List<int> VolunteerCount = new List<int>();
+            List<int> WithdrawnCount = new List<int>();
+            List<int> RejectedCount = new List<int>();
+            List<int> ConfirmedCount = new List<int>();
+            List<int> PendingConfirmationCount = new List<int>();
+            List<string> Labels = new List<string>();
+
+            foreach (var stat in Statistics)
+            {
+                Labels.Add(String.Format("{0} {1}", stat.MonthName, stat.Year));
+                PotentialVolunteers.Add(stat.Potential);
+                VolunteerCount.Add(stat.VolunteerCount);
+                WithdrawnCount.Add(stat.WithdrawnCount);
+                RejectedCount.Add(stat.RejectedCount);
+                ConfirmedCount.Add(stat.ConfirmedCount);
+                PendingConfirmationCount.Add(stat.PendingConfirmationCount);
+            }
+
+            model.Labels = string.Join(",", Labels);
+            model.PotentialVolunteers = string.Join(",", PotentialVolunteers);
+            model.VolunteerCount = string.Join(",", VolunteerCount);
+            model.WithdrawnCount = string.Join(",", WithdrawnCount);
+            model.RejectedCount = string.Join(",", RejectedCount);
+            model.ConfirmedCount = string.Join(",", ConfirmedCount);
+            model.PendingConfirmationCount = string.Join(",", PendingConfirmationCount);
+
+            return View(model);
+        }
     }
 }
