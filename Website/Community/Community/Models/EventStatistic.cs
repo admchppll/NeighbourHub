@@ -12,14 +12,14 @@ namespace Community.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Contact
+    public partial class EventStatistic
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Message { get; set; }
-        public bool Replied { get; set; }
-        public System.DateTime Date { get; set; }
-        public Nullable<int> LinkedEmail { get; set; }
+        public Nullable<int> Month { get; set; }
+        public string MonthName { get; set; }
+        public Nullable<int> Year { get; set; }
+        public int Total { get; set; }
+        public int UnpublishedCount { get; set; }
+        public int CancelledCount { get; set; }
+        public int SuspendedCount { get; set; }
     }
 }

@@ -1,0 +1,41 @@
+﻿@model Community.Models.ContactDisplayModel
+@{
+    ViewBag.Title = "Reply";
+}
+
+<h2>Reply to contact</h2>
+
+<div class="col-xs-12">
+    <div class="col-sm-6">
+        Email: @Model.Contact.Email
+    </div>
+    <div class="col-sm-6">
+        Name: @Model.Contact.Name
+    </div>
+    <div class="col-sm-6">
+        Date: @Model.Contact.Date.ToString("ddd, dd MMM yyyy h:mm tt")
+    </div>
+    <div class="col-xs-12">
+        @Html.Raw(@Model.Contact.Message)
+    </div>
+</div>
+<hr/>
+<h3>Replies</h3>
+<table class="table table-center">
+    @foreach (var item in Model.Replies) {
+        <tr>
+            <td>@item.Date.ToString("ddd, dd MMM yyyy h:mm tt")</td>
+            <td>@Html.Raw(item.Message)</td>
+        </tr>
+    }
+</table>
+
+@using(Html.BeginForm()){ 
+    @Html.AntiForgeryToken()
+    <textarea id="Message" name="Message" class="form-control"></textarea>
+    <input type="hidden" name="ContactID" id="ContactID" value="@Model.Contact.ID" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+}
+<script>
+    CKEDITOR.replaceAll();
+</script>

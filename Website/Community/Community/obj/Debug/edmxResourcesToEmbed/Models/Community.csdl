@@ -206,7 +206,7 @@
     <NavigationProperty Name="User" Relationship="Self.FK_Report_User_Reported" FromRole="Report" ToRole="User" />
     <NavigationProperty Name="User1" Relationship="Self.FK_Report_User_Reporter" FromRole="Report" ToRole="User" />
     <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Resolved" Type="Boolean" Nullable="false" />
+    <Property Name="ResolvedDate" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -902,6 +902,9 @@
       <End Role="User" EntitySet="Users" />
       <End Role="Review" EntitySet="Reviews" />
     </AssociationSet>
+    <EntitySet Name="EventStatistics" EntityType="CommunityModel.EventStatistic" />
+    <EntitySet Name="ReportStatistics" EntityType="CommunityModel.ReportStatistic" />
+    <EntitySet Name="UserStatistics" EntityType="CommunityModel.UserStatistic" />
   </EntityContainer>
   <Association Name="FK_Audit_User">
     <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
@@ -1016,6 +1019,8 @@
     <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Replied" Type="Boolean" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LinkedEmail" Type="Int32" />
   </EntityType>
   <EntityType Name="Review">
     <Key>
@@ -1054,4 +1059,49 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="EventStatistic">
+    <Key>
+      <PropertyRef Name="Total" />
+      <PropertyRef Name="UnpublishedCount" />
+      <PropertyRef Name="CancelledCount" />
+      <PropertyRef Name="SuspendedCount" />
+    </Key>
+    <Property Name="Month" Type="Int32" />
+    <Property Name="MonthName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="Total" Type="Int32" Nullable="false" />
+    <Property Name="UnpublishedCount" Type="Int32" Nullable="false" />
+    <Property Name="CancelledCount" Type="Int32" Nullable="false" />
+    <Property Name="SuspendedCount" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ReportStatistic">
+    <Key>
+      <PropertyRef Name="ResolvedCount" />
+    </Key>
+    <Property Name="Month" Type="Int32" />
+    <Property Name="MonthName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="ReportedCount" Type="Int32" />
+    <Property Name="ResolvedCount" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserStatistic">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="VolunteerCount" />
+      <PropertyRef Name="WithdrawnCount" />
+      <PropertyRef Name="RejectedCount" />
+      <PropertyRef Name="ConfirmedCount" />
+      <PropertyRef Name="PendingConfirmationCount" />
+    </Key>
+    <Property Name="Month" Type="Int32" />
+    <Property Name="MonthName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="HostedCount" Type="Int32" />
+    <Property Name="VolunteerCount" Type="Int32" Nullable="false" />
+    <Property Name="WithdrawnCount" Type="Int32" Nullable="false" />
+    <Property Name="RejectedCount" Type="Int32" Nullable="false" />
+    <Property Name="ConfirmedCount" Type="Int32" Nullable="false" />
+    <Property Name="PendingConfirmationCount" Type="Int32" Nullable="false" />
+  </EntityType>
 </Schema>

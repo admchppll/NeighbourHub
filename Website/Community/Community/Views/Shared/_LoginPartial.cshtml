@@ -13,11 +13,16 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="@Url.Action("Index", "Manage")"><i class="fa fa-home"></i> My Hub</a>
+                @if (UserHelper.isAdmin(user) == true) {
+                    <a href="@Url.Action("Index", "Admin")" title="Dashboard"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a>
+                }
+                else {
+                    <a href="@Url.Action("Index", "Manage")" title="My Hub"><i class="fa fa-home" aria-hidden="true"></i> My Hub</a>
+                }
             </li>
             <li>
-                <a class="hidden-xs" href="@Url.Action("Index", "Notification")"><i class="fa fa-bell"></i>@if(notifications > 0) {<span class="label label-danger">@notifications</span>}</a>
-                <a class="visible-xs" href="@Url.Action("Index", "Notification")"><i class="fa fa-bell"></i> Notifications @if (notifications > 0){<span class="label label-danger">@notifications</span>}</a>
+                <a class="hidden-xs" href="@Url.Action("Index", "Notification")"><i class="fa fa-bell" aria-hidden="true"></i>@if(notifications > 0) {<span class="label label-danger">@notifications</span>}</a>
+                <a class="visible-xs" href="@Url.Action("Index", "Notification")"><i class="fa fa-bell" aria-hidden="true"></i> Notifications @if (notifications > 0){<span class="label label-danger">@notifications</span>}</a>
             </li>
             <li>
                 <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>

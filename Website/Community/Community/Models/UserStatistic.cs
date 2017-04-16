@@ -12,18 +12,17 @@ namespace Community.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Report
+    public partial class UserStatistic
     {
-        public int ID { get; set; }
+        public Nullable<int> Month { get; set; }
+        public string MonthName { get; set; }
+        public Nullable<int> Year { get; set; }
         public string UserID { get; set; }
-        public Nullable<int> ReportedEvent { get; set; }
-        public string ReportedID { get; set; }
-        public string Description { get; set; }
-        public System.DateTime Sent { get; set; }
-        public Nullable<System.DateTime> ResolvedDate { get; set; }
-    
-        public virtual Event Event { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
+        public Nullable<int> HostedCount { get; set; }
+        public int VolunteerCount { get; set; }
+        public int WithdrawnCount { get; set; }
+        public int RejectedCount { get; set; }
+        public int ConfirmedCount { get; set; }
+        public int PendingConfirmationCount { get; set; }
     }
 }

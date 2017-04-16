@@ -46,7 +46,9 @@
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="Replied" Type="bit" Nullable="false" />
+    <Property Name="LinkedEmail" Type="int" />
   </EntityType>
   <EntityType Name="Event">
     <Key>
@@ -199,7 +201,7 @@
     <Property Name="ReportedID" Type="nvarchar" MaxLength="128" />
     <Property Name="Description" Type="nvarchar(max)" />
     <Property Name="Sent" Type="datetime" Nullable="false" />
-    <Property Name="Resolved" Type="bit" Nullable="false" />
+    <Property Name="ResolvedDate" Type="datetime" />
   </EntityType>
   <EntityType Name="Review">
     <Key>
@@ -365,6 +367,57 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
     <Property Name="Length" Type="tinyint" Nullable="false" />
     <Property Name="Published" Type="bit" Nullable="false" />
     <Property Name="Suspended" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Volunteer.dbo.EventStatistics' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="EventStatistics">
+    <Key>
+      <PropertyRef Name="Total" />
+      <PropertyRef Name="UnpublishedCount" />
+      <PropertyRef Name="CancelledCount" />
+      <PropertyRef Name="SuspendedCount" />
+    </Key>
+    <Property Name="Month" Type="int" />
+    <Property Name="MonthName" Type="nvarchar" MaxLength="30" />
+    <Property Name="Year" Type="int" />
+    <Property Name="Total" Type="int" Nullable="false" />
+    <Property Name="UnpublishedCount" Type="int" Nullable="false" />
+    <Property Name="CancelledCount" Type="int" Nullable="false" />
+    <Property Name="SuspendedCount" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Volunteer.dbo.ReportStatistics' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ReportStatistics">
+    <Key>
+      <PropertyRef Name="ResolvedCount" />
+    </Key>
+    <Property Name="Month" Type="int" />
+    <Property Name="MonthName" Type="nvarchar" MaxLength="30" />
+    <Property Name="Year" Type="int" />
+    <Property Name="ReportedCount" Type="int" />
+    <Property Name="ResolvedCount" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Volunteer.dbo.UserStatistics' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="UserStatistics">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="VolunteerCount" />
+      <PropertyRef Name="WithdrawnCount" />
+      <PropertyRef Name="RejectedCount" />
+      <PropertyRef Name="ConfirmedCount" />
+      <PropertyRef Name="PendingConfirmationCount" />
+    </Key>
+    <Property Name="Month" Type="int" />
+    <Property Name="MonthName" Type="nvarchar" MaxLength="30" />
+    <Property Name="Year" Type="int" />
+    <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="HostedCount" Type="int" />
+    <Property Name="VolunteerCount" Type="int" Nullable="false" />
+    <Property Name="WithdrawnCount" Type="int" Nullable="false" />
+    <Property Name="RejectedCount" Type="int" Nullable="false" />
+    <Property Name="ConfirmedCount" Type="int" Nullable="false" />
+    <Property Name="PendingConfirmationCount" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_Address_User">
     <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -846,6 +899,40 @@ warning 6002: The table/view 'Volunteer.dbo.EventSearch' does not have a primary
     [EventSearch].[Published] AS [Published], 
     [EventSearch].[Suspended] AS [Suspended]
     FROM [dbo].[EventSearch] AS [EventSearch]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="EventStatistics" EntityType="Self.EventStatistics" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [EventStatistics].[Month] AS [Month], 
+    [EventStatistics].[MonthName] AS [MonthName], 
+    [EventStatistics].[Year] AS [Year], 
+    [EventStatistics].[Total] AS [Total], 
+    [EventStatistics].[UnpublishedCount] AS [UnpublishedCount], 
+    [EventStatistics].[CancelledCount] AS [CancelledCount], 
+    [EventStatistics].[SuspendedCount] AS [SuspendedCount]
+    FROM [dbo].[EventStatistics] AS [EventStatistics]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ReportStatistics" EntityType="Self.ReportStatistics" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ReportStatistics].[Month] AS [Month], 
+    [ReportStatistics].[MonthName] AS [MonthName], 
+    [ReportStatistics].[Year] AS [Year], 
+    [ReportStatistics].[ReportedCount] AS [ReportedCount], 
+    [ReportStatistics].[ResolvedCount] AS [ResolvedCount]
+    FROM [dbo].[ReportStatistics] AS [ReportStatistics]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="UserStatistics" EntityType="Self.UserStatistics" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [UserStatistics].[Month] AS [Month], 
+    [UserStatistics].[MonthName] AS [MonthName], 
+    [UserStatistics].[Year] AS [Year], 
+    [UserStatistics].[UserID] AS [UserID], 
+    [UserStatistics].[HostedCount] AS [HostedCount], 
+    [UserStatistics].[VolunteerCount] AS [VolunteerCount], 
+    [UserStatistics].[WithdrawnCount] AS [WithdrawnCount], 
+    [UserStatistics].[RejectedCount] AS [RejectedCount], 
+    [UserStatistics].[ConfirmedCount] AS [ConfirmedCount], 
+    [UserStatistics].[PendingConfirmationCount] AS [PendingConfirmationCount]
+    FROM [dbo].[UserStatistics] AS [UserStatistics]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
       <End Role="User" EntitySet="User" />

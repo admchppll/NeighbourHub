@@ -13,6 +13,9 @@ namespace Community.Models
     [MetadataType(typeof(AuditMetaData))]
     public partial class Audit { }
 
+    [MetadataType(typeof(ContactMetaData))]
+    public partial class Contact { }
+
     [MetadataType(typeof(EventMetaData))]
     public partial class Event { }
 

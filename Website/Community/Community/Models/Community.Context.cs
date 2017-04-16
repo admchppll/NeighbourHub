@@ -55,6 +55,9 @@ namespace Community.Models
         public virtual DbSet<EventSearch> EventSearches { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<EventStatistic> EventStatistics { get; set; }
+        public virtual DbSet<ReportStatistic> ReportStatistics { get; set; }
+        public virtual DbSet<UserStatistic> UserStatistics { get; set; }
     
         public virtual int confirmVolunteer(Nullable<int> volunteerID)
         {

@@ -43,6 +43,23 @@ namespace Community.Models
         public string AuditMessage { get; set; }
     }
 
+    public class ContactMetaData
+    {
+        [Required]
+        public int ID { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [AllowHtml]
+        [Required]
+        public string Message { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public bool Replied { get; set; }
+
+        public System.DateTime Date { get; set; }
+    }
+
     public class EventMetaData
     {
         [Required]

@@ -33,8 +33,21 @@ namespace Community.Helpers
         }
 
         public static bool isAdmin(string userID) {
+            using (CommunityEntities db = new CommunityEntities())
+            {
+                var role = db.Roles.Where(r => r.Name == "Admin").Single();
+                bool count = db.UserRoles.Where(u => u.UserId == userID && u.RoleId == role.Id).Any();
+                return count;
+            }
+        }
 
-            return true;
+        public static bool isConnectedToOrganisation(string userID)
+        {
+            CommunityEntities db = new CommunityEntities();
+
+            var exists = db.UserOrganisations.Where(u => u.UserID == userID).Any();
+
+            return exists;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Community.Controllers
             }
 
             if (showResolved == false) {
-                reports = reports.Where(r => r.Resolved == false);
+                reports = reports.Where(r => r.ResolvedDate != null);
             }
 
             reports = reports.OrderBy(m => m.ID);
@@ -200,6 +200,7 @@ namespace Community.Controllers
         public ActionResult Create([Bind(Include = "ID,UserID,ReportedEvent,ReportedID,Description")] Report report)
         {
             report.Sent = DateTime.Now;
+            report.ResolvedDate = null;
 
             if (ModelState.IsValid)
             {
@@ -225,7 +226,7 @@ namespace Community.Controllers
         {
             Report report = db.Reports.Find(data.ID);
 
-            if (report.Resolved == true) {
+            if (report.ResolvedDate != null) {
                 return Json(new
                 {
                     success = false,
@@ -234,7 +235,7 @@ namespace Community.Controllers
                 });
             }
 
-            report.Resolved = true;
+            report.ResolvedDate = DateTime.Now;
 
             if (ModelState.IsValid)
             {

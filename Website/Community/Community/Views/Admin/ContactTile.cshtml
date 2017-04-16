@@ -1,0 +1,38 @@
+﻿@model Community.Models.ContactPartialView
+@{
+    Layout = null;
+}
+<div class="panel panel-default">
+    <div class="row text-center">
+        <h3>
+            Contact Messages Received
+            <span class="label label-warning">@Model.TotalOpen</span>
+        </h3>
+    </div>
+    @if (Model.Contacts.Count() == 0)
+    {
+        <div class="row text-center">
+                <h4><b>Congratulations!</b> We seem to have responded to all contact requests!</h4>
+                <p><i class="text-warning">Don't forget to check our inbox!</i></p>
+        </div>
+
+    }
+    else {
+        <table class="table table-center">
+            @foreach (var item in Model.Contacts)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                    <td>
+                        <a href="@Url.Action("Reply", "Contact", new { id = @item.ID })">View</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        
+    }
+    <div class="row text-center">
+        @Html.ActionLink("View All", "Index", "Contact")
+    </div>
+</div>

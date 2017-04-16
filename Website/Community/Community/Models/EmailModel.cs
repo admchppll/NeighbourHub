@@ -18,4 +18,16 @@ namespace Community.Models
         [AllowHtml]
         public string Html { get; set; }
     }
+
+    public class EmailExtendedModel : Email
+    {
+        public string To { get; set; }
+        public string From { get; set; }
+        public string Subject { get; set; }
+        [AllowHtml]
+        public string Message { get; set; }
+        public string RecipientName { get; set; }
+        public string SenderName { get; set; }
+        public string ReplyEmail { get; set; }
+    }
 }

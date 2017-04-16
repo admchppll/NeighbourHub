@@ -13,7 +13,7 @@ namespace Community.Helpers
             CommunityEntities db = new CommunityEntities();
 
             var count = db.Reports
-                .Where(r => r.Resolved == false)
+                .Where(r => r.ResolvedDate == null)
                 .Count();
             return count;
         }
@@ -24,7 +24,7 @@ namespace Community.Helpers
 
             var count = db.Reports
                 .Where(r => r.ReportedEvent != null 
-                    && r.Resolved == false)
+                    && r.ResolvedDate == null)
                 .Count();
             return count;
         }
@@ -35,7 +35,7 @@ namespace Community.Helpers
 
             var count = db.Reports
                 .Where(r => r.ReportedID != null
-                    && r.Resolved == false)
+                    && r.ResolvedDate == null)
                 .Count();
             return count;
         }

@@ -48,8 +48,9 @@ namespace Community.Controllers
         // POST: UserRole/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,RoleId,IdentityUser_Id")] UserRole userRole)
+        public ActionResult Create([Bind(Include = "UserId,RoleId")] UserRole userRole)
         {
+            userRole.IdentityUser_Id = userRole.UserId;
             if (ModelState.IsValid)
             {
                 db.UserRoles.Add(userRole);

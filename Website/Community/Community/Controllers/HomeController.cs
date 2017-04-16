@@ -43,6 +43,7 @@ namespace Community.Controllers
                 contactNew.Name = contact.Name;
                 contactNew.Email = contact.Email;
                 contactNew.Message = sanitizer.Sanitize(contact.Message);
+                contactNew.Date = DateTime.Now;
                 contactNew.Replied = false;
 
                 db.Contacts.Add(contactNew);

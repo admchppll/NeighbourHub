@@ -245,6 +245,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuditController.cs" />
     <Compile Include="Controllers\BookmarkController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventTagController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -287,6 +288,7 @@
     <Compile Include="Models\Address.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Models\Audit.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
@@ -316,6 +318,9 @@
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventSearch.cs">
+      <DependentUpon>Community.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventStatistic.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventTag.cs">
@@ -348,6 +353,9 @@
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Report.cs">
+      <DependentUpon>Community.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReportStatistic.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Review.cs">
@@ -387,6 +395,9 @@
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserSkill.cs">
+      <DependentUpon>Community.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserStatistic.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Volunteer.cs">
@@ -848,6 +859,11 @@
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ContactTile.cshtml" />
+    <Content Include="Views\Emails\EmailExtendedModel.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Contact\Reply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />
@@ -855,7 +871,6 @@
     <Folder Include="Content\font-awesome\css\" />
     <Folder Include="Content\font-awesome\fonts\" />
     <Folder Include="Uploads\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
