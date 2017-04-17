@@ -13,6 +13,7 @@ using System.IO;
 using PagedList;
 using System.Linq.Expressions;
 using Ganss.XSS;
+using Community.Filters;
 
 namespace Community.Controllers
 {
@@ -36,7 +37,7 @@ namespace Community.Controllers
             return View(events.ToPagedList(pageNumber, pageSize));
         }
 
-        [AllowAnonymous]
+        [AllowAnonymous, SetReturnUrl]
         public ActionResult Search(string postcode, double? distance, int? page)
         {
             int pageNumber = (page ?? 1);
@@ -63,8 +64,16 @@ namespace Community.Controllers
                 .Where(e => e.Published == true) 
                 .Where(e => e.Suspended != true)
                 .Where(e => e.VolunteerQuantity > e.Volunteers)
-                .Where(e => e.Location.Distance(geog) < resultRadius);
-
+                .Where(e => e.Location.Distance(geog) < resultRadius)
+                .Select(n => new EventSearchView () {
+                    ID = n.ID,
+                    Title = n.Title,
+                    Description = n.Description,
+                    Date = n.Date,
+                    Time = n.Time,
+                    Distance = (n.Location.Distance(geog)/mile) ?? 0,
+                    Length = n.Length
+                });
             events = events.OrderBy(e => e.Date);
 
             return View(events.ToPagedList(pageNumber, pageSize));
@@ -87,7 +96,7 @@ namespace Community.Controllers
 
         [AllowAnonymous]
         // GET: Event/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, float? distance)
         {
             if (id == null)
             {
@@ -95,7 +104,7 @@ namespace Community.Controllers
             }
             int eventID = (int)id;
 
-            Event @event = db.Events.Where(e => e.ID == eventID).SingleOrDefault();
+            Event @event = db.Events.Include(a => a.Address).Where(e => e.ID == eventID).SingleOrDefault();
             if (@event == null)
             {
                 return HttpNotFound();

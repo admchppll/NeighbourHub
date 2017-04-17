@@ -27,6 +27,21 @@ namespace Community.Helpers
             return exists;
         }
 
+        public static bool isApprovedVolunteer(string userId, int eventID)
+        {
+            CommunityEntities db = new CommunityEntities();
+
+            bool exists = db.Volunteers
+                .Where(v => v.EventID == eventID
+                        && v.VolunteerID == userId
+                        && v.Accepted == true
+                        && v.Rejected != true
+                        && v.Withdrawn != true)
+                .Any();
+
+            return exists;
+        }
+
         public static bool isWithdrawn(string userID, int eventID)
         {
             CommunityEntities db = new CommunityEntities();
@@ -35,6 +50,19 @@ namespace Community.Helpers
                 .Where(v => v.EventID == eventID
                         && v.VolunteerID == userID
                         && v.Withdrawn == true)
+                .Any();
+
+            return exists;
+        }
+
+        public static bool isConfirmed(string userID, int eventID)
+        {
+            CommunityEntities db = new CommunityEntities();
+
+            bool exists = db.Volunteers
+                .Where(v => v.EventID == eventID
+                        && v.VolunteerID == userID
+                        && v.Confirmed == true)
                 .Any();
 
             return exists;

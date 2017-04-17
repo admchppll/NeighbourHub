@@ -1,12 +1,31 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<div class="jumbotron">
-    <h1>Welcome</h1>
-    <p class="lead"></p>
-    <p></p>
+@Styles.Render("~/Content/Swiper")
+<div class="container">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="background-image:url(@Url.Content("~/Content/Images/HomeSlider/image0.jpg"))">Slide 1</div>
+            <div class="swiper-slide" style="background-image:url(@Url.Content("~/Content/Images/HomeSlider/image01.jpg"))">Slide 2</div>
+            <div class="swiper-slide" style="background-image:url(@Url.Content("~/Content/Images/HomeSlider/image1.jpeg"))">Slide 3</div>
+        </div>
+    </div>
 </div>
+<div class="container">
+    <div class="col-xs-12">
+        <h1 class="text-center">Volunteer Now!</h1>
+        @Html.Partial("_Search", "Index")
+    </div>
+    <div class="col-xs-12">
+        <h1>One Goal!</h1>
+        <h2>Create a COMMUNITY that cares!</h2>
+        <p>
+            Volunteer now to help create a better community in your local area. Through mutual and <b>fair</b> participation with your neighbours this can be possible.<br/>
+            From little things to the big, every now and then you may need some help...so why not be there for someone else? Who knows, you may even make new friends!
+        </p>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-8">
         <ul>
@@ -29,7 +48,17 @@
             <li>@Html.ActionLink("Message", "Index", "Message")</li>
         </ul>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
-        @Html.Partial("_Search", "Index")
-    </div>
+
+    @Scripts.Render("~/bundles/Swiper")
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        slidesPerView: 1,
+        loop: true,
+        autoplay: 2500,
+        autoplayDisableOnInteraction: true,
+        spaceBetween: 30
+    });
+    </script>
 </div>

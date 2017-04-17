@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<Community.Models.EventSearch>
+﻿@model PagedList.IPagedList<Community.Models.EventSearchView>
 @using PagedList.Mvc;
 
 @{
@@ -47,12 +47,19 @@
         {
             foreach (var item in Model)
             {
-                <div class="row">
-                    <div class="col-sm-12">
+                <div class="row vertical-center">
+                    <div class="col-xs-8 col-sm-10">
                         <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
-                        <p>@Html.DisplayFor(modelItem => item.Description)</p>
-                        <h4>@Html.DisplayFor(modelItem => item.Date)</h4>
+                        <p>
+                            <b>@item.Date.ToString("ddd d MMMM yyyy") - @Html.DisplayFor(modelItem => item.Time)</b> (@Html.DisplayFor(modelItem => item.Length) Hours)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </p>
+
+                    </div>
+                    <div class="col-xs-4 col-sm-2 top-pad-2">
                         <a href="@Url.Action("Details", "Event", new { id = item.ID })" class="btn btn-success">Details</a>
+                        <p class="top-pad">@Html.DisplayFor(modelItem => item.Distance) Miles</p>
                     </div>
                 </div>
             }
@@ -69,7 +76,9 @@
                 </p>
             }
             else {
-                @Html.PagedListPager(Model, page => Url.Action("Search", new { page, postcode = ViewBag.Postcode, distance = ViewBag.Distance }))
+                <div class="pagerSection">
+                    @Html.PagedListPager(Model, page => Url.Action("Search", new { page, postcode = ViewBag.Postcode, distance = ViewBag.Distance }))
+                </div>
             }
         }
     </div>

@@ -17,13 +17,13 @@ namespace Community.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.FullWidth = true;
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
+            ViewBag.FullWidth = true;
             return View();
         }
 

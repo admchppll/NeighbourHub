@@ -258,6 +258,7 @@
     <Compile Include="Controllers\PointController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SkillController.cs" />
     <Compile Include="Controllers\TagController.cs" />
@@ -326,6 +327,7 @@
     <Compile Include="Models\EventTag.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GeneralViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IndexViewModels.cs" />
     <Compile Include="Models\IndividualUserStatistic.cs">
@@ -627,10 +629,16 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\email-logo.png" />
     <Content Include="Content\Images\fb-tile-rectangle.jpg" />
+    <Content Include="Content\Images\handshake-2009195_1920.png" />
+    <Content Include="Content\Images\HomeSlider\image0.jpg" />
+    <Content Include="Content\Images\HomeSlider\image01.jpg" />
+    <Content Include="Content\Images\HomeSlider\image1.jpeg" />
     <Content Include="Content\Images\logo-greyscale.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\user-substitute.png" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Swiper\swiper.css" />
+    <Content Include="Content\Swiper\swiper.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -700,6 +708,10 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Swiper\swiper.jquery.js" />
+    <Content Include="Scripts\Swiper\swiper.jquery.min.js" />
+    <Content Include="Scripts\Swiper\swiper.js" />
+    <Content Include="Scripts\Swiper\swiper.min.js" />
     <Content Include="Scripts\Volunteer.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -873,6 +885,11 @@
     <Content Include="Views\Admin\EventTile.cshtml" />
     <Content Include="Views\Admin\VolunteerTile.cshtml" />
     <Content Include="Views\Admin\UserTile.cshtml" />
+    <Content Include="Views\Review\Create.cshtml" />
+    <Content Include="Views\Review\Delete.cshtml" />
+    <Content Include="Views\Review\Details.cshtml" />
+    <Content Include="Views\Review\Edit.cshtml" />
+    <Content Include="Views\Review\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />

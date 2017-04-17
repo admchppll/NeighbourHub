@@ -29,7 +29,15 @@ namespace Community
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome/css/font-awesome.min.css",
                       "~/Content/site.css"));
-            bundles.Add(new ScriptBundle("~/bundles/Chart").Include("~/Scripts/Chart.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Chart").Include(
+                    "~/Scripts/Chart.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/Swiper").Include(
+                "~/Scripts/Swiper/swiper.min.js",
+                "~/Scripts/Swiper/swiper.jquery.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/Swiper").Include(
+                "~/Content/Swiper/swiper.min.css"));
         }
     }
 }
