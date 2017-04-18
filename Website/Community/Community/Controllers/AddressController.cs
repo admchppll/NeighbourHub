@@ -156,7 +156,7 @@ namespace Community.Controllers
             address.UserID = null;
             db.SaveChanges();
 
-            AuditHelper.addAudit(user, "Address Disassociated with User. Address ID: #" + address.ID);
+            AuditHelper.AddAudit(user, "Address Disassociated with User. Address ID: #" + address.ID);
             return RedirectToAction("Index");
         }
 

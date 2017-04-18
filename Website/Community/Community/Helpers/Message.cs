@@ -6,7 +6,7 @@ namespace Community.Helpers
 {
     public class MessageHelper
     {
-        public static int getUnreadMessages(string userID) {
+        public static int GetUnreadMessages(string userID) {
             CommunityEntities db = new CommunityEntities();
 
             int count = db.Messages
@@ -18,7 +18,7 @@ namespace Community.Helpers
             return count;
         }
 
-        public static int getAllMessages(string userID)
+        public static int GetAllMessages(string userID)
         {
             CommunityEntities db = new CommunityEntities();
 
@@ -30,7 +30,7 @@ namespace Community.Helpers
             return count;
         }
 
-        public static int getAllSentMessages(string userID)
+        public static int GetAllSentMessages(string userID)
         {
             CommunityEntities db = new CommunityEntities();
 
@@ -42,7 +42,7 @@ namespace Community.Helpers
             return count;
         }
 
-        public static int getAllReceivedMessages(string userID)
+        public static int GetAllReceivedMessages(string userID)
         {
             CommunityEntities db = new CommunityEntities();
 

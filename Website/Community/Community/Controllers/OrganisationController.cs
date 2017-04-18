@@ -68,7 +68,7 @@ namespace Community.Controllers
                 db.UserOrganisations.Add(uo);
                 db.SaveChanges();
 
-                AuditHelper.addAudit(
+                AuditHelper.AddAudit(
                     uo.UserID,
                     "Organisation Created: #" + organisation.ID + " " + organisation.Name);
 

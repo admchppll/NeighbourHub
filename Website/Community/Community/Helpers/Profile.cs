@@ -34,7 +34,7 @@ namespace Community.Helpers
 
         ///<summary>Check whether profile is suspended</summary>
         ///<returns></returns>
-        public static bool isSuspended(string userID) {
+        public static bool IsSuspended(string userID) {
             CommunityEntities db = new CommunityEntities();
             var exists = db.Profiles
                 .Where(p => p.UserID == userID
@@ -45,7 +45,7 @@ namespace Community.Helpers
 
         ///<summary>Check whether profile is active</summary>
         ///<returns></returns>
-        public static bool isActive(string userID)
+        public static bool IsActive(string userID)
         {
             CommunityEntities db = new CommunityEntities();
             var exists = db.Profiles
@@ -55,10 +55,10 @@ namespace Community.Helpers
             return exists;
         }
 
-        public static bool canAffordVolunteer(string userID, int eventID)
+        public static bool CanAffordVolunteer(string userID, int eventID)
         {
             CommunityEntities db = new CommunityEntities();
-            int balance = getBalance(userID);
+            int balance = GetBalance(userID);
             int required = VolunteerHelper.getVolunteerPointValue(eventID);
 
             if (balance < required)
@@ -70,7 +70,7 @@ namespace Community.Helpers
             }
         }
 
-        public static int getBalance(string userID)
+        public static int GetBalance(string userID)
         {
             CommunityEntities db = new CommunityEntities();
             var profile = db.Profiles

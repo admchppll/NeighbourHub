@@ -125,7 +125,7 @@ namespace Community.Controllers
             db.Contacts.Add(newContact);
             db.SaveChanges();
 
-            AuditHelper.addAudit(userId, String.Format("[Admin] Replied to contact form submission #{0}. Reply ID: #{0}", contact.ID, newContact.ID));
+            AuditHelper.AddAudit(userId, String.Format("[Admin] Replied to contact form submission #{0}. Reply ID: #{0}", contact.ID, newContact.ID));
             return RedirectToAction("Index");
 
         }

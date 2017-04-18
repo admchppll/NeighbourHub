@@ -9,7 +9,7 @@ namespace Community.Helpers
 {
     public class AuditHelper
     {
-        public static void addEventAudit(int eventId, string message, int? report) {
+        public static void AddEventAudit(int eventId, string message, int? report) {
             CommunityEntities db = new CommunityEntities();
             var e = db.Events.Find(eventId);
 
@@ -24,7 +24,7 @@ namespace Community.Helpers
             db.SaveChanges();
         }
 
-        public static void addUserAudit(string userId, string message, int? report)
+        public static void AddUserAudit(string userId, string message, int? report)
         {
             CommunityEntities db = new CommunityEntities();
 
@@ -38,7 +38,7 @@ namespace Community.Helpers
             db.SaveChanges();
         }
 
-        public static void addAudit(string userID, string message)
+        public static void AddAudit(string userID, string message)
         {
             CommunityEntities db = new CommunityEntities();
 

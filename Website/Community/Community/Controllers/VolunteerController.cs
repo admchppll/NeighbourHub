@@ -214,7 +214,7 @@ namespace Community.Controllers
                 });
             }
             else {
-                if (ProfileHelper.canAffordVolunteer(userID, data.EventId) == false) {
+                if (ProfileHelper.CanAffordVolunteer(userID, data.EventId) == false) {
                     return Json(new
                     {
                         success = false,

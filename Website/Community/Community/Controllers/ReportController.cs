@@ -96,7 +96,7 @@ namespace Community.Controllers
                         "You have received a new message!",
                         "~/Message/Read/" + message.ID);
 
-                AuditHelper.addUserAudit(message.SenderID, "Message sent to reporter:" + message.Body, ReportID);
+                AuditHelper.AddUserAudit(message.SenderID, "Message sent to reporter:" + message.Body, ReportID);
 
 
                 return RedirectToAction("Details", "Report", new { id = ReportID });
@@ -131,7 +131,7 @@ namespace Community.Controllers
 
                 int repId = report.ReportedEvent ?? 0;
 
-                AuditHelper.addEventAudit(repId, "Event has been reported. Report ID: " + report.ID, report.ID);
+                AuditHelper.AddEventAudit(repId, "Event has been reported. Report ID: " + report.ID, report.ID);
                 return RedirectToAction("Confirmation");
             }
 
@@ -162,7 +162,7 @@ namespace Community.Controllers
                 db.Reports.Add(report);
                 db.SaveChanges();
 
-                AuditHelper.addUserAudit(report.ReportedID, "User has been reported. Report ID: " + report.ID, report.ID);
+                AuditHelper.AddUserAudit(report.ReportedID, "User has been reported. Report ID: " + report.ID, report.ID);
                 return RedirectToAction("Confirmation");
             }
 

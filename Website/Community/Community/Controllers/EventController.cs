@@ -414,7 +414,7 @@ namespace Community.Controllers
                 db.reverseTransaction(t.ID);
             }
 
-            AuditHelper.addEventAudit(@event.ID, String.Format("Event Cancelled: #{0}", @event.ID), null);
+            AuditHelper.AddEventAudit(@event.ID, String.Format("Event Cancelled: #{0}", @event.ID), null);
 
             if (ModelState.IsValid)
             {

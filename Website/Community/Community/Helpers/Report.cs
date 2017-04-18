@@ -9,7 +9,7 @@ namespace Community.Helpers
 {
     public class ReportHelper
     {
-        public static int getUnresolved() {
+        public static int GetUnresolved() {
             CommunityEntities db = new CommunityEntities();
 
             var count = db.Reports
@@ -18,7 +18,7 @@ namespace Community.Helpers
             return count;
         }
 
-        public static int getUnresolvedEvent()
+        public static int GetUnresolvedEvent()
         {
             CommunityEntities db = new CommunityEntities();
 
@@ -29,7 +29,7 @@ namespace Community.Helpers
             return count;
         }
 
-        public static int getUnresolvedUser()
+        public static int GetUnresolvedUser()
         {
             CommunityEntities db = new CommunityEntities();
 
