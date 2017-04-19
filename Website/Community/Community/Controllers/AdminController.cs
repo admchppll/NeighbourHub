@@ -1,4 +1,5 @@
 ﻿using Community.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,6 +137,19 @@ namespace Community.Controllers
             model.TotalSuspendedUsers = db.Profiles.Where(p => p.Suspended == true).Count();
 
             return View(model);
+        }
+
+        public ActionResult MessageTile()
+        {
+            string userID = User.Identity.GetUserId();
+
+            var messages = db.Messages
+                .Include(m => m.User)
+                .Include(m => m.User1)
+                .Where(m => m.Sent != null && m.RecipientID == userID)
+                .OrderByDescending(m => m.Sent)
+                .Take(3);
+            return View(messages.ToList());
         }
     }
 }

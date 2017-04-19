@@ -14,6 +14,7 @@ using PagedList;
 using System.Linq.Expressions;
 using Ganss.XSS;
 using Community.Filters;
+using System.Collections.Generic;
 
 namespace Community.Controllers
 {
@@ -160,14 +161,14 @@ namespace Community.Controllers
             }
 
             ViewBag.AddressID = new SelectList(addresses, "AddressID", "Label");
-            ViewBag.Tags = new SelectList(db.Tags.Where(v => v.Active == true),"ID", "Name");
+            ViewBag.Tags = db.Tags.Where(v => v.Active == true);
             return View();
         }
 
         // POST: Event/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,ShortDescription,LongDescription,AddressID,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,VolunteerQuantity,Points")] Event @event, [Bind(Include="PictureURL")]HttpPostedFileBase PictureURL)
+        public ActionResult Create([Bind(Include = "Title,ShortDescription,LongDescription,AddressID,Repeated,RepeatIncrement,Date,Length,AM1,AM2,AM3,AM4,AM5,AM6,AM7,PM1,PM2,PM3,PM4,PM5,PM6,PM7,DateInfo,VolunteerQuantity,Points")] Event @event, [Bind(Include="PictureURL")]HttpPostedFileBase PictureURL, [Bind(Include="Tags")]string Tags)
         {
             DateTime current_date = DateTime.Now;
 
@@ -196,6 +197,22 @@ namespace Community.Controllers
             {
                 db.Events.Add(@event);
                 db.SaveChanges();
+
+                List<string> TagList = Tags.Split(',').ToList<string>();
+                foreach (var t in TagList) {
+                    int Tag = 0;
+                    if (int.TryParse(t, out Tag))
+                    {
+                        EventTag et = new EventTag
+                        {
+                            EventID = @event.ID,
+                            TagID = Tag
+                        };
+                        db.EventTags.Add(et);
+                        db.SaveChanges();
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -211,6 +228,7 @@ namespace Community.Controllers
                 .ToList();
 
             ViewBag.AddressID = new SelectList(addresses, "AddressID", "Label");
+            ViewBag.Tags = db.Tags.Where(v => v.Active == true);
             return View(@event);
         }
 

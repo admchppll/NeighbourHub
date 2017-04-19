@@ -53,7 +53,7 @@ namespace Community.Controllers
                 if (address.Default == true) {
                     AddressHelper.SetDefault(address.ID);
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Manage");
             }
 
             ViewBag.UserID = new SelectList(db.Users, "ID", "Email", address.UserID);

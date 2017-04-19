@@ -11,10 +11,10 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <ul class="nav nav-pills nav-justified">
-    <li class= "@(ViewBag.Section == "index"?"active":"")"><a href="@Url.Action("Index")">All <span class="badge">@MessageHelper.getAllMessages(userID)</span></a></li>
-    <li class= "@(ViewBag.Section == "sent"?"active":"")"><a href="@Url.Action("Index", new { section = "sent"})">Sent <span class="badge">@MessageHelper.getAllSentMessages(userID)</span></a></li>
-    <li class= "@(ViewBag.Section == "received"?"active":"")"><a href="@Url.Action("Index", new { section = "received"})">Received <span class="badge">@MessageHelper.getAllReceivedMessages(userID)</span></a></li>
-    <li class= "@(ViewBag.Section == "saved"?"active":"")"><a href="@Url.Action("Index", new { section = "saved"})">Saved <span class="badge">@MessageHelper.getAllSavedMessages(userID)</span></a></li>
+    <li class= "@(ViewBag.Section == "index"?"active":"")"><a href="@Url.Action("Index")">All <span class="badge">@MessageHelper.GetAllMessages(userID)</span></a></li>
+    <li class= "@(ViewBag.Section == "sent"?"active":"")"><a href="@Url.Action("Index", new { section = "sent"})">Sent <span class="badge">@MessageHelper.GetAllSentMessages(userID)</span></a></li>
+    <li class= "@(ViewBag.Section == "received"?"active":"")"><a href="@Url.Action("Index", new { section = "received"})">Received <span class="badge">@MessageHelper.GetAllReceivedMessages(userID)</span></a></li>
+    <li class= "@(ViewBag.Section == "saved"?"active":"")"><a href="@Url.Action("Index", new { section = "saved"})">Saved <span class="badge">@MessageHelper.GetAllSavedMessages(userID)</span></a></li>
 </ul>
 <table class="table message-table">
     <tr>

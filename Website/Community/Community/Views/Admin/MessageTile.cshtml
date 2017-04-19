@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Community.Models.Message>
+@using Microsoft.AspNet.Identity;
+@{
+    string userID = User.Identity.GetUserId();
+    Layout = null;
+}
+<div class="row text-center">
+    <h3>My Messages</h3>
+</div>
+<table class="table table-center">
+    <tr>
+        <th></th>
+        <th>Date</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="@(item.Read == false && item.RecipientID == userID ? "unread":"")">
+            <td>
+                @if (item.User1.ID == userID)
+                {
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                }
+                else if (item.User.ID == userID)
+                {
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sent)
+            </td>
+            <td>
+                @Html.ActionLink(item.Title, "Read", new { id = item.ID })
+            </td>
+            <td>
+                @if (item.User.ID == userID && item.Sent != null)
+                {
+                    if (item.Read == true)
+                    {
+                        <span>Read</span>
+                    }
+                    else {
+                        <span>Recieved</span>
+                    }
+                }
+                else if (item.User1.ID == userID && item.Sent != null)
+                {
+                    <span>Sent</span>
+                }
+            </td>
+            <td>@Html.ActionLink("Read", "Read", new { id = item.ID }, new { @class = "btn btn-info" })</td>
+        </tr>
+    }
+</table>
+<div class="row text-center">
+    @Html.ActionLink("View All", "Index")
+</div>
