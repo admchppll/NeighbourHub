@@ -17,48 +17,50 @@
         @Html.Partial("_Search", "Index")
     </div>
     <div class="col-xs-12">
-        <h1>One Goal!</h1>
-        <h2>Create a COMMUNITY that cares!</h2>
+        <h2>Lets create a COMMUNITY that cares!</h2>
         <p>
-            Volunteer now to help create a better community in your local area. Through mutual and <b>fair</b> participation with your neighbours this can be possible.<br/>
+            Volunteer now to help create a better community in your local area. Through mutual and
+            <b>fair</b> participation with your neighbours this can be possible.
+            <br />
             From little things to the big, every now and then you may need some help...so why not be there for someone else? Who knows, you may even make new friends!
         </p>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-8">
-        <ul>
-            <li>@Html.ActionLink("Event", "Index", "Event")</li>
-            <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
-            <li>@Html.ActionLink("Address", "Index", "Address")</li>
-            <li>@Html.ActionLink("Organisation", "Index", "Organisation")</li>
-            <li>@Html.ActionLink("Volunteer", "Index", "Volunteer")</li>
-            <li>@Html.ActionLink("Skill", "Index", "Skill")</li>
-            <li>@Html.ActionLink("User Skill", "Index", "UserSkill")</li>
-            <li>@Html.ActionLink("Interests", "Index", "Interest")</li>
-            <li>@Html.ActionLink("User Interests", "Index", "UserInterest")</li>
-            <li>@Html.ActionLink("Role", "Index", "Role")</li>
-            <li>@Html.ActionLink("User Role", "Index", "UserRole")</li>
-            <li>@Html.ActionLink("Tag", "Index", "Tag")</li>
-            <li>@Html.ActionLink("Event Tag", "Index", "EventTag")</li>
-            <li>@Html.ActionLink("Information", "Index", "Information")</li>
-            <li>@Html.ActionLink("Report", "Index", "Report")</li>
-            <li>@Html.ActionLink("Transaction", "Index", "Transaction")</li>
-            <li>@Html.ActionLink("Message", "Index", "Message")</li>
-        </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">
+            <ul>
+                <li>@Html.ActionLink("Event", "Index", "Event")</li>
+                <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
+                <li>@Html.ActionLink("Address", "Index", "Address")</li>
+                <li>@Html.ActionLink("Organisation", "Index", "Organisation")</li>
+                <li>@Html.ActionLink("Volunteer", "Index", "Volunteer")</li>
+                <li>@Html.ActionLink("Skill", "Index", "Skill")</li>
+                <li>@Html.ActionLink("User Skill", "Index", "UserSkill")</li>
+                <li>@Html.ActionLink("Interests", "Index", "Interest")</li>
+                <li>@Html.ActionLink("User Interests", "Index", "UserInterest")</li>
+                <li>@Html.ActionLink("Role", "Index", "Role")</li>
+                <li>@Html.ActionLink("User Role", "Index", "UserRole")</li>
+                <li>@Html.ActionLink("Tag", "Index", "Tag")</li>
+                <li>@Html.ActionLink("Event Tag", "Index", "EventTag")</li>
+                <li>@Html.ActionLink("Information", "Index", "Information")</li>
+                <li>@Html.ActionLink("Report", "Index", "Report")</li>
+                <li>@Html.ActionLink("Transaction", "Index", "Transaction")</li>
+                <li>@Html.ActionLink("Message", "Index", "Message")</li>
+            </ul>
+        </div>
     </div>
-
+</div>
     @Scripts.Render("~/bundles/Swiper")
     <script>
-    var swiper = new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        slidesPerView: 1,
-        loop: true,
-        autoplay: 2500,
-        autoplayDisableOnInteraction: true,
-        spaceBetween: 30
-    });
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            slidesPerView: 1,
+            loop: true,
+            autoplay: 2500,
+            autoplayDisableOnInteraction: true,
+            spaceBetween: 30
+        });
     </script>
-</div>
+

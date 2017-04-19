@@ -109,6 +109,7 @@ namespace Community.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Distance = distance;
             return View(@event);
         }
 
@@ -144,8 +145,10 @@ namespace Community.Controllers
                 .Where(a => a.UserID == userID)
                 .Select(a => new {
                     AddressID = a.ID,
-                    Label = a.Name + " (" + a.Address1 + ")"
+                    Label = a.Name + " (" + a.Address1 + ")" + (a.Default ? " DEFAULT" : ""),
+                    Default = a.Default
                 })
+                .OrderByDescending(a => a.Default)
                 .ToList();
 
             if (ProfileHelper.ProfileExists(userID) == false)
@@ -201,8 +204,10 @@ namespace Community.Controllers
                 .Where(a => a.UserID == userID)
                 .Select(a => new {
                     AddressID = a.ID,
-                    Label = a.Name + " (" + a.Address1 + ")"
+                    Label = a.Name + " (" + a.Address1 + ")" + (a.Default ? " DEFAULT" : ""),
+                    Default = a.Default
                 })
+                .OrderByDescending(a => a.Default)
                 .ToList();
 
             ViewBag.AddressID = new SelectList(addresses, "AddressID", "Label");
@@ -217,18 +222,23 @@ namespace Community.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Event @event = db.Events.Find(id);
+            var userID = User.Identity.GetUserId();
             if (@event == null)
             {
                 return HttpNotFound();
             }
+            else if (UserHelper.IsAdmin(userID)) {
+                return RedirectToAction("Details", new { id = id });
+            }
 
-            var userID = User.Identity.GetUserId();
             var addresses = db.Addresses
                 .Where(a => a.UserID == userID)
                 .Select(a => new {
                     AddressID = a.ID,
-                    Label = a.Name + " (" + a.Address1 + ")"
+                    Label = a.Name + " (" + a.Address1 + ")" + (a.Default ? " DEFAULT" : ""),
+                    Default = a.Default
                 })
+                .OrderByDescending(a => a.Default)
                 .ToList();
 
             ViewBag.AddressID = new SelectList(addresses, "AddressID", "Label");

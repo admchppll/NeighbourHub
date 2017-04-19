@@ -13,28 +13,6 @@ namespace Community.Controllers
     {
         private CommunityEntities db = new CommunityEntities();
 
-        // GET: Address
-        public ActionResult Index()
-        {
-            var addresses = db.Addresses.Include(a => a.User);
-            return View(addresses.ToList());
-        }
-
-        // GET: Address/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Models.Address address = db.Addresses.Find(id);
-            if (address == null)
-            {
-                return HttpNotFound();
-            }
-            return View(address);
-        }
-
         public ActionResult UserPartial()
         {
             string userID = User.Identity.GetUserId();
@@ -87,13 +65,18 @@ namespace Community.Controllers
         }
 
         //Handle AJAX MakeDefault requests
-        [HttpPost, ValidateHeaderAntiForgeryToken]
-        public JsonResult MakeDefault(AddressPostData data) {
-            AddressHelper.SetDefault(data.AddressID);
-            return Json(new
+        public ActionResult MakeDefault(int? addressId) {
+            if (addressId == null)
             {
-                success = true
-            });
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Address address = db.Addresses.Find(addressId);
+            if (address == null)
+            {
+                return HttpNotFound();
+            }
+            AddressHelper.SetDefault(address.ID);
+            return RedirectToAction("Index", "Manage");
         }
 
         // GET: Address/Edit/5

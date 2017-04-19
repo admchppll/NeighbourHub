@@ -177,7 +177,7 @@ textarea {
 .swiper-slide {
     text-align: center;
     min-height: 200px;
-    height: 400px;
+    height: 50%;
     max-height: 400px;
     font-size: 18px;
     background: #fff;

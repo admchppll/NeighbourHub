@@ -11,10 +11,9 @@ namespace Community.Helpers
 {
     public class UserRoleHelper
     {
-        public static void addToRole(string role, string userID) {
+        public static void AddToRole(string role, string userID) {
             using (CommunityEntities db = new CommunityEntities())
             {
-
                 var userStore = new UserStore<ApplicationUser>(db);
                 var userManager = new UserManager<ApplicationUser>(userStore);
                 userManager.AddToRole(userID, role);
@@ -23,7 +22,7 @@ namespace Community.Helpers
     }
 
     public class UserHelper {
-        public static int externalLogins(string userID) {
+        public static int ExternalLogins(string userID) {
             using (CommunityEntities db = new CommunityEntities())
             {
 
@@ -32,7 +31,7 @@ namespace Community.Helpers
             }
         }
 
-        public static bool isAdmin(string userID) {
+        public static bool IsAdmin(string userID) {
             using (CommunityEntities db = new CommunityEntities())
             {
                 var role = db.Roles.Where(r => r.Name == "Admin").Single();
@@ -41,7 +40,7 @@ namespace Community.Helpers
             }
         }
 
-        public static bool isConnectedToOrganisation(string userID)
+        public static bool IsConnectedToOrganisation(string userID)
         {
             CommunityEntities db = new CommunityEntities();
 

@@ -107,7 +107,7 @@ namespace Community.Controllers
                 db.SaveChanges();
             }
 
-            UserRoleHelper.addToRole("OrganisationAdmin", uo.UserID);
+            UserRoleHelper.AddToRole("OrganisationAdmin", uo.UserID);
 
             return RedirectToAction("Details", new { id = id });
         }

@@ -20,10 +20,16 @@ namespace Community.Controllers
         // GET: Volunteer
         public ActionResult Index()
         {
-            var volunteers = db.Volunteers.Include(v => v.Event).Include(v => v.User);
+            var volunteers = db.Volunteers
+                .Include(v => v.Event)
+                .Include(v => v.User);
             return View(volunteers.ToList());
         }
 
+        /// <summary>
+        /// Screen used on event details page
+        /// </summary>
+        /// <param name="eventId"></param>
         public ActionResult Volunteers(int eventId)
         {
             ViewBag.EventID = eventId;
@@ -38,6 +44,10 @@ namespace Community.Controllers
             return PartialView(volunteers.ToList());
         }
 
+        /// <summary>
+        /// Screen used on users hub  /Manage/Index
+        /// </summary>
+        /// <returns></returns>
         public ActionResult UserPartial()
         {
             string userID = User.Identity.GetUserId();
@@ -53,52 +63,12 @@ namespace Community.Controllers
             return View(events.ToList());
         }
 
-        // GET: Volunteer/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Volunteer volunteer = db.Volunteers.Find(id);
-            if (volunteer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(volunteer);
-        }
-
-        // GET: Volunteer/Create
-        public ActionResult Create()
-        {
-            ViewBag.EventID = new SelectList(db.Events, "ID", "HostID");
-            ViewBag.VolunteerID = new SelectList(db.Users, "ID", "Email");
-            return View();
-        }
-
-        // POST: Volunteer/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,EventID,VolunteerID,Confirmed,Rejected,Withdrawn")] Volunteer volunteer)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Volunteers.Add(volunteer);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.EventID = new SelectList(db.Events, "ID", "HostID", volunteer.EventID);
-            ViewBag.VolunteerID = new SelectList(db.Users, "ID", "Email", volunteer.VolunteerID);
-            return View(volunteer);
-        }
-
         public class VolunteerPostData {
             public int Id { get; set; }
             public int EventId { get; set; }
         }
 
-        //POST: Volunteer/Volunteer
+        //POST: Volunteer/Volunteer (Used in AJAX)
         [HttpPost,ValidateHeaderAntiForgeryToken]
         public JsonResult Volunteer(VolunteerPostData data) {
             Volunteer volunteer = new Volunteer();
@@ -106,7 +76,7 @@ namespace Community.Controllers
             volunteer.EventID = data.EventId;
 
             //Check if a volunteer already exists
-            bool volunteerExists = VolunteerHelper.isVolunteer(volunteer.VolunteerID, volunteer.EventID);
+            bool volunteerExists = VolunteerHelper.IsVolunteer(volunteer.VolunteerID, volunteer.EventID);
 
             if (volunteerExists) {
                 return Json(new
@@ -136,12 +106,12 @@ namespace Community.Controllers
             });
         }
 
-        //POST: Volunteer/Confirm
+        //POST: Volunteer/Confirm (Used in AJAX)
         [HttpPost, ValidateHeaderAntiForgeryToken]
         public JsonResult Confirm(VolunteerPostData data)
         {
             string userID = User.Identity.GetUserId();
-            bool volunteerExists = VolunteerHelper.existsVolunteer(data.Id);
+            bool volunteerExists = VolunteerHelper.ExistsVolunteer(data.Id);
 
             if (volunteerExists == false)
             {
@@ -155,7 +125,7 @@ namespace Community.Controllers
             else {
                 Volunteer volunteer = db.Volunteers.Find(data.Id);
 
-                if (VolunteerHelper.isHost(userID, data.EventId))
+                if (VolunteerHelper.IsHost(userID, data.EventId))
                 {
                     try
                     {
@@ -197,12 +167,12 @@ namespace Community.Controllers
                 });
         }
 
-        //POST: Volunteer/Accept
+        //POST: Volunteer/Accept (Used in AJAX)
         [HttpPost, ValidateHeaderAntiForgeryToken]
         public JsonResult Accept(VolunteerPostData data)
         {
             string userID = User.Identity.GetUserId();
-            bool volunteerExists = VolunteerHelper.existsVolunteer(data.Id);
+            bool volunteerExists = VolunteerHelper.ExistsVolunteer(data.Id);
 
             if (volunteerExists == false)
             {
@@ -222,7 +192,7 @@ namespace Community.Controllers
                         message = "We couldn't accept the volunteer, unfortunately you don't have enough tokens to host this volunteer! Try volunteering for more events to get more tokens!"
                     });
                 }
-                else if (VolunteerHelper.isHost(userID, data.EventId))
+                else if (VolunteerHelper.IsHost(userID, data.EventId))
                 {
                     try
                     {
@@ -234,7 +204,7 @@ namespace Community.Controllers
                             userID, 
                             volunteer.VolunteerID,
                             volunteer.EventID, 
-                            VolunteerHelper.getVolunteerPointValue(volunteer.EventID));
+                            VolunteerHelper.GetVolunteerPointValue(volunteer.EventID));
                         
                         db.Entry(volunteer).State = EntityState.Modified;
                         db.SaveChanges();
@@ -244,6 +214,18 @@ namespace Community.Controllers
                             "Accepted",
                             "You have been accepted as a volunteer",
                             "~/Event/Details/" + volunteer.EventID);
+
+
+                        //Reject All volunteers when total volunteers asked for are filled
+                        if (VolunteerHelper.IsEventFull(data.EventId)) {
+                            var volunteers = db.Volunteers.Where(v => v.EventID == data.EventId && v.Accepted != true && v.Confirmed != true && v.Rejected != true && v.Withdrawn != true).ToList();
+                            foreach (var v in volunteers)
+                            {
+                                v.Rejected = true;
+                                NotificationHelper.Create(v.VolunteerID, "Event Full", "An event you have volunteered for has been filled.", String.Format("~/Event/Details/{0}", v.EventID));
+                            }
+                            db.SaveChanges();
+                        }
 
                         return Json(new
                         {
@@ -272,12 +254,12 @@ namespace Community.Controllers
             }
         }
 
-        //POST: Volunteer/Reject
+        //POST: Volunteer/Reject (Used in AJAX)
         [HttpPost, ValidateHeaderAntiForgeryToken]
         public JsonResult Reject(VolunteerPostData data)
         {
             string userID = User.Identity.GetUserId();
-            bool volunteerExists = VolunteerHelper.existsVolunteer(data.Id);
+            bool volunteerExists = VolunteerHelper.ExistsVolunteer(data.Id);
 
             if (volunteerExists == false)
             {
@@ -289,7 +271,7 @@ namespace Community.Controllers
                 });
             }
             else {
-                if (VolunteerHelper.isHost(userID, data.EventId))
+                if (VolunteerHelper.IsHost(userID, data.EventId))
                 {
                     try
                     {
@@ -358,12 +340,12 @@ namespace Community.Controllers
             });
         }
 
-        //POST: Volunteer/Withdraw
+        //POST: Volunteer/Withdraw (Used in AJAX)
         [HttpPost, ValidateHeaderAntiForgeryToken]
         public JsonResult Withdraw(VolunteerPostData data)
         {
             string userID = User.Identity.GetUserId();
-            bool isVolunteer = VolunteerHelper.isVolunteer(userID, data.EventId);
+            bool isVolunteer = VolunteerHelper.IsVolunteer(userID, data.EventId);
 
             if (isVolunteer == false)
             {
@@ -375,7 +357,7 @@ namespace Community.Controllers
                 });
             }
             else {
-                int volunteerID = VolunteerHelper.getVolunteer(userID, data.EventId);
+                int volunteerID = VolunteerHelper.GetVolunteer(userID, data.EventId);
                 Volunteer volunteer = db.Volunteers.Find(volunteerID);
 
                 try
@@ -385,7 +367,7 @@ namespace Community.Controllers
                     db.SaveChanges();
 
                     NotificationHelper.Create(
-                            VolunteerHelper.getHost(data.EventId),
+                            VolunteerHelper.GetHost(data.EventId),
                             "Withdrawn",
                             "A volunteer has withdrawn from your event!",
                             "~/Event/Details/" + data.EventId);

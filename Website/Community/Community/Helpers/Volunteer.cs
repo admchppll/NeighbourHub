@@ -6,7 +6,12 @@ namespace Community.Helpers
 {
     public class VolunteerHelper
     {
-        public static bool existsVolunteer(int id) {
+        /// <summary>
+        /// Check if volunteer id exists
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static bool ExistsVolunteer(int id) {
             CommunityEntities db = new CommunityEntities();
 
             bool exists = db.Volunteers
@@ -16,7 +21,13 @@ namespace Community.Helpers
             return exists;
         }
 
-        public static bool isVolunteer(string userId, int eventID) {
+        /// <summary>
+        /// Check if user has already volunteered on the event 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public static bool IsVolunteer(string userId, int eventID) {
             CommunityEntities db = new CommunityEntities();
 
             bool exists = db.Volunteers
@@ -27,7 +38,13 @@ namespace Community.Helpers
             return exists;
         }
 
-        public static bool isApprovedVolunteer(string userId, int eventID)
+        /// <summary>
+        /// Check if current user is approved(accepted) on the current event 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public static bool IsApprovedVolunteer(string userId, int eventID)
         {
             CommunityEntities db = new CommunityEntities();
 
@@ -42,7 +59,13 @@ namespace Community.Helpers
             return exists;
         }
 
-        public static bool isWithdrawn(string userID, int eventID)
+        /// <summary>
+        /// Checks if current user has been withdrawn from given event id 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public static bool IsWithdrawn(string userID, int eventID)
         {
             CommunityEntities db = new CommunityEntities();
 
@@ -55,7 +78,13 @@ namespace Community.Helpers
             return exists;
         }
 
-        public static bool isConfirmed(string userID, int eventID)
+        /// <summary>
+        /// Checks if current user is confirmed on given event id
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public static bool IsConfirmed(string userID, int eventID)
         {
             CommunityEntities db = new CommunityEntities();
 
@@ -68,7 +97,13 @@ namespace Community.Helpers
             return exists;
         }
 
-        public static int getVolunteer(string userID, int eventID)
+        /// <summary>
+        /// Get the volunteer id relative to the user and event given
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public static int GetVolunteer(string userID, int eventID)
         {
             CommunityEntities db = new CommunityEntities();
 
@@ -79,7 +114,12 @@ namespace Community.Helpers
             return volunteer.ID;
         }
 
-        public static string getHost(int eventID) {
+        /// <summary>
+        /// Returns host id of an event
+        /// </summary>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public static string GetHost(int eventID) {
             CommunityEntities db = new CommunityEntities();
 
             var @event = db.Events.Find(eventID);
@@ -87,7 +127,13 @@ namespace Community.Helpers
             return @event.HostID;
         }
 
-        public static bool isHost(string hostID, int eventID)
+        /// <summary>
+        /// Checks whether given user is host of the event provided
+        /// </summary>
+        /// <param name="hostID"></param>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public static bool IsHost(string hostID, int eventID)
         {
             CommunityEntities db = new CommunityEntities();
 
@@ -99,7 +145,12 @@ namespace Community.Helpers
             return exists;
         }
 
-        public static short getVolunteerPointValue(int eventID)
+        /// <summary>
+        /// Get the value of points allocated per volunteer on event
+        /// </summary>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public static short GetVolunteerPointValue(int eventID)
         {
             CommunityEntities db = new CommunityEntities();
             var @event = db.Events
@@ -112,6 +163,32 @@ namespace Community.Helpers
 
             short result = Convert.ToInt16(@event.Value / @event.Quantity);
             return result;
+        }
+
+        /// <summary>
+        /// Checks whether event has filled all requested positions
+        /// </summary>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public static bool IsEventFull(int eventID) {
+            CommunityEntities db = new CommunityEntities();
+
+            int volunteersRequested = db.Events.Find(eventID).VolunteerQuantity;
+            //All accepted and not withdrawn/rejected
+            int volunteerCount = db.Volunteers
+                .Where(v => v.EventID == eventID 
+                    && v.Accepted == true 
+                    && v.Rejected == false 
+                    && v.Withdrawn == false)
+                .Count();
+
+            if (volunteersRequested > volunteerCount)
+            {
+                return false;
+            }
+            else {
+                return true;
+            }
         }
     }
 }

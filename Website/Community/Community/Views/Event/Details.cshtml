@@ -1,6 +1,7 @@
 ﻿@model Community.Models.Event
 @using Community.Helpers
 @using Microsoft.AspNet.Identity;
+@using System.Configuration;
 
 @{
     ViewBag.Title = "Details";
@@ -9,12 +10,10 @@
 }
 @Html.AntiForgeryToken()
 <div class="col-xs-12 event-links">
-    @if (VolunteerHelper.isHost(userid, Model.ID))
+    @if (VolunteerHelper.IsHost(userid, Model.ID))
     {
         Html.ActionLink("Edit", "Edit", new { id = Model.ID });
     }
-    <!-- Need to find better way to do this due to search functionality-->
-    @Html.ActionLink("Back to List", "Index")
     <a href="javascript:history.back()">Go Back</a>
 </div>
 <div class="col-xs-12 col-md-7">
@@ -27,7 +26,7 @@
                 <b>Volunteers Needed:</b> @Html.DisplayFor(model => model.VolunteerQuantity)
             </div>
             <div class="col-xs-12 col-sm-6">
-                <b>Points Per Volunteer:</b> @VolunteerHelper.getVolunteerPointValue(Model.ID).ToString()
+                <b>Points Per Volunteer:</b> @VolunteerHelper.GetVolunteerPointValue(Model.ID).ToString()
             </div>
         </div>
         <p id="longDescription">
@@ -41,26 +40,26 @@
         }
     </div>
     <div class="col-xs-12">
-        @if (VolunteerHelper.isHost(userid, Model.ID) || UserHelper.isAdmin(userid))
+        @if (VolunteerHelper.IsHost(userid, Model.ID) || UserHelper.IsAdmin(userid))
         {
             Html.RenderAction("Volunteers", "Volunteer", new { eventId = Model.ID });
         }
     </div>
 </div>
 <div id="eventSidebar" class="col-xs-12 col-md-5">
-    @if (VolunteerHelper.isHost(userid, Model.ID) == false
-        && VolunteerHelper.isVolunteer(userid, Model.ID) == false
-        && VolunteerHelper.isWithdrawn(userid, Model.ID) == false
-        && UserHelper.isAdmin(userid) == false
-        && User.Identity.IsAuthenticated)
+    @if (VolunteerHelper.IsHost(userid, Model.ID) == false
+                && VolunteerHelper.IsVolunteer(userid, Model.ID) == false
+                && VolunteerHelper.IsWithdrawn(userid, Model.ID) == false
+                && UserHelper.IsAdmin(userid) == false
+                && User.Identity.IsAuthenticated)
     {
         <div class="col-xs-12">
             <div class="row">
-                @if (VolunteerHelper.isVolunteer(userid, Model.ID) == false)
+                @if (VolunteerHelper.IsVolunteer(userid, Model.ID) == false)
                 {
                     <button id="volunteerBtn" href="javascript:void();" onclick="volunteer(@Html.Raw(Model.ID))" class="btn btn-primary">Volunteer</button>
                 }
-                else if (VolunteerHelper.isWithdrawn(userid, Model.ID) == false)
+                else if (VolunteerHelper.IsWithdrawn(userid, Model.ID) == false)
                 {
                     <button id="withdrawBtn" href="javascript:void();" onclick="withdraw(@Html.Raw(Model.ID))" class="btn btn-warning">Withdraw</button>
                 }
@@ -86,7 +85,7 @@
                 @Html.DisplayFor(model => model.Length) Hours
                 <br />
                 <!--Distance still needs to be added-->
-                Distance: X.X miles 
+                Distance: X.X miles
             </p>
         </div>
 
@@ -98,29 +97,34 @@
             </div>
         }
     </div>
-    @if (VolunteerHelper.isApprovedVolunteer(userid, Model.ID) || UserHelper.isAdmin(userid))
+    @if (VolunteerHelper.IsApprovedVolunteer(userid, Model.ID) || UserHelper.IsAdmin(userid))
     {
         //Only provide address to approved volunteers
         <div class="col-xs-12">
             <h3>Address</h3>
-            <address>
-                @Html.DisplayFor(model => model.Address.Address1)<br />
-                @if (!String.IsNullOrEmpty(Model.Address.Address2))
+            <div class="col-xs-12">
+                <address>
+                    @Html.DisplayFor(model => model.Address.Address1)<br />
+                    @if (!String.IsNullOrEmpty(Model.Address.Address2))
                 {
-                    @Html.DisplayFor(model => model.Address.Address2)<br />
-                }
-                @Html.DisplayFor(model => model.Address.City)<br />
-                @if (!String.IsNullOrEmpty(Model.Address.County))
+                        @Html.DisplayFor(model => model.Address.Address2)<br />
+                    }
+                    @Html.DisplayFor(model => model.Address.City)<br />
+                    @if (!String.IsNullOrEmpty(Model.Address.County))
                 {
-                    @Html.DisplayFor(model => model.Address.County)<br />
-                }
-                @Html.DisplayFor(model => model.Address.Postcode)<br />
-            </address>
+                        @Html.DisplayFor(model => model.Address.County)<br />
+                    }
+                    @Html.DisplayFor(model => model.Address.Postcode)<br />
+                </address>
+                <iframe frameborder="0" style="border:0;"
+                        src="@String.Format("https://www.google.com/maps/embed/v1/place?key={0}&q={1},{2}",@ConfigurationManager.AppSettings["GoogleMapsAPI"],@Model.Address.Lat,@Model.Address.Long)"
+                        allowfullscreen></iframe>
+            </div>
             @if (!String.IsNullOrEmpty(Model.Address.Notes))
-            {
+                {
                 <div class="col-xs-12">
                     <h4>Things you should know</h4>
-                    <p>@Html.DisplayFor(model => model.DateInfo)</p>
+                    <p>@Html.DisplayFor(model => model.Address.Notes)</p>
                 </div>
             }
         </div>

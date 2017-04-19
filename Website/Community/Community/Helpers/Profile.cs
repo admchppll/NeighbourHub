@@ -59,7 +59,7 @@ namespace Community.Helpers
         {
             CommunityEntities db = new CommunityEntities();
             int balance = GetBalance(userID);
-            int required = VolunteerHelper.getVolunteerPointValue(eventID);
+            int required = VolunteerHelper.GetVolunteerPointValue(eventID);
 
             if (balance < required)
             {

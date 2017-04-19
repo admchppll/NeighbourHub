@@ -4,6 +4,7 @@
     string userID = User.Identity.GetUserId();
     Layout = null;
 }
+@Html.AntiForgeryToken()
 <div class="row text-center">
     <h3>My Addresses</h3>
 </div>
@@ -21,7 +22,7 @@
                 }
                 @if (item.Default == false)
                 {
-                    <a data-address-id="@item.ID" class="btn btn-info">Make Default</a>
+                    @Html.ActionLink("Make Default", "MakeDefault", new { addressId = addressID }, new { @class = "btn btn-info" })
                 }
                 @Html.ActionLink("Edit", "Edit", new { id = addressID }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Delete", "Delete", new { id = addressID }, new { @class = "btn btn-danger" })
