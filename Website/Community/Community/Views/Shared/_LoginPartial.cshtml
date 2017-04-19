@@ -13,7 +13,7 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @if (UserHelper.isAdmin(user) == true)
+                @if (UserHelper.IsAdmin(user) == true)
                 {
                     <a href="@Url.Action("Index", "Admin")" title="Dashboard" class="hidden-xs"><i class="fa fa-tachometer" aria-hidden="true"></i></a>
                     <a href="@Url.Action("Index", "Admin")" title="Dashboard" class="visible-xs"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
