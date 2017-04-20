@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Community.Models;
 using Community.Helpers;
+using System.Net;
+using System.Configuration;
 
 namespace Community.Controllers
 {
@@ -341,6 +343,87 @@ namespace Community.Controllers
                 return RedirectToAction("Index", "Manage");
             }
             return View(email);
+        }
+
+        public ActionResult Deactivate(int? id)
+        {
+            CommunityEntities db = new CommunityEntities();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Profile profile = db.Profiles.Find(id);
+            if (profile == null || User.Identity.GetUserId() != profile.UserID)
+            {
+                return HttpNotFound();
+            }
+            return View(profile);
+        }
+
+        [HttpPost, ActionName("Deactivate")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeactivateConfirmed(int id)
+        {
+            CommunityEntities db = new CommunityEntities();
+
+            Profile profile = db.Profiles.Find(id);
+            profile.Active = false;
+            db.SaveChanges();
+
+            User user = db.Users.Find(profile.UserID);
+
+            EmailModel email = new EmailModel();
+            email.From = ConfigurationManager.AppSettings["DefaultEmail"];
+            email.To = user.Email;
+            email.Subject = "Your account has been successfully deactivated";
+            email.Message = "We're sorry to see that you have chosen to deactivate your account with us. From this point onwards your profile and events will no longer visible to other users; unfortunately this also means that you are no longer able to create new events. If you would like to reactivate your account, simply login, head to your hub and select the reactivate link.\nThank you for using NeighbourHub and we hope you continue to serve your community.";
+            email.Html = "We're sorry to see that you have chosen to deactivate your account with us. From this point onwards your profile and events will no longer visible to other users; unfortunately this also means that you are no longer able to create new events. If you would like to reactivate your account, simply login, head to your hub and select the reactivate link.<br/>Thank you for using NeighbourHub and we hope you continue to serve your community.";
+            email.SendAsync();
+
+            AuditHelper.AddUserAudit(user.ID, "Account has been deactivated by user", null);
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Reactivate(int? id)
+        {
+            CommunityEntities db = new CommunityEntities();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Profile profile = db.Profiles.Find(id);
+            if (profile == null || User.Identity.GetUserId() != profile.UserID)
+            {
+                return HttpNotFound();
+            }
+            return View(profile);
+        }
+
+        // POST: Review/Delete/5
+        [HttpPost, ActionName("Reactivate")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReactivateConfirmed(int id)
+        {
+            CommunityEntities db = new CommunityEntities();
+
+            Profile profile = db.Profiles.Find(id);
+            profile.Active = false;
+            db.SaveChanges();
+
+            User user = db.Users.Find(profile.UserID);
+
+            EmailModel email = new EmailModel();
+            email.From = ConfigurationManager.AppSettings["DefaultEmail"];
+            email.To = user.Email;
+            email.Subject = "Account Reactivation";
+            email.Message = "Your account has been successfully reactivated.";
+            email.Html = "Your account has been successfully reactivated.";
+            email.SendAsync();
+
+            AuditHelper.AddUserAudit(user.ID, "Account has been reactivated by user", null);
+
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

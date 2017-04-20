@@ -115,7 +115,7 @@ namespace Community.Controllers
                 return HttpNotFound();
             } else if (message.RecipientID == userId 
                 && message.Read == false) {
-                MessageHelper.setRead(userId, message.ID);
+                MessageHelper.SetRead(userId, message.ID);
             }
             return View(message);
         }

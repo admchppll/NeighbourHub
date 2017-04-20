@@ -48,5 +48,13 @@ namespace Community.Helpers
 
             return exists;
         }
+
+        public static string GetUsername(string userID) {
+            using (CommunityEntities db = new CommunityEntities())
+            {
+                var user = db.Users.Find(userID);
+                return user.UserName;
+            }
+        }
     }
 }

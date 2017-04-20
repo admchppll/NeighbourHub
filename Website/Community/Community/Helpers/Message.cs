@@ -54,7 +54,7 @@ namespace Community.Helpers
             return count;
         }
 
-        public static int getAllSavedMessages(string userID)
+        public static int GetAllSavedMessages(string userID)
         {
             CommunityEntities db = new CommunityEntities();
 
@@ -66,7 +66,7 @@ namespace Community.Helpers
             return count;
         }
 
-        public static void setRead(string userID, int messageID)
+        public static void SetRead(string userID, int messageID)
         {
             CommunityEntities db = new CommunityEntities();
             Message message = db.Messages.Find(messageID);
