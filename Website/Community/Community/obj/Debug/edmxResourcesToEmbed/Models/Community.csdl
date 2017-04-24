@@ -34,16 +34,6 @@
     <Property Name="ReportID" Type="Int32" />
     <NavigationProperty Name="User" Relationship="CommunityModel.FK_Audit_User" FromRole="Audit" ToRole="User" />
   </EntityType>
-  <EntityType Name="Bookmarked">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="EventID" Type="Int32" Nullable="false" />
-    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Event" Relationship="Self.FK_Bookmarked_Event" FromRole="Bookmarked" ToRole="Event" />
-    <NavigationProperty Name="User" Relationship="Self.FK_Bookmarked_User" FromRole="Bookmarked" ToRole="User" />
-  </EntityType>
   <EntityType Name="Event">
     <Key>
       <PropertyRef Name="ID" />
@@ -83,7 +73,6 @@
     <Property Name="PictureURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Address" Relationship="Self.FK_Event_Address" FromRole="Event" ToRole="Address" />
     <NavigationProperty Name="Audits" Relationship="Self.FK_Audit_Event" FromRole="Event" ToRole="Audit" />
-    <NavigationProperty Name="Bookmarkeds" Relationship="Self.FK_Bookmarked_Event" FromRole="Event" ToRole="Bookmarked" />
     <NavigationProperty Name="User" Relationship="Self.FK_Event_User" FromRole="Event" ToRole="User" />
     <NavigationProperty Name="EventTags" Relationship="Self.FK_EventTag_Event1" FromRole="Event" ToRole="EventTag" />
     <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Event" FromRole="Event" ToRole="Report" />
@@ -91,6 +80,7 @@
     <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_Event" FromRole="Event" ToRole="Volunteer" />
     <Property Name="Cancelled" Type="Boolean" />
     <NavigationProperty Name="Reviews" Relationship="CommunityModel.FK_Review_Event" FromRole="Event" ToRole="Review" />
+    <NavigationProperty Name="Bookmarks" Relationship="CommunityModel.FK_Bookmarked_Event1" FromRole="Event" ToRole="Bookmark" />
   </EntityType>
   <EntityType Name="EventTag">
     <Key>
@@ -171,8 +161,8 @@
     <Property Name="CharityNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Approved" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="UserOrganisations" Relationship="Self.FK_UserOrganisation_Organisation" FromRole="Organisation" ToRole="UserOrganisation" />
-    <NavigationProperty Name="Points" Relationship="CommunityModel.FK_Points_Organisation" FromRole="Organisation" ToRole="Point" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="RegularPoints" Relationship="CommunityModel.FK_Points_Organisation1" FromRole="Organisation" ToRole="RegularPoint" />
   </EntityType>
   <EntityType Name="Profile">
     <Key>
@@ -272,7 +262,6 @@
     <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_User" FromRole="User" ToRole="Address" />
-    <NavigationProperty Name="Bookmarkeds" Relationship="Self.FK_Bookmarked_User" FromRole="User" ToRole="Bookmarked" />
     <NavigationProperty Name="Events" Relationship="Self.FK_Event_User" FromRole="User" ToRole="Event" />
     <NavigationProperty Name="Messages" Relationship="Self.FK_Message_User_Recipient" FromRole="User" ToRole="Message" />
     <NavigationProperty Name="Messages1" Relationship="Self.FK_Message_User_Sender" FromRole="User" ToRole="Message" />
@@ -288,10 +277,11 @@
     <NavigationProperty Name="UserSkills" Relationship="Self.FK_UserSkill_User" FromRole="User" ToRole="UserSkill" />
     <NavigationProperty Name="Volunteers" Relationship="Self.FK_Volunteer_User" FromRole="User" ToRole="Volunteer" />
     <NavigationProperty Name="Audits" Relationship="CommunityModel.FK_Audit_User" FromRole="User" ToRole="Audit" />
-    <NavigationProperty Name="Points" Relationship="CommunityModel.FK_Points_User" FromRole="User" ToRole="Point" />
     <NavigationProperty Name="Transactions" Relationship="CommunityModel.FK_Transaction_RecipientUser" FromRole="User" ToRole="Transaction" />
     <NavigationProperty Name="Transactions1" Relationship="CommunityModel.FK_Transaction_User" FromRole="User" ToRole="Transaction" />
     <NavigationProperty Name="Reviews" Relationship="CommunityModel.FK_Review_User" FromRole="User" ToRole="Review" />
+    <NavigationProperty Name="Bookmarks" Relationship="CommunityModel.FK_Bookmarked_User1" FromRole="User" ToRole="Bookmark" />
+    <NavigationProperty Name="RegularPoints" Relationship="CommunityModel.FK_Points_User1" FromRole="User" ToRole="RegularPoint" />
   </EntityType>
   <EntityType Name="UserClaim">
     <Key>
@@ -408,30 +398,6 @@
       </Principal>
       <Dependent Role="Audit">
         <PropertyRef Name="EventID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Bookmarked_Event">
-    <End Role="Event" Type="Self.Event" Multiplicity="1" />
-    <End Role="Bookmarked" Type="Self.Bookmarked" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Event">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Bookmarked">
-        <PropertyRef Name="EventID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Bookmarked_User">
-    <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="Bookmarked" Type="Self.Bookmarked" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Bookmarked">
-        <PropertyRef Name="UserID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -716,7 +682,6 @@
   <EntityContainer Name="CommunityEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Addresses" EntityType="Self.Address" />
     <EntitySet Name="Audits" EntityType="Self.Audit" />
-    <EntitySet Name="Bookmarkeds" EntityType="Self.Bookmarked" />
     <EntitySet Name="Events" EntityType="Self.Event" />
     <EntitySet Name="EventTags" EntityType="Self.EventTag" />
     <EntitySet Name="Information" EntityType="Self.Information" />
@@ -749,14 +714,6 @@
     <AssociationSet Name="FK_Audit_Event" Association="Self.FK_Audit_Event">
       <End Role="Event" EntitySet="Events" />
       <End Role="Audit" EntitySet="Audits" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Bookmarked_Event" Association="Self.FK_Bookmarked_Event">
-      <End Role="Event" EntitySet="Events" />
-      <End Role="Bookmarked" EntitySet="Bookmarkeds" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Bookmarked_User" Association="Self.FK_Bookmarked_User">
-      <End Role="User" EntitySet="Users" />
-      <End Role="Bookmarked" EntitySet="Bookmarkeds" />
     </AssociationSet>
     <AssociationSet Name="FK_Event_User" Association="Self.FK_Event_User">
       <End Role="User" EntitySet="Users" />
@@ -851,32 +808,23 @@
       <End Role="Volunteer" EntitySet="Volunteers" />
     </AssociationSet>
     <FunctionImport Name="confirmVolunteer">
-      <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
+      <Parameter Name="VolunteerID" Type="Int32" Mode="In" />
     </FunctionImport>
     <FunctionImport Name="createGeoLocationAddress">
-      <Parameter Name="AddressID" Mode="In" Type="Int32" />
+      <Parameter Name="AddressID" Type="Int32" Mode="In" />
     </FunctionImport>
     <FunctionImport Name="reduceSenderBalance">
-      <Parameter Name="TransactionID" Mode="In" Type="Int32" />
+      <Parameter Name="TransactionID" Type="Int32" Mode="In" />
     </FunctionImport>
     <FunctionImport Name="reverseTransaction">
-      <Parameter Name="TransactionID" Mode="In" Type="Int32" />
+      <Parameter Name="TransactionID" Type="Int32" Mode="In" />
     </FunctionImport>
     <FunctionImport Name="withdrawVolunteer">
-      <Parameter Name="VolunteerID" Mode="In" Type="Int32" />
+      <Parameter Name="VolunteerID" Type="Int32" Mode="In" />
     </FunctionImport>
     <AssociationSet Name="FK_Audit_User" Association="CommunityModel.FK_Audit_User">
       <End Role="User" EntitySet="Users" />
       <End Role="Audit" EntitySet="Audits" />
-    </AssociationSet>
-    <EntitySet Name="Points" EntityType="CommunityModel.Point" />
-    <AssociationSet Name="FK_Points_Organisation" Association="CommunityModel.FK_Points_Organisation">
-      <End Role="Organisation" EntitySet="Organisations" />
-      <End Role="Point" EntitySet="Points" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Points_User" Association="CommunityModel.FK_Points_User">
-      <End Role="User" EntitySet="Users" />
-      <End Role="Point" EntitySet="Points" />
     </AssociationSet>
     <AssociationSet Name="FK_Transaction_RecipientUser" Association="CommunityModel.FK_Transaction_RecipientUser">
       <End Role="User" EntitySet="Users" />
@@ -907,6 +855,24 @@
     <EntitySet Name="IndividualUserStatistics" EntityType="CommunityModel.IndividualUserStatistic" />
     <EntitySet Name="VolunteerStatistics" EntityType="CommunityModel.VolunteerStatistic" />
     <FunctionImport Name="spUsersWithoutProfile" ReturnType="Collection(Int32)" />
+    <EntitySet Name="Bookmarks" EntityType="CommunityModel.Bookmark" />
+    <AssociationSet Name="FK_Bookmarked_Event1" Association="CommunityModel.FK_Bookmarked_Event1">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Bookmark" EntitySet="Bookmarks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bookmarked_User1" Association="CommunityModel.FK_Bookmarked_User1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Bookmark" EntitySet="Bookmarks" />
+    </AssociationSet>
+    <EntitySet Name="RegularPoints" EntityType="CommunityModel.RegularPoint" />
+    <AssociationSet Name="FK_Points_Organisation1" Association="CommunityModel.FK_Points_Organisation1">
+      <End Role="Organisation" EntitySet="Organisations" />
+      <End Role="RegularPoint" EntitySet="RegularPoints" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Points_User1" Association="CommunityModel.FK_Points_User1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="RegularPoint" EntitySet="RegularPoints" />
+    </AssociationSet>
   </EntityContainer>
   <Association Name="FK_Audit_User">
     <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
@@ -916,42 +882,6 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Audit">
-        <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Point">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="OrganisationID" Type="Int16" />
-    <Property Name="DayOfMonth" Type="Byte" Nullable="false" />
-    <Property Name="Expiry" Type="DateTime" Nullable="false" Precision="0" />
-    <NavigationProperty Name="Organisation" Relationship="CommunityModel.FK_Points_Organisation" FromRole="Point" ToRole="Organisation" />
-    <NavigationProperty Name="User" Relationship="CommunityModel.FK_Points_User" FromRole="Point" ToRole="User" />
-  </EntityType>
-  <Association Name="FK_Points_Organisation">
-    <End Type="CommunityModel.Organisation" Role="Organisation" Multiplicity="0..1" />
-    <End Type="CommunityModel.Point" Role="Point" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Organisation">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Point">
-        <PropertyRef Name="OrganisationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Points_User">
-    <End Type="CommunityModel.User" Role="User" Multiplicity="0..1" />
-    <End Type="CommunityModel.Point" Role="Point" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Point">
         <PropertyRef Name="UserID" />
       </Dependent>
     </ReferentialConstraint>
@@ -1125,4 +1055,77 @@
     <Property Name="ConfirmedCount" Type="Int32" Nullable="false" />
     <Property Name="PendingConfirmationCount" Type="Int32" Nullable="false" />
   </EntityType>
+  <EntityType Name="Bookmark">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EventID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Event" Relationship="CommunityModel.FK_Bookmarked_Event1" FromRole="Bookmark" ToRole="Event" />
+    <NavigationProperty Name="User" Relationship="CommunityModel.FK_Bookmarked_User1" FromRole="Bookmark" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Bookmarked_Event1">
+    <End Type="CommunityModel.Event" Role="Event" Multiplicity="1" />
+    <End Type="CommunityModel.Bookmark" Role="Bookmark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookmark">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bookmarked_User1">
+    <End Type="CommunityModel.User" Role="User" Multiplicity="1" />
+    <End Type="CommunityModel.Bookmark" Role="Bookmark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookmark">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RegularPoint">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="OrganisationID" Type="Int16" />
+    <Property Name="DayOfMonth" Type="Byte" Nullable="false" />
+    <Property Name="Expiry" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Reason" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Submitted" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Approved" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Organisation" Relationship="CommunityModel.FK_Points_Organisation1" FromRole="RegularPoint" ToRole="Organisation" />
+    <NavigationProperty Name="User" Relationship="CommunityModel.FK_Points_User1" FromRole="RegularPoint" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Points_Organisation1">
+    <End Type="CommunityModel.Organisation" Role="Organisation" Multiplicity="0..1" />
+    <End Type="CommunityModel.RegularPoint" Role="RegularPoint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisation">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RegularPoint">
+        <PropertyRef Name="OrganisationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Points_User1">
+    <End Type="CommunityModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="CommunityModel.RegularPoint" Role="RegularPoint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RegularPoint">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

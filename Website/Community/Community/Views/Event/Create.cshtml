@@ -169,11 +169,20 @@
 
             if ($.inArray(tagID, tags) < 0) {
                 tags.push(tagID);
-                var output = '<span class="tag">' + tagName + ' <a href="javascript:void()" data-eventtag-id="' + tagID + '"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></span>';    
+                var output = '<span class="tag" id="#tag-'+ tagID +'">' + tagName + ' <a href="javascript:remove(this)" data-eventtag-id="' + tagID + '"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></span>';    
                 $('#tagList').append(output);
                 $('#Tags').val(tags.join());      
             }
         });
+
+        function remove() {
+            console.log("check0");
+            var tagID = $(this).attr("data-eventtag-id");
+            console.log("check1");
+            $('#tag-' + tagID).remove(); console.log("check2");
+            tags.remove(tagID); console.log("check3");
+            $('#Tags').val(tags.join()); console.log("check4");
+        }
 
         /*$('.tag > a').on("click", function () {
             console.log("check0");

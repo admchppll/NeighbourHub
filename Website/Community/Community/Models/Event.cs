@@ -18,12 +18,12 @@ namespace Community.Models
         public Event()
         {
             this.Audits = new HashSet<Audit>();
-            this.Bookmarkeds = new HashSet<Bookmarked>();
             this.EventTags = new HashSet<EventTag>();
             this.Reports = new HashSet<Report>();
             this.Transactions = new HashSet<Transaction>();
             this.Volunteers = new HashSet<Volunteer>();
             this.Reviews = new HashSet<Review>();
+            this.Bookmarks = new HashSet<Bookmark>();
         }
     
         public int ID { get; set; }
@@ -64,8 +64,6 @@ namespace Community.Models
         public virtual Address Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Audit> Audits { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Bookmarked> Bookmarkeds { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EventTag> EventTags { get; set; }
@@ -77,5 +75,7 @@ namespace Community.Models
         public virtual ICollection<Volunteer> Volunteers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bookmark> Bookmarks { get; set; }
     }
 }

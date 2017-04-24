@@ -12,13 +12,18 @@ namespace Community.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Bookmarked
+    public partial class RegularPoint
     {
         public int ID { get; set; }
-        public int EventID { get; set; }
         public string UserID { get; set; }
+        public Nullable<short> OrganisationID { get; set; }
+        public byte DayOfMonth { get; set; }
+        public System.DateTime Expiry { get; set; }
+        public string Reason { get; set; }
+        public System.DateTime Submitted { get; set; }
+        public bool Approved { get; set; }
     
-        public virtual Event Event { get; set; }
+        public virtual Organisation Organisation { get; set; }
         public virtual User User { get; set; }
     }
 }

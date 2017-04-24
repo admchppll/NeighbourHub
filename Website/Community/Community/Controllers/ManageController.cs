@@ -345,13 +345,10 @@ namespace Community.Controllers
             return View(email);
         }
 
-        public ActionResult Deactivate(int? id)
+        public ActionResult Deactivate()
         {
             CommunityEntities db = new CommunityEntities();
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            int id = ProfileHelper.CurrentProfileID(User.Identity.GetUserId());
             Profile profile = db.Profiles.Find(id);
             if (profile == null || User.Identity.GetUserId() != profile.UserID)
             {
@@ -362,10 +359,10 @@ namespace Community.Controllers
 
         [HttpPost, ActionName("Deactivate")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeactivateConfirmed(int id)
+        public ActionResult DeactivateConfirmed()
         {
             CommunityEntities db = new CommunityEntities();
-
+            int id = ProfileHelper.CurrentProfileID(User.Identity.GetUserId());
             Profile profile = db.Profiles.Find(id);
             profile.Active = false;
             db.SaveChanges();
@@ -385,13 +382,10 @@ namespace Community.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Reactivate(int? id)
+        public ActionResult Reactivate()
         {
             CommunityEntities db = new CommunityEntities();
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            int id = ProfileHelper.CurrentProfileID(User.Identity.GetUserId());
             Profile profile = db.Profiles.Find(id);
             if (profile == null || User.Identity.GetUserId() != profile.UserID)
             {
@@ -403,10 +397,11 @@ namespace Community.Controllers
         // POST: Review/Delete/5
         [HttpPost, ActionName("Reactivate")]
         [ValidateAntiForgeryToken]
-        public ActionResult ReactivateConfirmed(int id)
+        public ActionResult ReactivateConfirmed()
         {
             CommunityEntities db = new CommunityEntities();
 
+            int id = ProfileHelper.CurrentProfileID(User.Identity.GetUserId());
             Profile profile = db.Profiles.Find(id);
             profile.Active = false;
             db.SaveChanges();

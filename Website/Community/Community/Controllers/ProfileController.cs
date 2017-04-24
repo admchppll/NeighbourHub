@@ -37,6 +37,9 @@ namespace Community.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.CurrentInts = String.Join(",", db.UserInterests.Include(i => i.Interest).Where(ui => ui.UserID == profile.UserID).Select(i => i.Interest.Label).ToArray());
+            ViewBag.CurrentSkills = String.Join(",", db.UserSkills.Include(s => s.Skill1).Where(ui => ui.UserID == profile.UserID).Select(s => s.Skill1.Label).ToArray());
             return View(profile);
         }
 
@@ -47,7 +50,9 @@ namespace Community.Controllers
             if (ProfileHelper.ProfileExists(userID) == false)
             {
                 ViewBag.Message = message != ""? message : null;
-                ViewBag.UserID = new SelectList(db.Users, "ID", "Email");
+                ViewBag.Interests = db.Interests;
+                ViewBag.Skills = db.Skills.Where(s => s.Active == true);
+
                 return View();
             }
             else {
@@ -66,7 +71,11 @@ namespace Community.Controllers
 
         // POST: Profile/Create
         [HttpPost,ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography")] Profile profile, [Bind(Include = "PictureURL")]HttpPostedFileBase PictureURL)
+        public ActionResult Create(
+            [Bind(Include = "ID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography")] Profile profile, 
+            [Bind(Include = "PictureURL")]HttpPostedFileBase PictureURL, 
+            [Bind(Include = "Interests")]String Interests, 
+            [Bind(Include = "Skills")]String Skills)
         {
             DateTime current_date = DateTime.Now;
             if (PictureURL != null && PictureURL.ContentLength > 0)
@@ -84,12 +93,33 @@ namespace Community.Controllers
             profile.UserID = User.Identity.GetUserId();
             profile.Active = true;
 
+            var interestList = Interests.Split(',').ToList();
+            var skillList = Skills.Split(',').ToList();
+
             if (ModelState.IsValid)
             {
                 db.Profiles.Add(profile);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                foreach (var id in interestList) {
+                    UserInterest ui = new UserInterest();
+                    ui.InterestID = Convert.ToInt32(id);
+                    ui.UserID = profile.UserID;
+                    db.UserInterests.Add(ui);
+                }
+
+                foreach (var id in skillList) {
+                    UserSkill us = new UserSkill();
+                    us.Skill = Convert.ToInt32(id);
+                    us.UserID = profile.UserID;
+                    db.UserSkills.Add(us);
+                }
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Manage");
             }
+            ViewBag.Interests = db.Interests;
+            ViewBag.Skills = db.Skills.Where(s => s.Active == true);
             return View(profile);
         }
 
@@ -105,12 +135,26 @@ namespace Community.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.InterestSelected = db.UserInterests.Include(i => i.Interest).Where(ui => ui.UserID == profile.UserID);
+            ViewBag.CurrentInts = String.Join(",", db.UserInterests.Where(ui => ui.UserID == profile.UserID).Select(i => i.InterestID).ToArray());
+            ViewBag.SkillSelected = db.UserSkills.Include(s => s.Skill1).Where(ui => ui.UserID == profile.UserID);
+            ViewBag.CurrentSkills = String.Join(",", db.UserSkills.Where(ui => ui.UserID == profile.UserID).Select(s => s.Skill).ToArray());
+            ViewBag.Interests = db.Interests;
+            ViewBag.Skills = db.Skills.Where(s => s.Active == true);
+
             return View(profile);
         }
 
         // POST: Profile/Edit/5
         [HttpPost,ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography, PictureURL")] Profile profile, [Bind(Include = "PictureURL1")]HttpPostedFileBase PictureURL1)
+        public ActionResult Edit(
+            [Bind(Include = "ID,UserID,Balance,Title,FirstName,Surname,Gender,BirthDate,Phone,Biography, PictureURL")] Profile profile, 
+            [Bind(Include = "PictureURL1")]HttpPostedFileBase PictureURL1, 
+            [Bind(Include = "Interests")]String Interests, 
+            [Bind(Include = "Skills")]String Skills, 
+            [Bind(Include = "DeletedInterests")]String DeletedInterests, 
+            [Bind(Include = "DeletedSkills")]String DeletedSkills)
         {
             DateTime current_date = DateTime.Now;
             if (PictureURL1 != null && PictureURL1.ContentLength > 0)
@@ -126,12 +170,81 @@ namespace Community.Controllers
                 profile.PictureURL = "~/Uploads/Profile/" + currentDateString + "/" + fileName;
             }
 
+            var interestList = Interests.Split(',').ToList();
+            var skillList = Skills.Split(',').ToList();
+            var delInterestList = DeletedInterests.Split(',').ToList();
+            var delSkillList = DeletedSkills.Split(',').ToList();
+
             if (ModelState.IsValid)
             {
                 db.Entry(profile).State = EntityState.Modified;
+
+                foreach (var id in delInterestList) {
+                    if (String.IsNullOrEmpty(id)) {
+                        continue;
+                    }
+                    int delId = Convert.ToInt32(id);
+                    if (db.UserInterests.Where(u => u.InterestID == delId && u.UserID == profile.UserID).Any())
+                    {
+                        UserInterest del = db.UserInterests.Where(u => u.InterestID == delId && u.UserID == profile.UserID).Single();
+                        db.UserInterests.Remove(del);
+                    }
+                }
+
+                foreach (var id in interestList)
+                {
+                    if (String.IsNullOrEmpty(id))
+                    {
+                        continue;
+                    }
+                    int intId = Convert.ToInt32(id);
+                    if (!db.UserInterests.Where(u => u.InterestID == intId && u.UserID == profile.UserID).Any()) {
+                        UserInterest ui = new UserInterest();
+                        ui.InterestID = intId;
+                        ui.UserID = profile.UserID;
+                        db.UserInterests.Add(ui);
+                    }
+                }
+
+                foreach (var id in delSkillList)
+                {
+                    if (String.IsNullOrEmpty(id))
+                    {
+                        continue;
+                    }
+                    int delId = Convert.ToInt32(id);
+                    if (db.UserSkills.Where(u => u.Skill == delId && u.UserID == profile.UserID).Any())
+                    {
+                        UserSkill del = db.UserSkills.Where(u => u.Skill == delId && u.UserID == profile.UserID).Single();
+                        db.UserSkills.Remove(del);
+                    }
+                }
+
+                foreach (var id in skillList)
+                {
+                    if (String.IsNullOrEmpty(id))
+                    {
+                        continue;
+                    }
+                    int skId = Convert.ToInt32(id);
+                    if (!db.UserSkills.Where(u => u.Skill == skId && u.UserID == profile.UserID).Any())
+                    {
+                        UserSkill us = new UserSkill();
+                        us.Skill = skId;
+                        us.UserID = profile.UserID;
+                        db.UserSkills.Add(us);
+                    }                      
+                }
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Manage");
             }
+            ViewBag.InterestSelected = db.UserInterests.Include(i => i.Interest).Where(ui => ui.UserID == profile.UserID);
+            ViewBag.CurrentInts = String.Join(",",db.UserInterests.Where(ui => ui.UserID == profile.UserID).Select(i => i.InterestID).ToArray());
+            ViewBag.SkillSelected = db.UserSkills.Include(s => s.Skill1).Where(ui => ui.UserID == profile.UserID);
+            ViewBag.CurrentSkills = String.Join(",", db.UserSkills.Where(ui => ui.UserID == profile.UserID).Select(s => s.Skill).ToArray());
+            ViewBag.Interests = db.Interests;
+            ViewBag.Skills = db.Skills.Where(s => s.Active == true);
             return View(profile);
         }
 

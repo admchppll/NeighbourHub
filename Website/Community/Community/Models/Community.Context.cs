@@ -29,7 +29,6 @@ namespace Community.Models
     
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Audit> Audits { get; set; }
-        public virtual DbSet<Bookmarked> Bookmarkeds { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<EventTag> EventTags { get; set; }
         public virtual DbSet<Information> Information { get; set; }
@@ -51,7 +50,6 @@ namespace Community.Models
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserSkill> UserSkills { get; set; }
         public virtual DbSet<Volunteer> Volunteers { get; set; }
-        public virtual DbSet<Point> Points { get; set; }
         public virtual DbSet<EventSearch> EventSearches { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
@@ -59,6 +57,8 @@ namespace Community.Models
         public virtual DbSet<ReportStatistic> ReportStatistics { get; set; }
         public virtual DbSet<IndividualUserStatistic> IndividualUserStatistics { get; set; }
         public virtual DbSet<VolunteerStatistic> VolunteerStatistics { get; set; }
+        public virtual DbSet<Bookmark> Bookmarks { get; set; }
+        public virtual DbSet<RegularPoint> RegularPoints { get; set; }
     
         public virtual int confirmVolunteer(Nullable<int> volunteerID)
         {

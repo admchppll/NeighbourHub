@@ -255,7 +255,6 @@
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
-    <Compile Include="Controllers\PointController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
@@ -293,7 +292,7 @@
     <Compile Include="Models\Audit.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Bookmarked.cs">
+    <Compile Include="Models\Bookmark.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Community.Context.cs">
@@ -351,10 +350,10 @@
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PartialClasses.cs" />
-    <Compile Include="Models\Point.cs">
+    <Compile Include="Models\Profile.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Profile.cs">
+    <Compile Include="Models\RegularPoint.cs">
       <DependentUpon>Community.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Report.cs">
@@ -693,6 +692,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\Profile.js" />
     <Content Include="Scripts\global.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -793,16 +793,6 @@
     <Content Include="Views\UserRole\Details.cshtml" />
     <Content Include="Views\UserRole\Edit.cshtml" />
     <Content Include="Views\UserRole\Index.cshtml" />
-    <Content Include="Views\UserInterest\Create.cshtml" />
-    <Content Include="Views\UserInterest\Delete.cshtml" />
-    <Content Include="Views\UserInterest\Details.cshtml" />
-    <Content Include="Views\UserInterest\Edit.cshtml" />
-    <Content Include="Views\UserInterest\Index.cshtml" />
-    <Content Include="Views\UserSkill\Create.cshtml" />
-    <Content Include="Views\UserSkill\Delete.cshtml" />
-    <Content Include="Views\UserSkill\Details.cshtml" />
-    <Content Include="Views\UserSkill\Edit.cshtml" />
-    <Content Include="Views\UserSkill\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\Create.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Gender.cshtml" />
@@ -843,10 +833,6 @@
     <Content Include="Views\Audit\AuditReport.cshtml" />
     <Content Include="Views\Audit\ReportCreate.cshtml" />
     <Content Include="Views\Report\Reply.cshtml" />
-    <Content Include="Views\Point\Create.cshtml" />
-    <Content Include="Views\Point\Details.cshtml" />
-    <Content Include="Views\Point\Edit.cshtml" />
-    <Content Include="Views\Point\Index.cshtml" />
     <Content Include="Views\Organisation\Approve.cshtml" />
     <Content Include="Views\Organisation\Deactivate.cshtml" />
     <Content Include="Views\Transaction\UserPartial.cshtml" />
@@ -890,6 +876,9 @@
     <Content Include="Views\Review\Details.cshtml" />
     <Content Include="Views\Review\Edit.cshtml" />
     <Content Include="Views\Review\Index.cshtml" />
+    <Content Include="Views\Manage\Deactivate.cshtml" />
+    <Content Include="Views\Admin\MessageTile.cshtml" />
+    <Content Include="Views\Manage\Reactivate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />

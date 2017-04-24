@@ -1,114 +1,51 @@
 ﻿@model Community.Models.Profile
-
+@using Microsoft.AspNet.Identity;
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.User.UserName;
 }
 
-<h2>Details</h2>
+<h2 class="text-center">@Model.User.UserName</h2>
 
-<div>
-    <h4>Profile</h4>
+<div class="row">
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Balance)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Balance)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Surname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Surname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Biography)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Biography)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PictureURL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PictureURL)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Suspended)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Suspended)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-
-    </dl>
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-8 col-sm-offset-4 col-sm-4">
+            @if (Model.PictureURL != null && Model.PictureURL != "")
+            {
+                <img src="@Url.Content(Model.PictureURL)" class="img-responsive" alt="Profile Image" />
+            }
+        </div>
+    </div>
+    <div class="row text-center">
+        <h4>About Me</h4>
+        <p>
+            @if(!String.IsNullOrEmpty(@ViewBag.CurrentInts)){ 
+                <b> I am interested in: </b> @ViewBag.CurrentInts <br/>
+            }
+            @if (!String.IsNullOrEmpty(@ViewBag.CurrentSkills))
+            {
+                <b>I have the following skills: </b>@ViewBag.CurrentSkills
+            }
+        </p>
+        <div class="col-xs-10 col-xs-offset-1">
+            @Html.Raw(Model.Biography)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 text-center">
+            <h4>Reviews</h4>
+            <p>This neighbour has not received any reviews yet!</p>
+        </div>
+        <div class="col-sm-6 text-center">
+            <h4>Upcoming Events</h4>
+            <p>This neighbour has no upcoming event you can help with.</p>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+<p class="text-center">
+    @if (String.Equals(User.Identity.GetUserId(),Model.UserID) == true) {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID });
+        @Html.Raw(" | ");
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>

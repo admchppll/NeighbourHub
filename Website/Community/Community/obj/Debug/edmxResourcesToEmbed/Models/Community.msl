@@ -33,15 +33,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Bookmarkeds">
-      <EntityTypeMapping TypeName="CommunityModel.Bookmarked">
-        <MappingFragment StoreEntitySet="Bookmarked">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="EventID" ColumnName="EventID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="CommunityModel.Event">
         <MappingFragment StoreEntitySet="Event">
@@ -336,17 +327,6 @@
     <FunctionImportMapping FunctionImportName="reduceSenderBalance" FunctionName="CommunityModel.Store.reduceSenderBalance" />
     <FunctionImportMapping FunctionImportName="reverseTransaction" FunctionName="CommunityModel.Store.reverseTransaction" />
     <FunctionImportMapping FunctionImportName="withdrawVolunteer" FunctionName="CommunityModel.Store.withdrawVolunteer" />
-    <EntitySetMapping Name="Points">
-      <EntityTypeMapping TypeName="CommunityModel.Point">
-        <MappingFragment StoreEntitySet="Points">
-          <ScalarProperty Name="Expiry" ColumnName="Expiry" />
-          <ScalarProperty Name="DayOfMonth" ColumnName="DayOfMonth" />
-          <ScalarProperty Name="OrganisationID" ColumnName="OrganisationID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="clearNotifications" FunctionName="CommunityModel.Store.clearNotifications" />
     <EntitySetMapping Name="EventSearches">
       <EntityTypeMapping TypeName="CommunityModel.EventSearch">
@@ -447,5 +427,28 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="spUsersWithoutProfile" FunctionName="CommunityModel.Store.spUsersWithoutProfile" />
+    <EntitySetMapping Name="Bookmarks">
+      <EntityTypeMapping TypeName="CommunityModel.Bookmark">
+        <MappingFragment StoreEntitySet="Bookmark">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="EventID" ColumnName="EventID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegularPoints">
+      <EntityTypeMapping TypeName="CommunityModel.RegularPoint">
+        <MappingFragment StoreEntitySet="RegularPoints">
+          <ScalarProperty Name="Approved" ColumnName="Approved" />
+          <ScalarProperty Name="Submitted" ColumnName="Submitted" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="Expiry" ColumnName="Expiry" />
+          <ScalarProperty Name="DayOfMonth" ColumnName="DayOfMonth" />
+          <ScalarProperty Name="OrganisationID" ColumnName="OrganisationID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -63,25 +63,34 @@ textarea {
     float: left;
 }
 
-    .tag a {
-        color: #fff;
-    }
+.tag a {
+    color: #fff;
+}
 
-        .tag a:hover {
-            color: #47146a;
-        }
+.tag a:hover {
+    color: #47146a;
+}
 
 .tagList {
     display: inline;
+}
+
+.skillList, .interestList {
+    display: block;
+    margin-top: 10px;
+}
+
+.skill, .interest {
+    margin-top: 5px;
 }
 
 #alternateDateTable, #alternateDateTable td, #alternateDateTable th {
     border: none;
 }
 
-    #alternateDateTable th {
-        text-align: center;
-    }
+#alternateDateTable th {
+    text-align: center;
+}
 
 #volunteerInfo {
     padding-top: 10px;

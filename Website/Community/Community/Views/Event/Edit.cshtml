@@ -9,7 +9,7 @@
 @using (Html.BeginForm("Edit", "Event", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Event</h4>
         <hr />
@@ -263,9 +263,7 @@
             </div>
         </div>
     </div>
-<script>CKEDITOR.replaceAll();</script>
-            }
-
+}
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

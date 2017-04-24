@@ -10,6 +10,7 @@ using Community.Models;
 
 namespace Community.Controllers
 {
+    [Authorize]
     public class BookmarkController : Controller
     {
         private CommunityEntities db = new CommunityEntities();
@@ -17,23 +18,8 @@ namespace Community.Controllers
         // GET: Bookmark
         public ActionResult Index()
         {
-            var bookmarkeds = db.Bookmarkeds.Include(b => b.Event).Include(b => b.User);
+            var bookmarkeds = db.Bookmarks.Include(b => b.Event).Include(b => b.User);
             return View(bookmarkeds.ToList());
-        }
-
-        // GET: Bookmark/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Bookmarked bookmarked = db.Bookmarkeds.Find(id);
-            if (bookmarked == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bookmarked);
         }
 
         // GET: Bookmark/Create
@@ -45,15 +31,13 @@ namespace Community.Controllers
         }
 
         // POST: Bookmark/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,EventID,UserID")] Bookmarked bookmarked)
+        public ActionResult Create([Bind(Include = "ID,EventID,UserID")] Bookmark bookmarked)
         {
             if (ModelState.IsValid)
             {
-                db.Bookmarkeds.Add(bookmarked);
+                db.Bookmarks.Add(bookmarked);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -70,7 +54,7 @@ namespace Community.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bookmarked bookmarked = db.Bookmarkeds.Find(id);
+            Bookmark bookmarked = db.Bookmarks.Find(id);
             if (bookmarked == null)
             {
                 return HttpNotFound();
@@ -85,7 +69,7 @@ namespace Community.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,EventID,UserID")] Bookmarked bookmarked)
+        public ActionResult Edit([Bind(Include = "ID,EventID,UserID")] Bookmark bookmarked)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +89,7 @@ namespace Community.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bookmarked bookmarked = db.Bookmarkeds.Find(id);
+            Bookmark bookmarked = db.Bookmarks.Find(id);
             if (bookmarked == null)
             {
                 return HttpNotFound();
@@ -118,8 +102,8 @@ namespace Community.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Bookmarked bookmarked = db.Bookmarkeds.Find(id);
-            db.Bookmarkeds.Remove(bookmarked);
+            Bookmark bookmarked = db.Bookmarks.Find(id);
+            db.Bookmarks.Remove(bookmarked);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -12,15 +12,13 @@ namespace Community.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Point
+    public partial class Bookmark
     {
         public int ID { get; set; }
+        public int EventID { get; set; }
         public string UserID { get; set; }
-        public Nullable<short> OrganisationID { get; set; }
-        public byte DayOfMonth { get; set; }
-        public System.DateTime Expiry { get; set; }
     
-        public virtual Organisation Organisation { get; set; }
+        public virtual Event Event { get; set; }
         public virtual User User { get; set; }
     }
 }
