@@ -1,15 +1,48 @@
 ﻿@model Community.Models.AdminIndex
+@{
+    ViewBag.FullWidth = true;
+    ViewBag.Title = "Dashboard";
+}
+@Scripts.Render("~/bundles/Chart")
 <h2>Dashboard</h2>
 <hr />
+<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center">
+            <h3 class="panel-title">Admin Actions</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <h4>Sections</h4>
+                <a>Messages</a>
+                <a>Reports</a>
+                <a>Events</a>
+                <a>Volunteers</a>
+                <a>Users</a>
+            </div>
+            <div class="row">
+                <h4>Actions</h4>
+                <a>Role Administration</a>
+                <a>Tag Administration</a>
+                <a>Interest Administration</a>
+                <a>Skill Administration</a>
+                <a>Information Administration</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
+    @{
+        Html.RenderAction("ContactTile");
+        Html.RenderAction("ReportTile");
+        Html.RenderAction("EventTile");
+        Html.RenderAction("VolunteerTile");
+        Html.RenderAction("UserTile");
+    }
+</div>
 
-@Scripts.Render("~/bundles/Chart")
-@{
-    ViewBag.Title = "Dashboard";
-    Html.RenderAction("ContactTile");
-    Html.RenderAction("ReportTile");
-    Html.RenderAction("EventTile");
-    Html.RenderAction("VolunteerTile");
-    Html.RenderAction("UserTile");
-}
+
+
+
 
 

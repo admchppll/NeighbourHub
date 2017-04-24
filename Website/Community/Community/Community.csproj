@@ -692,6 +692,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\Event.js" />
+    <Content Include="Scripts\Notification.js" />
     <Content Include="Scripts\Profile.js" />
     <Content Include="Scripts\global.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
