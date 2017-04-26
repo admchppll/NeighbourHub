@@ -854,7 +854,7 @@
     <EntitySet Name="ReportStatistics" EntityType="CommunityModel.ReportStatistic" />
     <EntitySet Name="IndividualUserStatistics" EntityType="CommunityModel.IndividualUserStatistic" />
     <EntitySet Name="VolunteerStatistics" EntityType="CommunityModel.VolunteerStatistic" />
-    <FunctionImport Name="spUsersWithoutProfile" ReturnType="Collection(Int32)" />
+    <FunctionImport Name="usersWithoutProfile" ReturnType="Collection(Int32)" />
     <EntitySet Name="Bookmarks" EntityType="CommunityModel.Bookmark" />
     <AssociationSet Name="FK_Bookmarked_Event1" Association="CommunityModel.FK_Bookmarked_Event1">
       <End Role="Event" EntitySet="Events" />

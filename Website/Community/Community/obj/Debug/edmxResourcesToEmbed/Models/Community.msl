@@ -426,7 +426,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="spUsersWithoutProfile" FunctionName="CommunityModel.Store.spUsersWithoutProfile" />
+    <FunctionImportMapping FunctionImportName="usersWithoutProfile" FunctionName="CommunityModel.Store.usersWithoutProfile" />
     <EntitySetMapping Name="Bookmarks">
       <EntityTypeMapping TypeName="CommunityModel.Bookmark">
         <MappingFragment StoreEntitySet="Bookmark">

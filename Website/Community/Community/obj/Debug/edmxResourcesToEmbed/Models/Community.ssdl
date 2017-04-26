@@ -878,7 +878,7 @@ warning 6002: The table/view 'Volunteer.dbo.VolunteerStatistics' does not have a
   <Function Name="reverseTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="TransactionID" Type="int" Mode="In" />
   </Function>
-  <Function Name="spUsersWithoutProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="usersWithoutProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="withdrawVolunteer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="VolunteerID" Type="int" Mode="In" />
   </Function>

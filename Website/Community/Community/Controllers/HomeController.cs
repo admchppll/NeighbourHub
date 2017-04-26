@@ -60,5 +60,15 @@ namespace Community.Controllers
             }
             return View(contact);
         }
+
+        public ActionResult Terms()
+        {
+            return View();
+        }
+
+        public ActionResult Cookies()
+        {
+            return View();
+        }
     }
 }

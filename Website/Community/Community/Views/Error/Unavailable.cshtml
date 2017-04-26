@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Service Unavailable";
+}
+<div class="text-center">
+    <h2>Oops! The website is currently unavailable!</h2>
+    <h3>Request Timed Out!</h3>
+    <h4>It seems we are currently receiving a lot of traffic. Please wait a few minutes and try again!</h4>
+    <p>If this problem continues, please email: <a href="mailto:info@theneighbourhub.online">info@theneighbourhub.online</a></p>
+    <br /><br />
+    @Html.ActionLink("Return to Homepage", "Index", "Home", new { @class = "btn btn-primary" })
+</div>
+

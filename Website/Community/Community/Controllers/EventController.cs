@@ -38,7 +38,20 @@ namespace Community.Controllers
             return View(events.ToPagedList(pageNumber, pageSize));
         }
 
-        [AllowAnonymous, SetReturnUrl]
+        public ActionResult MyEvents(int? page)
+        {
+            int pageNumber = (page ?? 1);
+            string userId = User.Identity.GetUserId();
+
+            var events = db.Events
+                .Include(y => y.Address)
+                .Include(z => z.User)
+                .Where(e => e.HostID == userId)
+                .OrderBy(e => e.ID);
+            return View(events.ToPagedList(pageNumber, pageSize));
+        }
+
+        [AllowAnonymous]
         public ActionResult Search(string postcode, double? distance, int? page)
         {
             int pageNumber = (page ?? 1);

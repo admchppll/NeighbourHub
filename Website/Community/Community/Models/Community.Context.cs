@@ -123,9 +123,9 @@ namespace Community.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spSearchEvents_Result>("spSearchEvents", locationParameter, radiusParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> spUsersWithoutProfile()
+        public virtual ObjectResult<Nullable<int>> usersWithoutProfile()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spUsersWithoutProfile");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("usersWithoutProfile");
         }
     }
 }

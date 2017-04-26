@@ -246,6 +246,7 @@
     <Compile Include="Controllers\AuditController.cs" />
     <Compile Include="Controllers\BookmarkController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventTagController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -626,6 +627,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\favicon-16x16.png" />
+    <Content Include="Content\favicon-32x32.png" />
+    <Content Include="Content\favicon.ico" />
     <Content Include="Content\Images\email-logo.png" />
     <Content Include="Content\Images\fb-tile-rectangle.jpg" />
     <Content Include="Content\Images\handshake-2009195_1920.png" />
@@ -881,6 +885,14 @@
     <Content Include="Views\Manage\Deactivate.cshtml" />
     <Content Include="Views\Admin\MessageTile.cshtml" />
     <Content Include="Views\Manage\Reactivate.cshtml" />
+    <Content Include="Views\Event\MyEvents.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\NotPermitted.cshtml" />
+    <Content Include="Views\Error\InternalError.cshtml" />
+    <Content Include="Views\Error\Timeout.cshtml" />
+    <Content Include="Views\Error\Unavailable.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\Home\Cookies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />

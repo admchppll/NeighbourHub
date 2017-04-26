@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Oops! Permission Denied!";
+}
+<div class="text-center">
+    <h2>Permission Denied!</h2>
+    <h3>It seems you are not allowed to access this resource.</h3>
+    <h4>If you believe you should have access to this page/resource, please <a href="@Url.Action("Contact","Home")">contact</a> us!</h4>
+    <br /><br />
+    @Html.ActionLink("Return to Homepage", "Index", "Home", new { @class = "btn btn-primary" })
+</div>
+

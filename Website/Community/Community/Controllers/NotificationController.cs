@@ -19,11 +19,11 @@ namespace Community.Controllers
         // GET: Notification
         public ActionResult Index()
         {
-            string UserId = User.Identity.GetUserId();
+            string userId = User.Identity.GetUserId();
 
             var notifications = db.Notifications
                 .Include(n => n.User)
-                .Where(n => n.UserID == UserId)
+                .Where(n => n.UserID == userId)
                 .OrderBy(n => n.ID);
 
             return View(notifications.ToList());
@@ -31,11 +31,11 @@ namespace Community.Controllers
 
         public ActionResult UserPartial()
         {
-            string UserId = User.Identity.GetUserId();
+            string userId = User.Identity.GetUserId();
 
             var notifications = db.Notifications
                 .Include(n => n.User)
-                .Where(n => n.UserID == UserId)
+                .Where(n => n.UserID == userId)
                 .OrderBy(n => n.ID);
             return View(notifications.ToList());
         }

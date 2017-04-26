@@ -132,7 +132,7 @@ namespace Community.Controllers
             UserAdminView model = new UserAdminView();
 
             model.TotalUsers = db.Users.Count();
-            model.TotalWithoutProfile = db.spUsersWithoutProfile().Single() ?? 0;
+            model.TotalWithoutProfile = db.usersWithoutProfile().Single() ?? 0;
             model.TotalActiveUsers = db.Profiles.Where(p => p.Active == true && p.Suspended != true).Count();
             model.TotalInactiveUsers = db.Profiles.Where(p => p.Active == false && p.Suspended != true).Count();
             model.TotalSuspendedUsers = db.Profiles.Where(p => p.Suspended == true).Count();

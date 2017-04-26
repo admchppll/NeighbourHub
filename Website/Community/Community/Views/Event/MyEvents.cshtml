@@ -1,0 +1,70 @@
+﻿@model PagedList.IPagedList<Community.Models.Event>
+@using PagedList.Mvc;
+@using Community.Helpers;
+@{
+    ViewBag.Title = "My Events";
+}
+
+<h2>My Events</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <td>
+            Event Title
+        </td>
+        <td>
+            Short Description
+        </td>
+        <td>
+            Date
+        </td>
+        <td>
+            Time
+        </td>
+        <td>
+            Volunteers
+        </td>
+        <td>
+            Address
+        </td>
+        <td>
+        </td>
+    </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShortDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @item.Time
+        </td>
+        <td>
+            @VolunteerHelper.CountVolunteers(@item.ID);/@item.VolunteerQuantity
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

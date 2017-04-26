@@ -190,5 +190,25 @@ namespace Community.Helpers
                 return true;
             }
         }
+        
+        /// <summary>
+        /// Returns the number of volunteers on an event
+        /// </summary>
+        /// <param name="eventID"></param>
+        /// <returns></returns>
+        public static int CountVolunteers(int eventID)
+        {
+            CommunityEntities db = new CommunityEntities();
+
+            //All accepted and not withdrawn/rejected
+            int volunteerCount = db.Volunteers
+                .Where(v => v.EventID == eventID
+                    && v.Accepted == true
+                    && v.Rejected == false
+                    && v.Withdrawn == false)
+                .Count();
+
+            return volunteerCount;
+        }
     }
 }
