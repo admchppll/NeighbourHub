@@ -56,6 +56,7 @@ namespace Community.Controllers
         {
             int pageNumber = (page ?? 1);
             var resultRadius = distance * mile;
+            string currentUser = User.Identity.GetUserId();
 
             if (postcode == "" || distance == null && page == null) {
                 ViewBag.Search = false;
@@ -66,7 +67,13 @@ namespace Community.Controllers
             ViewBag.Distance = distance;
             ViewBag.Search = true;
 
-            if (postcode == null)
+            if (Postcode.PostcodeIsValid(postcode) == false)
+            {
+                ViewBag.PostcodeMessage = "Postcode is not valid";
+                ViewBag.Search = false;
+                return View();
+            }
+            else if (postcode == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -75,7 +82,7 @@ namespace Community.Controllers
             DbGeography geog = Postcode.CreateGeographyPoint(code.latitude, code.longitude);
 
             var events = db.EventSearches
-                .Where(e => e.Published == true) 
+                .Where(e => e.Published == true)
                 .Where(e => e.Suspended != true)
                 .Where(e => e.VolunteerQuantity > e.Volunteers)
                 .Where(e => e.Location.Distance(geog) < resultRadius)

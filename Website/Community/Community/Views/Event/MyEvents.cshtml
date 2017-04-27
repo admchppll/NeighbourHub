@@ -48,15 +48,14 @@
             @item.Time
         </td>
         <td>
-            @VolunteerHelper.CountVolunteers(@item.ID);/@item.VolunteerQuantity
+            @VolunteerHelper.CountVolunteers(@item.ID)/@item.VolunteerQuantity
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Address.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }, new { @class="btn btn-warning"}) |
+            @Html.ActionLink("View", "Details", new { id=item.ID }, new { @class="btn btn-info"})
         </td>
     </tr>
 }

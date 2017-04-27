@@ -40,20 +40,26 @@ namespace Community.Controllers
         public ActionResult Create([Bind(Include = "ID,Name,Address1,Address2,City,County,Country,Postcode,Notes,Default")] Address address)
         {
             address.UserID = User.Identity.GetUserId();
-
-            Postcode postcode = new Postcode(address.Postcode);
-            address.Long = postcode.longitude;
-            address.Lat = postcode.latitude;
-
-            if (ModelState.IsValid)
+            if (Postcode.PostcodeIsValid(address.Postcode) == true)
             {
-                db.Addresses.Add(address);
-                db.SaveChanges();
-                db.createGeoLocationAddress(address.ID);
-                if (address.Default == true) {
-                    AddressHelper.SetDefault(address.ID);
+                Postcode postcode = new Postcode(address.Postcode);
+                address.Long = postcode.longitude;
+                address.Lat = postcode.latitude;
+
+                if (ModelState.IsValid)
+                {
+                    db.Addresses.Add(address);
+                    db.SaveChanges();
+                    db.createGeoLocationAddress(address.ID);
+                    if (address.Default == true)
+                    {
+                        AddressHelper.SetDefault(address.ID);
+                    }
+                    return RedirectToAction("Index", "Manage");
                 }
-                return RedirectToAction("Index", "Manage");
+            }
+            else {
+                ViewBag.PostcodeMessage = "Postcode is not valid";
             }
 
             ViewBag.UserID = new SelectList(db.Users, "ID", "Email", address.UserID);
@@ -64,7 +70,7 @@ namespace Community.Controllers
             public int AddressID { get; set; }
         }
 
-        //Handle AJAX MakeDefault requests
+        //Handle MakeDefault requests
         public ActionResult MakeDefault(int? addressId) {
             if (addressId == null)
             {

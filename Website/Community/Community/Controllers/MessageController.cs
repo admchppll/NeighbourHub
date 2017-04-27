@@ -120,10 +120,10 @@ namespace Community.Controllers
             return View(message);
         }
 
-        // GET: Message/Create
-        public ActionResult Create()
+        public ActionResult Create(string userId)
         {
             ViewBag.RecipientID = new SelectList(db.Users, "ID", "Email");
+            ViewBag.Recipient = string.IsNullOrEmpty(userId) ? null : userId;
             return View();
         }
 

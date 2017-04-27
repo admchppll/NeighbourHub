@@ -45,6 +45,28 @@ namespace Community.Helpers
             }
         }
 
+        public static bool PostcodeIsValid(string code)
+        {
+            string url = URL + code + "/validate";
+
+            HttpWebRequest getRequest = (HttpWebRequest)WebRequest.Create(url);
+            getRequest.Method = "GET";
+
+            var getResponse = (HttpWebResponse)getRequest.GetResponse();
+            Stream newStream = getResponse.GetResponseStream();
+            StreamReader sr = new StreamReader(newStream);
+            var result = sr.ReadToEnd();
+            var postcodeInfo = JsonConvert.DeserializeObject<PostcodeValidateResult>(result);
+
+            if (postcodeInfo.Status == 200 && postcodeInfo.Result == true)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
         public static DbGeography CreateGeographyPoint(double latitude, double longitude)
         {
             var text = string.Format(CultureInfo.InvariantCulture.NumberFormat, "POINT({0} {1})", longitude, latitude);
@@ -65,6 +87,15 @@ namespace Community.Helpers
 
         [JsonProperty("latitude")]
         public double Latitude { get; set; }
+    }
+
+    public class PostcodeValidateResult {
+        [JsonProperty("status")]
+        public int Status;
+        [JsonProperty("result")]
+        public bool Result;
+        [JsonProperty("error")]
+        public string Error;
     }
 
     public class AddressHelper {

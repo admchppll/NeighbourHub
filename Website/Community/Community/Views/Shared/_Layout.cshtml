@@ -7,7 +7,6 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/Content/favicon.ico")" />
     <link rel="icon" type="image/png" sizes="32x32" href="@Url.Content("~/Content/favicon-32x32.png")">
     <link rel="icon" type="image/png" sizes="16x16" href="@Url.Content("~/Content/favicon-16x16.png")">
     <title>@ViewBag.Title - NeighbourHub</title>
@@ -17,9 +16,17 @@
     <meta property="og:image" content="@Url.Content(image)">
     <meta property="og:url" content="@Request.Url.AbsoluteUri">
     <meta property="fb:app_id" content="@ConfigurationManager.AppSettings["FacebookAppId"]" />
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@Url.Content(image)">
+    <meta name="twitter:title" content="@ViewBag.Title - NeighbourHub">
+    <meta name="twitter:description" content="@ViewBag.Description">
+    <!--<meta name="twitter:creator" content="@ConfigurationManager.AppSettings["TwitterUser"]"> -->
+    <meta name="twitter:image:src" content="@Url.Content(image)"> 
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -43,14 +50,20 @@
             </div>
         </div>
     </div>
+    <!--<div class="container-fluid">
+        <div class="alert alert-warning">
+            <strong>Warning!</strong> This is a website created as a Final Year University Project for Loughborough University. You will <b>NOT</b> be able to sign up or access any of the functionality that requires a user account without prior permission! For test credentials, please contact adam@adamchappell.com
+        </div>
+    </div>-->
     <div class="container@(ViewBag.FullWidth == true ? "-fluid" : "") body-content">
         @RenderBody()
     </div>
     <hr />
     @if (Request.Cookies["CookiePermission"].Value.ToString() == "false" || Request.Cookies["CookiePermission"].Value == null) {
+        <!--
         <footer id="cookieFooter" class="container-fluid">
             <div class="container">
-                <p class="col-xs-12 col-md-10 col-lg-9">This website uses cookies to ensure you get the best experience on our website. By continuing to use this site you accept the use of cookies. <a href="http://www.bbc.co.uk/webwise/guides/about-cookies">Click here</a> to learn more about cookies.</p>
+                <p class="col-xs-12 col-md-10 col-lg-9">This website uses cookies to ensure you get the best experience on our website. By continuing to use this site you accept the use of cookies. <a href="@Url.Action("Cookies","Home")">Click here</a> to learn more about how we use cookies.</p>
                 <div class="col-xs-12 col-md-2 col-lg-3">
                     <button type="button" class="btn btn-default center-block" href="javascript:void()" onclick="cookieAccept();">Continue</button>
                 </div>
@@ -62,12 +75,21 @@
                 cookieFooter.parentNode.removeChild(cookieFooter);
                 createCookie("CookiePermission", "true", 7);
             }
-        </script>
+        </script>    
+        -->
     }
     <footer>
         <div class="container">
-            <img src="@Url.Content("~/Content/Images/logo-greyscale.png")" style="max-width:200px;" />
-            <p>&copy; @DateTime.Now.Year - NeighbourHub</p>
+            <div class="col-sm-4">
+                <img src="@Url.Content("~/Content/Images/logo-greyscale.png")" style="max-width:200px;" />
+            </div>
+            <div class="col-sm-8">
+                <div class="col-xs-12 text-right">
+                    <i class="fa fa-facebook fa-2x" aria-hidden="true"></i><i class="fa fa-twitter fa-2x" aria-hidden="true"></i><i class="fa fa-google-plus fa-2x" aria-hidden="true"></i>
+                </div>
+                <p class="text-right">@Html.ActionLink("Terms and Conditions", "Terms", "Home") @Html.ActionLink("Cookie Policy", "Cookies", "Home") &copy; @DateTime.Now.Year - NeighbourHub</p>
+            </div>
+            
         </div>
     </footer>
     @Scripts.Render("~/bundles/bootstrap")

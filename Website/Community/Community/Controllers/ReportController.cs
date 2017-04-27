@@ -142,7 +142,7 @@ namespace Community.Controllers
         // GET: Report
         public ActionResult ReportUser(string userId)
         {
-            var user = db.Users.Find(userId);
+            var user = db.Users.Where(u => u.ID == userId).Single();
             ViewBag.ReportedID = userId;
             ViewBag.UserName = user.UserName;
 

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cd4a6b34c2c84b7289250f25f06f9df6" Name="Diagram1" ZoomLevel="106">
+      <Diagram DiagramId="cd4a6b34c2c84b7289250f25f06f9df6" Name="Diagram1" ZoomLevel="84">
         <EntityTypeShape EntityType="CommunityModel.Address" Width="1.5" PointX="4.875" PointY="20" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Audit" Width="1.5" PointX="2.375" PointY="21.625" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Event" Width="3.5" PointX="5" PointY="20.875" IsExpanded="false" />
@@ -20,7 +20,7 @@
         <EntityTypeShape EntityType="CommunityModel.Skill" Width="1.5" PointX="6.75" PointY="26.75" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Tag" Width="1.5" PointX="9.75" PointY="20" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Transaction" Width="1.5" PointX="9.75" PointY="23.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="CommunityModel.User" Width="2.625" PointX="5.25" PointY="23.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="CommunityModel.User" Width="2.625" PointX="5.375" PointY="23.375" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.UserClaim" Width="1.5" PointX="2.375" PointY="25.375" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.UserInterest" Width="1.5" PointX="2.375" PointY="26" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.UserLogin" Width="1.5" PointX="12.125" PointY="20" IsExpanded="false" />
@@ -61,7 +61,21 @@
         <EntityTypeShape EntityType="CommunityModel.Contact" Width="1.5" PointX="12.125" PointY="26.75" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Review" Width="1.5" PointX="12.25" PointY="25" IsExpanded="false" />
         <AssociationConnector Association="CommunityModel.FK_Review_Event" />
-        <AssociationConnector Association="CommunityModel.FK_Review_User" />
+        <AssociationConnector Association="CommunityModel.FK_Review_User" ManuallyRouted="true" >
+          <ConnectorPoint PointX="8" PointY="23.6375" />
+          <ConnectorPoint PointX="8.7916666666666661" PointY="23.6375" />
+          <ConnectorPoint PointX="8.9583333333333339" PointY="23.6375" />
+          <ConnectorPoint PointX="9.3854166666666661" PointY="23.6375" />
+          <ConnectorPoint PointX="9.5520833333333339" PointY="23.6375" />
+          <ConnectorPoint PointX="10.010414166666665" PointY="23.6375" />
+          <ConnectorPoint PointX="10.177080833333333" PointY="23.6375" />
+          <ConnectorPoint PointX="10.416666666666666" PointY="23.6375" />
+          <ConnectorPoint PointX="10.583333333333334" PointY="23.6375" />
+          <ConnectorPoint PointX="13.181479637220836" PointY="23.6375" />
+          <ConnectorPoint PointX="13.181479637220836" PointY="24.550375" />
+          <ConnectorPoint PointX="13.177935267582022" PointY="24.550375" />
+          <ConnectorPoint PointX="13.177935267582022" PointY="25" />
+        </AssociationConnector>
         <EntityTypeShape EntityType="CommunityModel.EventStatistic" Width="1.5" PointX="3.75" PointY="3.75" />
         <EntityTypeShape EntityType="CommunityModel.ReportStatistic" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="CommunityModel.IndividualUserStatistic" Width="1.5" PointX="6.75" PointY="2.75" />

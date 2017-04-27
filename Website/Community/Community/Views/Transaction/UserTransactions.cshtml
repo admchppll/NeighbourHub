@@ -5,10 +5,10 @@
     ViewBag.Title = "Your Transactions";
     string userID = User.Identity.GetUserId();
 }
-<h3>Your Transactions</h3>
+<h3>My Transactions</h3>
 <ul class="nav nav-pills nav-justified">
     <li class="@(ViewBag.Section == "index"?"active":"")">
-        <a href="@Url.Action("UserTransactions")">All Reports <span class="badge"></span></a>
+        <a href="@Url.Action("UserTransactions")">All Transactions <span class="badge"></span></a>
     </li>
     <li class="@(ViewBag.Section == "received"?"active":"")">
         <a href="@Url.Action("UserTransactions", new { section = "received"})">Received<span class="badge"></span></a>
@@ -56,11 +56,11 @@
                 @{
                     if (item.RecipientID == userID)
                     {
-                        <span class="glyphicon glyphicon-arrow-right"></span>
+                        <span class="glyphicon glyphicon-plus"></span>
                     }
                     else if (item.SenderID == userID)
                     {
-                        <span class="glyphicon glyphicon-arrow-left"></span>
+                        <span class="glyphicon glyphicon-minus"></span>
                     }
                 }
             </td>

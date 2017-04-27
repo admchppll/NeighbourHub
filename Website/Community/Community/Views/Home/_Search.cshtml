@@ -2,7 +2,10 @@
 {
 <div class="row" id="eventSearch">    
     <div class="col-xs-12 col-sm-6 col-sm-offset-3 eventSearch">  
-        <div class="col-xs-9"><input class="form-control" aria-label="" name="postcode" placeholder="Postcode" type="text"></div>
+        <div class="col-xs-9">
+            <input class="form-control" aria-label="" id="postcode" name="postcode" placeholder="Postcode" type="text">
+            <p class="text-warning" id="postcodeWarning">@ViewBag.PostcodeMessage</p>
+        </div>
         <div class="col-xs-3"><button type="submit" class="btn btn-primary">Search</button></div>
         
         <input type="hidden" value="10" name="distance" />
@@ -26,14 +29,4 @@
         </div>
     </div>
 </div>
-<style type="text/css">
-    #eventSearch > .eventSearch {
-        padding-bottom: 15px;
-    }
-
-    .eventSearch h4 {
-        text-align: center;
-    }
-</style>
-<!--<input type="text" class="form-control" name="postcode" placeholder="Postcode">-->
 }

@@ -43,6 +43,10 @@
     </div>
 </div>
 <p class="text-center">
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Report User", "ReportUser", "Report", new { userId = Model.UserID }, new { @class = "btn btn-danger" })
+    }
     @if (String.Equals(User.Identity.GetUserId(),Model.UserID) == true) {
         @Html.ActionLink("Edit", "Edit", new { id = Model.ID });
         @Html.Raw(" | ");

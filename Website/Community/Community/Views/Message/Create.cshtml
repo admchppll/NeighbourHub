@@ -14,13 +14,20 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+        @if (ViewBag.Recipient == null)
+        {
         <div class="form-group">
             @Html.LabelFor(model => model.RecipientID, "RecipientID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("RecipientID", null, htmlAttributes: new { @class = "form-control" })
+                
+                <input type="text" name="RecipientID" id="RecipientID" class="form-control" />
                 @Html.ValidationMessageFor(model => model.RecipientID, "", new { @class = "text-danger" })
             </div>
         </div>
+        }
+        else {
+            <input type="hidden" name="RecipientID" id="RecipientID" value="@ViewBag.Recipient"/>
+        }
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -39,8 +46,8 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Saved, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                <label for="Saved">Not ready to send yet?</label>
                     @Html.EditorFor(model => model.Saved)
                     @Html.ValidationMessageFor(model => model.Saved, "", new { @class = "text-danger" })
             </div>
@@ -53,12 +60,35 @@
         </div>
         <div class="form-group">
             <div class="col-md-2">
-                <button type="button" href="@Url.Action("Back to List", "Index")" class="btn btn-primary">Back to Messages</button>
+                <a href="@Url.Action("Index")" class="">Back to Messages</a>
             </div>
         </div>
     </div>
     <script>
         CKEDITOR.replaceAll();
+
+        $(document).ready(function () {
+            $("#RecipientID").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Profile/ProfileList",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            prefix: request.term
+                        },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.UserName, value: item.ID };
+                            }));
+                        }
+                    });
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        });
     </script>
 }
 

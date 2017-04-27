@@ -629,7 +629,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\favicon-16x16.png" />
     <Content Include="Content\favicon-32x32.png" />
-    <Content Include="Content\favicon.ico" />
     <Content Include="Content\Images\email-logo.png" />
     <Content Include="Content\Images\fb-tile-rectangle.jpg" />
     <Content Include="Content\Images\handshake-2009195_1920.png" />
@@ -639,6 +638,12 @@
     <Content Include="Content\Images\logo-greyscale.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\user-substitute.png" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Swiper\swiper.css" />
     <Content Include="Content\Swiper\swiper.min.css" />
@@ -697,6 +702,8 @@
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\Event.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\Notification.js" />
     <Content Include="Scripts\Profile.js" />
     <Content Include="Scripts\global.js" />
@@ -746,7 +753,6 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Address\Create.cshtml" />
     <Content Include="Views\Address\Delete.cshtml" />
-    <Content Include="Views\Address\Details.cshtml" />
     <Content Include="Views\Address\Edit.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
     <Content Include="Views\Event\Delete.cshtml" />
@@ -893,6 +899,7 @@
     <Content Include="Views\Error\Unavailable.cshtml" />
     <Content Include="Views\Home\Terms.cshtml" />
     <Content Include="Views\Home\Cookies.cshtml" />
+    <Content Include="Views\Profile\EventPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />

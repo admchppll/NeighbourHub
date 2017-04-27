@@ -12,15 +12,18 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                @if (UserHelper.IsAdmin(user) == true)
-                {
+
+            @if (UserHelper.IsAdmin(user) == true)
+            {
+                <li>
                     <a href="@Url.Action("Index", "Admin")" title="Dashboard" class="hidden-xs"><i class="fa fa-tachometer" aria-hidden="true"></i></a>
                     <a href="@Url.Action("Index", "Admin")" title="Dashboard" class="visible-xs"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>
-                }
-                else {
-                    <a href="@Url.Action("Index", "Manage")" title="My Hub"><i class="fa fa-home" aria-hidden="true"></i> My Hub</a>
-                }
+                </li>
+            }
+            <li>
+                <a href="@Url.Action("Index", "Manage")" title="My Hub" class="hidden-xs"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
+                <a href="@Url.Action("Index", "Manage")" title="My Hub" class="visible-xs"><i class="fa fa-user-circle" aria-hidden="true"></i> My Hub</a>
+
             </li>
             @if (UserHelper.IsAdmin(user) == false)
             {

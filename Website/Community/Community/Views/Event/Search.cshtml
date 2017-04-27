@@ -12,6 +12,7 @@
             <div class="col-xs-12">
                 <h4>Postcode</h4>
                 <input class="form-control" aria-label="" name="postcode" placeholder="Postcode" type="text" value="@ViewBag.Postcode">
+                <p class="text-warning" id="postcodeWarning">@ViewBag.PostcodeMessage</p>
             </div>
             <div class="col-xs-12">
                 <h4>Search Radius</h4>
@@ -34,7 +35,7 @@
                     <span>@Html.RadioButton("Sort", "Date Soonest") Date Soonest</span>
                 </div>
             </div>
-            <div class="col-xs-12">
+            <div class="col-xs-12 vertical-padding">
                 <button type="submit" class="btn btn-primary col-xs-12">Search</button>
             </div>
             <script type="text/javascript">

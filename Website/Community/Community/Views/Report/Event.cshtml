@@ -16,16 +16,18 @@
 
         <div class="form-group">
             <div class="col-md-2">
-                Event
+                <label>Event</label>
             </div>
             <div class="col-md-10">
-                <input type="hidden" id="ReportedEvent" name="ReportedEvent" value="@ViewBag.ReportedEvent"/><a href="@Url.Action("Details", "Event", new { eventId = ViewBag.ReportedEvent })">@ViewBag.EventTitle</a>
-
+                <input type="hidden" id="ReportedEvent" name="ReportedEvent" value="@ViewBag.ReportedEvent"/>
+                <a href="@Url.Action("Details", "Event", new { eventId = ViewBag.ReportedEvent })">@ViewBag.EventTitle</a>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                <label for="Description" class="">Tell us why are reporting this event?</label> Please be specific, the more information you provide the better we'll be able to carry out our investigation and take the most appropriate action!
+            </div>
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", rows = 15 } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })

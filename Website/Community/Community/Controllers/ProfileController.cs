@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using System.IO;
 using System.Web;
 using Community.Helpers;
+using System.Collections.Generic;
 
 namespace Community.Controllers
 {
@@ -40,6 +41,12 @@ namespace Community.Controllers
 
             ViewBag.CurrentInts = String.Join(",", db.UserInterests.Include(i => i.Interest).Where(ui => ui.UserID == profile.UserID).Select(i => i.Interest.Label).ToArray());
             ViewBag.CurrentSkills = String.Join(",", db.UserSkills.Include(s => s.Skill1).Where(ui => ui.UserID == profile.UserID).Select(s => s.Skill1.Label).ToArray());
+            return View(profile);
+        }
+
+        public ActionResult EventPartial(string userId)
+        {
+            Profile profile = db.Profiles.Where(p => p.UserID == userId).Single();
             return View(profile);
         }
 
@@ -329,6 +336,19 @@ namespace Community.Controllers
                 title = "Something went wrong! ",
                 message = "This profile could not be restored."
             });
+        }
+
+        [HttpPost]
+        public JsonResult ProfileList(string prefix) {
+            var users = db.Users
+                .Where(u => u.UserName.Contains(prefix))
+                .OrderBy(u => u.UserName)
+                .Select(u => new {
+                    ID = u.ID,
+                    UserName = u.UserName })
+                .Take(10)
+                .ToList();
+            return Json(users, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

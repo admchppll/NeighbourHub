@@ -64,7 +64,7 @@ function createCookie(name, value, days) {
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = name + "=" + value + expires + ";"; // domain=neighbourhub.online;";
+    document.cookie = name + "=" + value + expires + ";"; // domain=theneighbourhub.online;";
 }
 
 function resultMessage(title, message, success, messageLocation) {
@@ -92,3 +92,23 @@ Array.prototype.remove = function () {
     }
     return this;
 };
+
+$(document).ready(function () {
+    $("#postcode").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "http://api.postcodes.io/postcodes/" + request.term + "/autocomplete",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    response($.map(data.result, function (item) {
+                        return { label: item, value: item };
+                    }));
+                }
+            });
+        },
+        messages: {
+            noResults: "", results: ""
+        }
+    });
+});
