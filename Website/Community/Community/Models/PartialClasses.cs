@@ -37,8 +37,14 @@ namespace Community.Models
     [MetadataType(typeof(ProfileMetaData))]
     public partial class Profile { }
 
+    [MetadataType(typeof(ReviewMetaData))]
+    public partial class Review { }
+
     [MetadataType(typeof(ReportMetaData))]
     public partial class Report { }
+
+    [MetadataType(typeof(RoleMetaData))]
+    public partial class Role { }
 
     [MetadataType(typeof(SkillMetaData))]
     public partial class Skill { }
@@ -49,8 +55,14 @@ namespace Community.Models
     [MetadataType(typeof(TransactionMetaData))]
     public partial class Transaction { }
 
+    [MetadataType(typeof(UserMetaData))]
+    public partial class User { }
+
     [MetadataType(typeof(UserOrganisationMetaData))]
     public partial class UserOrganisation { }
+
+    [MetadataType(typeof(UserRoleMetaData))]
+    public partial class UserRole { }
 
     [MetadataType(typeof(VolunteerMetaData))]
     public partial class Volunteer { }

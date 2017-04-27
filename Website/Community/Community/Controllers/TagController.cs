@@ -21,21 +21,6 @@ namespace Community.Controllers
             return View(db.Tags.ToList());
         }
 
-        // GET: Tag/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tag tag = db.Tags.Find(id);
-            if (tag == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tag);
-        }
-
         // GET: Tag/Create
         public ActionResult Create()
         {

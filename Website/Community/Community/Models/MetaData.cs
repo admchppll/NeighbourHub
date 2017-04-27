@@ -27,6 +27,7 @@ namespace Community.Models
         [Required]
         [StringLength(15, ErrorMessage = "Postcode cannot be longer than 50 characters.")]
         public string Postcode { get; set; }
+        [UIHint("YesNo")]
         [Required]
         public bool Default { get; set; }
     }
@@ -75,6 +76,7 @@ namespace Community.Models
         [Required]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Created { get; set; }
+        [UIHint("YesNo")]
         [Required]
         public bool Published { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
@@ -181,8 +183,10 @@ namespace Community.Models
         [RegularExpression("^[0-9 ]*$", ErrorMessage = "Charity number can only contain numbers and spaces.")]
         [StringLength(50, ErrorMessage = "Charity number cannot be longer than 50 characters.")]
         public string CharityNumber { get; set; }
+        [UIHint("YesNo")]
         [Required]
         public bool Approved { get; set; }
+        [UIHint("YesNo")]
         [Required]
         public bool Active { get; set; }
     }
@@ -212,6 +216,7 @@ namespace Community.Models
         [MinLength(2, ErrorMessage = "Surname must contain at least 2 characters ")]
         public string Surname { get; set; }
         [Required]
+        [UIHint("Gender")]
         public bool Gender { get; set; }
         [Required]
         [Display(Name = "Date of Birth")]
@@ -226,8 +231,10 @@ namespace Community.Models
         [Display(Name ="Profile Image")]
         public string PictureURL { get; set; }
         [Required]
+        [UIHint("YesNo")]
         public bool Active { get; set; }
         [Required]
+        [UIHint("YesNo")]
         public bool Suspended { get; set; }
     }
 
@@ -240,6 +247,26 @@ namespace Community.Models
         [Display(Name = "Reported Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Sent { get; set; }
+        [Display(Name = "Resolved Date")]
+        [DisplayFormat(DataFormatString = "{0:ddd, dd MMM yyyy h:mm tt }")]
+        public Nullable<System.DateTime> ResolvedDate { get; set; }
+    }
+
+    public class ReviewMetaData
+    {
+        public int ID { get; set; }
+        public string UserID { get; set; }
+        public Nullable<int> EventID { get; set; }
+        public Nullable<byte> Rating { get; set; }
+        public string Review1 { get; set; }
+        public string VolunteerID { get; set; }
+    }
+
+    public  class RoleMetaData
+    {
+        public string Id { get; set; }
+        [Display(Name = "Role")]
+        public string Name { get; set; }
     }
 
     public class SkillMetaData {
@@ -264,9 +291,31 @@ namespace Community.Models
         public bool Gift { get; set; }
         [Required]
         public short Amount { get; set; }
+        [UIHint("YesNo")]
         public bool Cancelled { get; set; }
+        [UIHint("YesNo")]
         [Required]
         public bool Complete { get; set; }
+    }
+
+    public class UserMetaData
+    {
+        public string ID { get; set; }
+        [Display(Name = "User Email")]
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string PasswordHash { get; set; }
+        public string SecurityStamp { get; set; }
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
+        public bool LockoutEnabled { get; set; }
+        public int AccessFailedCount { get; set; }
+        [Display(Name ="Username")]
+        public string UserName { get; set; }
+        public string Discriminator { get; set; }
     }
 
     public class UserOrganisationMetaData {
@@ -274,17 +323,28 @@ namespace Community.Models
         public System.DateTime Created { get; set; }
     }
 
+    public class UserRoleMetaData {
+        [Display(Name = "User")]
+        public string UserId { get; set; }
+        [Display(Name = "Role")]
+        public string RoleId { get; set; }
+    }
+
     public class VolunteerMetaData {
         [Required]
         public int EventID { get; set; }
         [Required]
         public string VolunteerID { get; set; }
+        [UIHint("YesNo")]
         [Required]
         public bool Accepted { get; set; }
+        [UIHint("YesNo")]
         [Required]
         public bool Confirmed { get; set; }
+        [UIHint("YesNo")]
         [Required]
         public bool Rejected { get; set; }
+        [UIHint("YesNo")]
         [Required]
         public bool Withdrawn { get; set; }
     }

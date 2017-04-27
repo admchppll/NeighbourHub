@@ -21,21 +21,6 @@ namespace Community.Controllers
             return View(db.Skills.ToList());
         }
 
-        // GET: Skill/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Skill skill = db.Skills.Find(id);
-            if (skill == null)
-            {
-                return HttpNotFound();
-            }
-            return View(skill);
-        }
-
         // GET: Skill/Create
         public ActionResult Create()
         {

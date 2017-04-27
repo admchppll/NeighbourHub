@@ -768,22 +768,17 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Tag\Create.cshtml" />
     <Content Include="Views\Tag\Delete.cshtml" />
-    <Content Include="Views\Tag\Details.cshtml" />
     <Content Include="Views\Tag\Edit.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Information\Create.cshtml" />
-    <Content Include="Views\Information\Delete.cshtml" />
     <Content Include="Views\Information\Details.cshtml" />
     <Content Include="Views\Information\Edit.cshtml" />
     <Content Include="Views\Information\Index.cshtml" />
     <Content Include="Views\Interest\Create.cshtml" />
     <Content Include="Views\Interest\Delete.cshtml" />
-    <Content Include="Views\Interest\Details.cshtml" />
     <Content Include="Views\Interest\Edit.cshtml" />
-    <Content Include="Views\Interest\Index.cshtml" />
     <Content Include="Views\Skill\Create.cshtml" />
     <Content Include="Views\Skill\Delete.cshtml" />
-    <Content Include="Views\Skill\Details.cshtml" />
     <Content Include="Views\Skill\Edit.cshtml" />
     <Content Include="Views\Skill\Index.cshtml" />
     <Content Include="Views\Message\Create.cshtml" />
@@ -802,8 +797,6 @@
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\UserRole\Create.cshtml" />
     <Content Include="Views\UserRole\Delete.cshtml" />
-    <Content Include="Views\UserRole\Details.cshtml" />
-    <Content Include="Views\UserRole\Edit.cshtml" />
     <Content Include="Views\UserRole\Index.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\Create.cshtml" />
@@ -900,6 +893,9 @@
     <Content Include="Views\Home\Terms.cshtml" />
     <Content Include="Views\Home\Cookies.cshtml" />
     <Content Include="Views\Profile\EventPartial.cshtml" />
+    <Content Include="Views\Interest\Index.cshtml" />
+    <Content Include="Views\Role\Delete.cshtml" />
+    <Content Include="Views\Error\BadRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />

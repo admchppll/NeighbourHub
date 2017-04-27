@@ -90,32 +90,6 @@ namespace Community.Controllers
             return View(information);
         }
 
-        // GET: Information/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Information information = db.Information.Find(id);
-            if (information == null)
-            {
-                return HttpNotFound();
-            }
-            return View(information);
-        }
-
-        // POST: Information/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Information information = db.Information.Find(id);
-            db.Information.Remove(information);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

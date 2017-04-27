@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity;
 using System.IO;
 using System.Web;
 using Community.Helpers;
-using System.Collections.Generic;
+using PagedList;
 
 namespace Community.Controllers
 {
@@ -16,13 +16,22 @@ namespace Community.Controllers
     public class ProfileController : Controller
     {
         private CommunityEntities db = new CommunityEntities();
+        private const int pageSize = 20;
 
         // GET: Profile
         [Authorize(Roles = "Admin")]
-        public ActionResult Index()
+        public ActionResult Index(int? page, string prefix)
         {
-            var profiles = db.Profiles.Include(p => p.User);
-            return View(profiles.ToList());
+            int pageNumber = (page ?? 1);
+            var profiles = db.Profiles
+                .Include(p => p.User)
+                .Where(p => p.FirstName.Contains(prefix) || p.Surname.Contains(prefix) || p.User.UserName.Contains(prefix))
+                .OrderBy(p => p.FirstName)
+                .ThenBy(p => p.Surname)
+                .ThenBy(p => p.User.UserName);
+
+            ViewBag.TotalResults = profiles.Count();
+            return View(profiles.ToPagedList(pageNumber, pageSize));
         }
 
         [AllowAnonymous]
@@ -44,9 +53,20 @@ namespace Community.Controllers
             return View(profile);
         }
 
+        [AllowAnonymous]
         public ActionResult EventPartial(string userId)
         {
             Profile profile = db.Profiles.Where(p => p.UserID == userId).Single();
+            return View(profile);
+        }
+
+        public ActionResult UserPartial()
+        {
+            string userID = User.Identity.GetUserId();
+            int profileID = ProfileHelper.CurrentProfileID(userID);
+
+            var profile = db.Profiles.Find(profileID);
+
             return View(profile);
         }
 
@@ -65,15 +85,6 @@ namespace Community.Controllers
             else {
                 return RedirectToAction("Edit", new { id = ProfileHelper.CurrentProfileID(userID) });
             }
-        }
-
-        public ActionResult UserPartial() {
-            string userID = User.Identity.GetUserId();
-            int profileID = ProfileHelper.CurrentProfileID(userID);
-
-            var profile = db.Profiles.Find(profileID);
-
-            return View(profile);
         }
 
         // POST: Profile/Create

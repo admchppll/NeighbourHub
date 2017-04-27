@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Oops! Something Went Wrong";
+}
+<div class="text-center">
+    <h2>Bad Request!</h2>
+    <h3>Oops! It seems your browser sent our servers a request it didn't understand!</h3>
+    <h4>This isn't your fault, please check that you have entered a valid url. If the problem continues, please email: <a href="mailto:info@theneighbourhub.online">info@theneighbourhub.online</a></h4>
+    <br /><br />
+    @Html.ActionLink("Return to Homepage", "Index", "Home", new { @class = "btn btn-primary" })
+</div>
+

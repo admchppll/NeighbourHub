@@ -9,13 +9,13 @@
         <EntityTypeShape EntityType="CommunityModel.Audit" Width="1.5" PointX="2.375" PointY="21.625" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Event" Width="3.5" PointX="5" PointY="20.875" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.EventTag" Width="1.5" PointX="7.125" PointY="20" IsExpanded="false" />
-        <EntityTypeShape EntityType="CommunityModel.Information" Width="1.5" PointX="9.25" PointY="26.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="CommunityModel.Information" Width="1.5" PointX="9.75" PointY="26.75" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Interest" Width="1.5" PointX="2.375" PointY="26.75" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Message" Width="1.5" PointX="2.375" PointY="23.125" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Notification" Width="1.5" PointX="2.375" PointY="24.125" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Organisation" Width="1.5" PointX="12.125" PointY="22" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Profile" Width="1.5" PointX="2.375" PointY="24.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="CommunityModel.Report" Width="1.5" PointX="9.25" PointY="25" IsExpanded="false" />
+        <EntityTypeShape EntityType="CommunityModel.Report" Width="1.5" PointX="9.75" PointY="25" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Role" Width="1.5" PointX="2.375" PointY="20" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Skill" Width="1.5" PointX="6.75" PointY="26.75" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Tag" Width="1.5" PointX="9.75" PointY="20" IsExpanded="false" />
@@ -59,22 +59,9 @@
         <AssociationConnector Association="CommunityModel.FK_Transaction_User" />
         <EntityTypeShape EntityType="CommunityModel.EventSearch" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="CommunityModel.Contact" Width="1.5" PointX="12.125" PointY="26.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="CommunityModel.Review" Width="1.5" PointX="12.25" PointY="25" IsExpanded="false" />
+        <EntityTypeShape EntityType="CommunityModel.Review" Width="1.5" PointX="12.125" PointY="25" IsExpanded="false" />
         <AssociationConnector Association="CommunityModel.FK_Review_Event" />
-        <AssociationConnector Association="CommunityModel.FK_Review_User" ManuallyRouted="true" >
-          <ConnectorPoint PointX="8" PointY="23.6375" />
-          <ConnectorPoint PointX="8.7916666666666661" PointY="23.6375" />
-          <ConnectorPoint PointX="8.9583333333333339" PointY="23.6375" />
-          <ConnectorPoint PointX="9.3854166666666661" PointY="23.6375" />
-          <ConnectorPoint PointX="9.5520833333333339" PointY="23.6375" />
-          <ConnectorPoint PointX="10.010414166666665" PointY="23.6375" />
-          <ConnectorPoint PointX="10.177080833333333" PointY="23.6375" />
-          <ConnectorPoint PointX="10.416666666666666" PointY="23.6375" />
-          <ConnectorPoint PointX="10.583333333333334" PointY="23.6375" />
-          <ConnectorPoint PointX="13.181479637220836" PointY="23.6375" />
-          <ConnectorPoint PointX="13.181479637220836" PointY="24.550375" />
-          <ConnectorPoint PointX="13.177935267582022" PointY="24.550375" />
-          <ConnectorPoint PointX="13.177935267582022" PointY="25" />
+        <AssociationConnector Association="CommunityModel.FK_Review_User" ManuallyRouted="false" >
         </AssociationConnector>
         <EntityTypeShape EntityType="CommunityModel.EventStatistic" Width="1.5" PointX="3.75" PointY="3.75" />
         <EntityTypeShape EntityType="CommunityModel.ReportStatistic" Width="1.5" PointX="0.75" PointY="4.75" />

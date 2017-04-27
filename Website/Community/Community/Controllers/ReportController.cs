@@ -46,7 +46,7 @@ namespace Community.Controllers
             }
 
             if (showResolved == false) {
-                reports = reports.Where(r => r.ResolvedDate != null);
+                reports = reports.Where(r => r.ResolvedDate == null);
             }
 
             reports = reports.OrderBy(m => m.ID);

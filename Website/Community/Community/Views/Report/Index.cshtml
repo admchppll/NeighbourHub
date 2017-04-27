@@ -8,11 +8,17 @@
 <h2>Reports</h2>
 
 <ul class="nav nav-pills nav-justified">
-    <li class="@(ViewBag.Section == "index"?"active":"")"><a href="@Url.Action("Index")">All Reports <span class="badge">@ReportHelper.getUnresolved()</span></a></li>
-    <li class="@(ViewBag.Section == "event"?"active":"")"><a href="@Url.Action("Index", new { section = "event"})">Event Reports <span class="badge">@ReportHelper.getUnresolvedEvent()</span></a></li>
-    <li class="@(ViewBag.Section == "user"?"active":"")"><a href="@Url.Action("Index", new { section = "user"})">User Reports <span class="badge">@ReportHelper.getUnresolvedUser()</span></a></li>
+    <li class="@(ViewBag.Section == "index"?"active":"")">
+        <a href="@Url.Action("Index")">All Reports <span class="badge">@ReportHelper.GetUnresolved()</span></a>
+    </li>
+    <li class="@(ViewBag.Section == "event"?"active":"")">
+        <a href="@Url.Action("Index", new { section = "event"})">Event Reports <span class="badge">@ReportHelper.GetUnresolvedEvent()</span></a>
+    </li>
+    <li class="@(ViewBag.Section == "user"?"active":"")">
+        <a href="@Url.Action("Index", new { section = "user"})">User Reports <span class="badge">@ReportHelper.GetUnresolvedUser()</span></a>
+    </li>
 </ul>
-<input type="hidden" name="showHidden" value="@ViewBag.ShowResolved"/>
+<input type="hidden" name="showHidden" value="@ViewBag.ShowResolved" />
 <div id="resolvedLink">
     @if (ViewBag.ShowResolved == false)
     {
@@ -22,66 +28,85 @@
         @Html.ActionLink("Hide Resolved", "Index", new { section = ViewBag.Section, showResolved = !ViewBag.ShowResolved })
     }
 </div>
-<table class="table">
+<table class="table table-center">
     <tr>
         <th></th>
         <th>
             ID
         </th>
-        <th>
-            Reported Event
-        </th>
-        <th>
-            Reported User
-        </th>
+        @if (ViewBag.Section != "user")
+        {
+            <th>
+                Reported Event
+            </th>
+        }
+        @if (ViewBag.Section != "event")
+        {
+            <th>
+                Reported User
+            </th>
+        }
         <th>
             Reported By
         </th>
         @if (ViewBag.ShowResolved == true)
         {
-        <th>
-            Resolved
-        </th>
+            <th>
+                Resolved
+            </th>
         }
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @if (item.ReportedEvent != null && item.ReportedID == null)
-            {
-                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-            }
-            else if (item.ReportedEvent == null && item.ReportedID != null)
-            {
-                <span class="glyphicon glyphicon-glyphicon-user" aria-hidden="true"></span>
-            }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.ReportedEvent != null && item.ReportedID == null)
+                {
+                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                }
+                else if (item.ReportedEvent == null && item.ReportedID != null)
+                {
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                }
 
-        </td>
-        <td>
-            @Html.ActionLink(item.ID.ToString(), "Details", new { id = item.ID })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Event.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User1.UserName)
-        </td>
-        @if (ViewBag.ShowResolved == true)
-        {
-        <td>
-            @Html.DisplayFor(modelItem => item.Resolved, "YesNo")
-        </td>
-        }
-        <td>
-            @Html.ActionLink("View", "Details", new { id=item.ID })
-        </td>
-    </tr>
-}
+            </td>
+            <td>
+                @Html.ActionLink(item.ID.ToString(), "Details", new { id = item.ID })
+            </td>
+            @if (ViewBag.Section != "user")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.Title)
+                </td>
+            }
+            @if (ViewBag.Section != "event")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.User1.UserName)
+            </td>
+            @if (ViewBag.ShowResolved == true)
+            {
+                <td>
+                    @if (item.ResolvedDate == null)
+                    {
+                        <span>Unresolved</span>
+                    }
+                    else {
+                        @Html.DisplayFor(modelItem => item.ResolvedDate)
+                    }
+                </td>
+            }
+            <td>
+                @Html.ActionLink("View", "Details", new { id = item.ID })
+            </td>
+        </tr>
+    }
 </table>
 <div class="pagerSection">
     @Html.PagedListPager(Model, page => Url.Action("Index",

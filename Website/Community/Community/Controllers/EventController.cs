@@ -11,9 +11,7 @@ using Community.Helpers;
 using System.Web;
 using System.IO;
 using PagedList;
-using System.Linq.Expressions;
 using Ganss.XSS;
-using Community.Filters;
 using System.Collections.Generic;
 
 namespace Community.Controllers
