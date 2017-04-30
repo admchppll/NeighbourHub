@@ -4,42 +4,68 @@
     ViewBag.Title = "Dashboard";
 }
 @Scripts.Render("~/bundles/Chart")
-<h2>Dashboard</h2>
+<h2 class="text-center"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</h2>
 <hr />
 <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
-    <div class="panel panel-primary">
-        <div class="panel-heading text-center">
-            <h3 class="panel-title">Admin Actions</h3>
-        </div>
+    <div class="panel panel-default">
+        <h4 class="text-center text-primary">Admin Actions</h4>
         <div class="panel-body">
             <div class="row">
                 <h4>Sections</h4>
-                @Html.ActionLink("Messages", "Index", "Contact")<br />
-                @Html.ActionLink("Reports", "Index", "Report")<br />
-                <a>Events</a><br />
-                <a>Volunteers</a><br />
-                <a>Users</a><br />
+                @Html.ActionLink("Messages", "Index", "Contact")
+                <br />
+                @Html.ActionLink("Reports", "Index", "Report")
+                <br />
+                <a>Events</a>
+                <br />
+                <a>Volunteers</a>
+                <br />
+                @Html.ActionLink("Users", "Index", "Profile")
+                <br />
             </div>
             <div class="row">
                 <h4>Actions</h4>
-                @Html.ActionLink("User Roles", "Index", "UserRole")<br />
-                @Html.ActionLink("Role", "Index", "Role")<br/>
-                @Html.ActionLink("Tag", "Index", "Tag")<br />
-                @Html.ActionLink("Interest", "Index", "Interest")<br />
-                @Html.ActionLink("Skill", "Index", "Skill")<br />
+                @Html.ActionLink("User Roles", "Index", "UserRole")
+                <br />
+                @Html.ActionLink("Role", "Index", "Role")
+                <br />
+                @Html.ActionLink("Tag", "Index", "Tag")
+                <br />
+                @Html.ActionLink("Interest", "Index", "Interest")
+                <br />
+                @Html.ActionLink("Skill", "Index", "Skill")
+                <br />
                 @Html.ActionLink("Information", "Index", "Information")
             </div>
         </div>
     </div>
 </div>
 <div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
-    @{
-        Html.RenderAction("ContactTile");
-        Html.RenderAction("ReportTile");
-        Html.RenderAction("EventTile");
-        Html.RenderAction("VolunteerTile");
-        Html.RenderAction("UserTile");
-    }
+    <div class="col-xs-12">
+        @{
+            Html.RenderAction("ContactTile");
+        }
+    </div>
+    <div class="col-xs-12 col-lg-6">
+        @{
+            Html.RenderAction("ReportTile");
+        }
+    </div>
+    <div class="col-xs-12 col-lg-6">
+        @{
+            Html.RenderAction("EventTile");
+        }
+    </div>
+    <div class="col-xs-12 col-lg-6">
+        @{
+            Html.RenderAction("VolunteerTile");
+        }
+    </div>
+    <div class="col-xs-12 col-lg-6">
+        @{
+            Html.RenderAction("UserTile");
+        }
+    </div>
 </div>
 
 

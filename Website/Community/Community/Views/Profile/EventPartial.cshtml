@@ -1,9 +1,12 @@
 ﻿@model Community.Models.Profile
+@using Microsoft.AspNet.Identity;
 @{
     var image = "";
     Layout = null;
+    var userId = User.Identity.GetUserId();
 }
-<div class="col-xs-12 col-sm-6">
+
+<div class="col-xs-12 col-sm-5 vertical-padding">
     <div class="col-xs-4">
         @if (Model.PictureURL != null && Model.PictureURL != "")
             {
@@ -19,9 +22,13 @@
         <h3>@Model.User.UserName</h3>
     </div>
 </div>
-<div class="col-xs-12 col-sm-6">
-    <div class="btn-group">
-        @Html.ActionLink("Report User", "ReportUser", "Report", new { userId = Model.UserID }, new { @class = "btn btn-danger" })
+<div class="col-xs-12 col-sm-7 vertical-padding">
+    <div class="btn-group text-right">
+        @if (userId != Model.UserID)
+        {
+            @Html.ActionLink("Send Message", "Create", "Message", new { userId = Model.UserID }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Report User", "ReportUser", "Report", new { userId = Model.UserID }, new { @class = "btn btn-danger" })
+        }
         @Html.ActionLink("View Profile", "Details", new { id = Model.ID }, new { @class = "btn btn-info" })
     </div>
 </div>

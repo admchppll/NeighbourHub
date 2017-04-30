@@ -3,10 +3,10 @@
 @if (Model.Count() != 0)
 {
     <h3>Tags</h3>
-    <div class="col-xs-12 tagList">
+    <h5 class="col-xs-12 tagList text-center">
         @foreach (var item in Model)
         {
             <span class="label label-info tag">@Html.DisplayFor(modelItem => item.Tag.Name)</span>
         }
-    </div>
+    </h5>
 }

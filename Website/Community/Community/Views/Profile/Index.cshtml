@@ -5,62 +5,66 @@
 }
 
 <h2>Profile Search</h2>
-<div class="col-xs-12 col-sm-6">
-    @using (Html.BeginForm("Index", "Profile", FormMethod.Get))
-    {
-        <div class="form-inline">
-            <div class="form-group">
-                Find User By Name or Username:
-                <input type="text" name="prefix" id="prefix" class="form-control" />
-                <input type="submit" value="Search" class="btn btn-primary" />
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        @using (Html.BeginForm("Index", "Profile", FormMethod.Get))
+        {
+            <div class="form-inline">
+                <div class="form-group">
+                    Find User By Name or Username:
+                    <input type="text" name="prefix" id="prefix" class="form-control" />
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </div>
             </div>
-        </div>
-    }
-</div>
-<div class="col-xs-12 col-sm-6 vertical-padding">
-    <b> Total Results:</b> @ViewBag.TotalResults
+        }
+    </div>
+    <div class="col-xs-12 col-sm-6 vertical-padding-2x">
+        <b> Total Results:</b> @ViewBag.TotalResults
+    </div>
 </div>
 @if (Model.Count() != 0)
 {
-    <table class="table table-center">
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Username
-            </th>
-            <th>
-                Active
-            </th>
-            <th>
-                Suspended
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <div class="row vertical-padding-2x">
+        <table class="table table-center">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.Surname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Active)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Suspended)
-                </td>
-                <td>
-                    @Html.ActionLink("View", "Details", new { id = item.ID }, new { @class = "btn btn-info" })
-                </td>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Active
+                </th>
+                <th>
+                    Suspended
+                </th>
+                <th></th>
             </tr>
-        }
 
-    </table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Active)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Suspended)
+                    </td>
+                    <td>
+                        @Html.ActionLink("View", "Details", new { id = item.ID }, new { @class = "btn btn-info" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
     <div class="pagerSection">
         @Html.PagedListPager(Model, page => Url.Action("Index",
             new { page, sortOrder = ViewBag.CurrentSort }))

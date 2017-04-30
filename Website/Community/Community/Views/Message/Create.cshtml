@@ -18,15 +18,20 @@
         {
         <div class="form-group">
             @Html.LabelFor(model => model.RecipientID, "RecipientID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                
+            <div class="col-md-10">             
                 <input type="text" name="RecipientID" id="RecipientID" class="form-control" />
                 @Html.ValidationMessageFor(model => model.RecipientID, "", new { @class = "text-danger" })
             </div>
         </div>
         }
         else {
-            <input type="hidden" name="RecipientID" id="RecipientID" value="@ViewBag.Recipient"/>
+            <div class="form-group">
+                <label class="col-md-2">Recipient</label>
+                <div class="col-md-10">
+                    @ViewBag.RecipientName
+                    <input type="hidden" name="RecipientID" id="RecipientID" value="@ViewBag.Recipient" />
+                </div>
+            </div>
         }
 
         <div class="form-group">

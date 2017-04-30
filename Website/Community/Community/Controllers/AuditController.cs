@@ -12,6 +12,7 @@ using Ganss.XSS;
 
 namespace Community.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class AuditController : Controller
     {
         private CommunityEntities db = new CommunityEntities();

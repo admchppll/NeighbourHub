@@ -22,11 +22,13 @@ namespace Community.Models
 
     public class ChangeEmailViewModel {
         [Required]
-        [EmailAddress]
+
         [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [Required]
-        [EmailAddress]
+
+        [DataType(DataType.EmailAddress)]
         [Compare("Email", ErrorMessage = "Emails do not match.")]
         [Display(Name = "Confirm Email")]
         public string ConfirmEmail { get; set; }

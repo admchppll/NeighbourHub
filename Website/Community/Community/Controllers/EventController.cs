@@ -49,6 +49,21 @@ namespace Community.Controllers
             return View(events.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult UserEvents(int? page, string userId)
+        {
+            int pageNumber = (page ?? 1);
+
+            var events = db.Events
+                .Include(y => y.Address)
+                .Include(z => z.User)
+                .Where(e => e.HostID == userId)
+                .Where(e => e.Date >= DateTime.Now)
+                .OrderBy(e => e.ID);
+
+            ViewBag.UserID = userId;
+            return View(events.ToPagedList(pageNumber, pageSize));
+        }
+
         [AllowAnonymous]
         public ActionResult Search(string postcode, double? distance, int? page)
         {
@@ -139,6 +154,17 @@ namespace Community.Controllers
             var events = db.Events
                 .Include(y => y.Address)
                 .Where(e => e.HostID == userID && e.Date >= DateTime.Now)
+                .OrderBy(e => e.Date)
+                .Take(3);
+
+            return View(events.ToList());
+        }
+
+        public ActionResult ProfilePartial(string userId)
+        {
+            var events = db.Events
+                .Include(y => y.Address)
+                .Where(e => e.HostID == userId && e.Date >= DateTime.Now)
                 .OrderBy(e => e.Date)
                 .Take(3);
 
@@ -263,7 +289,7 @@ namespace Community.Controllers
             {
                 return HttpNotFound();
             }
-            else if (UserHelper.IsAdmin(userID)) {
+            else if (!VolunteerHelper.IsHost(userID,@event.ID)) {
                 return RedirectToAction("Details", new { id = id });
             }
 
@@ -321,32 +347,6 @@ namespace Community.Controllers
 
             ViewBag.AddressID = new SelectList(addresses, "AddressID", "Label");
             return View(@event);
-        }
-
-        // GET: Event/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@event);
-        }
-
-        // POST: Event/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Event @event = db.Events.Find(id);
-            db.Events.Remove(@event);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         public class EventPostData {

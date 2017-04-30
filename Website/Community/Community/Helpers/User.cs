@@ -25,7 +25,6 @@ namespace Community.Helpers
         public static int ExternalLogins(string userID) {
             using (CommunityEntities db = new CommunityEntities())
             {
-
                 int count = db.UserLogins.Where(u => u.UserId == userID).Count();
                 return count;
             }

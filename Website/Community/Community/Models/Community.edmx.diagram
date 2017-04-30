@@ -64,7 +64,7 @@
         <AssociationConnector Association="CommunityModel.FK_Review_User" ManuallyRouted="false" >
         </AssociationConnector>
         <EntityTypeShape EntityType="CommunityModel.EventStatistic" Width="1.5" PointX="3.75" PointY="3.75" />
-        <EntityTypeShape EntityType="CommunityModel.ReportStatistic" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="CommunityModel.ReportStatistic" Width="1.875" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="CommunityModel.IndividualUserStatistic" Width="1.5" PointX="6.75" PointY="2.75" />
         <EntityTypeShape EntityType="CommunityModel.VolunteerStatistic" Width="1.5" PointX="2.625" PointY="8" IsExpanded="false" />
         <EntityTypeShape EntityType="CommunityModel.Bookmark" Width="1.5" PointX="2.375" PointY="22.25" IsExpanded="false" />

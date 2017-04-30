@@ -21,8 +21,8 @@ namespace Community.Controllers
             return View(db.Information.ToList());
         }
 
-        // GET: Information/Details/5
-        public ActionResult Details(int? id)
+        // GET: Information/Preview/5
+        public ActionResult Preview(int? id)
         {
             if (id == null)
             {
@@ -43,12 +43,12 @@ namespace Community.Controllers
         }
 
         // POST: Information/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Label,Data,Edited")] Information information)
+        public ActionResult Create([Bind(Include = "Label,Data")] Information information)
         {
+            information.Edited = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 db.Information.Add(information);
@@ -75,12 +75,11 @@ namespace Community.Controllers
         }
 
         // POST: Information/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Label,Data,Edited")] Information information)
+        public ActionResult Edit([Bind(Include = "ID,Label,Data")] Information information)
         {
+            information.Edited = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.Entry(information).State = EntityState.Modified;

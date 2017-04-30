@@ -24,8 +24,7 @@
     <!--<meta name="twitter:creator" content="@ConfigurationManager.AppSettings["TwitterUser"]"> -->
     <meta name="twitter:image:src" content="@Url.Content(image)">
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/modernizr")
+
 
 </head>
 <body>
@@ -85,17 +84,20 @@
                 <img src="@Url.Content("~/Content/Images/logo-greyscale.png")" style="max-width:200px;" />
             </div>
             <div class="col-sm-8">
-                <div class="col-xs-12 text-right">
+                <div class="col-xs-12 text-right footer-darkgrey">
                     <a><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
                     <a><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>
                     <a><i class="fa fa-google-plus fa-2x" aria-hidden="true"></i></a>
                 </div>
-                <p class="col-xs-12 text-right">@Html.ActionLink("Terms and Conditions", "Terms", "Home") @Html.ActionLink("Cookie Policy", "Cookies", "Home") &copy; @DateTime.Now.Year - NeighbourHub</p>
+                <p class="col-xs-12 text-right footer-darkgrey vertical-padding">@Html.ActionLink("Terms and Conditions", "Terms", "Home") @Html.ActionLink("Cookie Policy", "Cookies", "Home")</p>
+                <p class="col-xs-12 footer-darkgrey">NeighbourHub &copy; @DateTime.Now.Year</p>
             </div>
 
         </div>
     </footer>
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
     @RenderSection("scripts", required: false)
 </body>
 </html>

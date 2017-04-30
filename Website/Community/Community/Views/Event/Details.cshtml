@@ -6,7 +6,7 @@
 @{
     ViewBag.Title = "Details";
     ViewBag.SocialImage = Model.PictureURL;
-    var userid = User.Identity.GetUserId();
+    var userId = User.Identity.GetUserId();
 }
 @Html.AntiForgeryToken()
 
@@ -16,6 +16,13 @@
     </div>
     <div class="col-xs-12">
         <div id="volunteerInfo" class="row">
+            <div class="col-xs-12">
+                @if (ViewBag.Distance != null)
+                {
+                    <b>Distance: </b>@ViewBag.Distance.ToString("0.00")
+                    <span>miles</span>
+                }
+            </div>
             <div class="col-xs-12 col-sm-6">
                 <b>Volunteers Needed:</b> @Html.DisplayFor(model => model.VolunteerQuantity)
             </div>
@@ -32,30 +39,44 @@
                 <img src="@Url.Content(Model.PictureURL)" class="img-responsive" />
             </div>
         }
+        <div class="row vertical-padding">
+            <div class="col-xs-12">
+                <label>Location</label>
+            </div>
+            <div class="col-xs-12 map">
+                <iframe frameborder="0" style="border:0;"
+                        src="@String.Format("https://www.google.com/maps/embed/v1/place?key={0}&q={1},{2}", @ConfigurationManager.AppSettings["GoogleMapsAPI"], @Model.Address.Lat, @Model.Address.Long)"
+                        allowfullscreen></iframe>
+            </div>
+        </div>
     </div>
     <div class="col-xs-12">
-        @if (VolunteerHelper.IsHost(userid, Model.ID) || UserHelper.IsAdmin(userid))
+        @if (VolunteerHelper.IsHost(userId, Model.ID) || UserHelper.IsAdmin(userId))
         {
             Html.RenderAction("Volunteers", "Volunteer", new { eventId = Model.ID });
         }
+        @if (User.Identity.IsAuthenticated && VolunteerHelper.IsHost(userId, Model.ID) != true)
+        {
+            @Html.ActionLink("Report Event", "Event", "Report", new { eventId = Model.ID }, new { @class = "btn btn-danger" })
+        }
     </div>
 </div>
-<div id="eventSidebar" class="col-xs-12 col-md-5">
-    @if (VolunteerHelper.IsHost(userid, Model.ID) == false
-                    && VolunteerHelper.IsVolunteer(userid, Model.ID) == false
-                    && VolunteerHelper.IsWithdrawn(userid, Model.ID) == false
-                    && UserHelper.IsAdmin(userid) == false
-                    && User.Identity.IsAuthenticated)
+<div id="eventSidebar" class="col-xs-12 col-md-5 text-center">
+    @if (VolunteerHelper.IsHost(userId, Model.ID) == false
+        && VolunteerHelper.IsVolunteer(userId, Model.ID) == false
+        && VolunteerHelper.IsWithdrawn(userId, Model.ID) == false
+        && UserHelper.IsAdmin(userId) == false
+        && User.Identity.IsAuthenticated)
     {
         <div class="col-xs-12">
             <div class="row">
-                @if (VolunteerHelper.IsVolunteer(userid, Model.ID) == false)
+                @if (VolunteerHelper.IsVolunteer(userId, Model.ID) == false)
                 {
                     <button id="volunteerBtn" href="javascript:void();" onclick="volunteer(@Model.ID)" class="btn btn-primary">Volunteer</button>
                 }
-                else if (VolunteerHelper.IsWithdrawn(userid, Model.ID) == false)
+                else if (VolunteerHelper.IsWithdrawn(userId, Model.ID) == false)
                 {
-                    <button id="withdrawBtn" href="javascript:void();" onclick="withdraw(@Model.ID)" class="btn btn-warning">Withdraw</button>
+                    <button id="withdrawBtn" href="javascript:void();" onclick="withdraw(@Model.ID)" class="btn btn-danger">Withdraw</button>
                 }
             </div>
             <div class="row">
@@ -78,20 +99,17 @@
                 <br />
                 @Html.DisplayFor(model => model.Length) Hours
                 <br />
-                <!--Distance still needs to be added-->
-                Distance: X.X miles
             </p>
         </div>
 
-        @if (Model.DateInfo != "")
+        @if (!String.IsNullOrEmpty(Model.DateInfo))
         {
             <div class="col-xs-12">
-                <h4>Extra Information</h4>
                 <p>@Html.DisplayFor(model => model.DateInfo)</p>
             </div>
         }
     </div>
-    @if (VolunteerHelper.IsApprovedVolunteer(userid, Model.ID) || UserHelper.IsAdmin(userid))
+    @if (VolunteerHelper.IsApprovedVolunteer(userId, Model.ID) || UserHelper.IsAdmin(userId))
     {
         //Only provide address to approved volunteers
         <div class="col-xs-12">
@@ -110,44 +128,37 @@
                     }
                     @Html.DisplayFor(model => model.Address.Postcode)<br />
                 </address>
-                <iframe frameborder="0" style="border:0;"
-                        src="@String.Format("https://www.google.com/maps/embed/v1/place?key={0}&q={1},{2}", @ConfigurationManager.AppSettings["GoogleMapsAPI"], @Model.Address.Lat, @Model.Address.Long)"
-                        allowfullscreen></iframe>
             </div>
             @if (!String.IsNullOrEmpty(Model.Address.Notes))
             {
                 <div class="col-xs-12">
-                    <h4>Things you should know</h4>
                     <p>@Html.DisplayFor(model => model.Address.Notes)</p>
                 </div>
             }
         </div>
     }
-    <div class="col-xs-12">
+    <div class="col-xs-12 text-center">
         @{
             Html.RenderAction("Display", "EventTag", new { eventId = Model.ID });
         }
     </div>
 </div>
-<div class="col-xs-12">
-    @{
-        Html.RenderAction("EventPartial", "Profile", new { userId = userid });
+<div class="col-xs-12 col-md-8 panel panel-default">
+    @if (User.Identity.IsAuthenticated)
+    {
+        Html.RenderAction("EventPartial", "Profile", new { userId = Model.HostID });
     }
 </div>
 <div class="col-xs-12 event-links">
-    @if (VolunteerHelper.IsHost(userid, Model.ID))
+    @if (VolunteerHelper.IsHost(userId, Model.ID))
     {
         Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-warning" });
     }
-     
-    @if (User.Identity.IsAuthenticated)
-    { 
-        @Html.ActionLink("Report Event", "Event", "Report", new { eventId = Model.ID }, new { @class = "btn btn-danger" })
-    }
-    
+    <br />
     <a href="javascript:history.back()">Go Back</a>
 </div>
 @section Scripts {
     @Scripts.Render("~/Scripts/Volunteer.js")
+    @Scripts.Render("~/Scripts/EventTag.js")
 }
 

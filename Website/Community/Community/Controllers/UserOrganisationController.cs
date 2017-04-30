@@ -45,8 +45,6 @@ namespace Community.Controllers
         }
 
         // POST: UserOrganisation/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,UserID,OrganisationID,Approved,Denied,Admin,Created")] UserOrganisation userOrganisation)
@@ -81,8 +79,6 @@ namespace Community.Controllers
         }
 
         // POST: UserOrganisation/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,UserID,OrganisationID,Approved,Denied,Admin,Created")] UserOrganisation userOrganisation)

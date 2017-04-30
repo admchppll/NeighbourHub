@@ -1,0 +1,35 @@
+﻿@model PagedList.IPagedList<Community.Models.Event>
+@using PagedList.Mvc;
+@using Community.Helpers;
+@{
+    ViewBag.Title = "Upcoming Events";
+}
+
+<h2>My's Upcoming Events</h2>
+
+@foreach (var item in Model)
+{
+    <div class="row vertical-center vertical-padding">
+        <div class="col-xs-8 col-sm-10">
+            <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+            <p>
+                <b>@item.Date.ToString("ddd d MMMM yyyy") - @Html.DisplayFor(modelItem => item.Time)</b> (@Html.DisplayFor(modelItem => item.Length) Hours)
+                <br />
+                @Html.DisplayFor(modelItem => item.ShortDescription)
+            </p>
+        </div>
+        <div class="col-xs-4 col-sm-2 top-pad-2">
+            <a href="@Url.Action("Details", "Event", new { id = item.ID })" class="btn btn-success">Details</a>
+        </div>
+    </div>
+}
+@if (Model.Count() == 0)
+{
+    <h3>This neighbour has no upcoming events!</h3>
+}
+else
+{
+    <div class="pagerSection">
+        @Html.PagedListPager(Model, page => Url.Action("UserEvents", new { page, userId = ViewBag.UserID }))
+    </div>
+}

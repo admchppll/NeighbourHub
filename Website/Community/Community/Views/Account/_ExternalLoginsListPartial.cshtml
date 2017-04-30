@@ -19,11 +19,16 @@
             <div id="socialLoginList">
                 <p>
                     @foreach (AuthenticationDescription p in loginProviders) {
-                        <button type="submit" class="btn btn-primary" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
+                        <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">
                         @if (p.AuthenticationType == "Facebook")
                         {
                             <i class="fa fa-facebook" aria-hidden="true"></i>
-                        } @p.AuthenticationType
+                        }
+                        else if (p.AuthenticationType == "Twitter")
+                        {
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                        }                  
+                            @p.AuthenticationType
                         </button>
                     }
                 </p>

@@ -1,4 +1,6 @@
-﻿function getRequestVerificationToken(data) {
+﻿CKEDITOR.replaceAll();
+
+function getRequestVerificationToken(data) {
     return $('input[name=__RequestVerificationToken]').val();
 }
 

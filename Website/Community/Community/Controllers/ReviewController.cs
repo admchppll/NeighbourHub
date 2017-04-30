@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Community.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Community.Controllers
 {
+    [Authorize]
     public class ReviewController : Controller
     {
         private CommunityEntities db = new CommunityEntities();
@@ -37,18 +39,29 @@ namespace Community.Controllers
         }
 
         // GET: Review/Create
-        public ActionResult Create()
+        public ActionResult Create(int volunteerId)
         {
-            ViewBag.EventID = new SelectList(db.Events, "ID", "HostID");
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Email");
+            Volunteer volunteer = db.Volunteers.Find(volunteerId);
+            if (volunteer == null)
+            {
+                return HttpNotFound();
+            }
+            string currentUser = User.Identity.GetUserId();
+
+            ViewBag.VolunteerID = currentUser == volunteer.Event.HostID ? volunteer.VolunteerID : "";                         
+            ViewBag.EventID = volunteer.EventID;
             return View();
         }
 
         // POST: Review/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserID,EventID,Rating,Review1,VolunteerID")] Review review)
+        public ActionResult Create([Bind(Include = "EventID,Rating,Review1,VolunteerID")] Review review)
         {
+            string currentUser = User.Identity.GetUserId();
+            review.UserID = currentUser;
+            review.VolunteerID = string.IsNullOrEmpty(review.VolunteerID) ? null : review.VolunteerID;
+
             if (ModelState.IsValid)
             {
                 db.Reviews.Add(review);
@@ -56,8 +69,10 @@ namespace Community.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EventID = new SelectList(db.Events, "ID", "HostID", review.EventID);
-            ViewBag.UserID = new SelectList(db.Users, "ID", "Email", review.UserID);
+            Volunteer volunteer = db.Volunteers.Find(review.VolunteerID);
+
+            ViewBag.VolunteerID = currentUser == volunteer.Event.HostID ? volunteer.VolunteerID : "";
+            ViewBag.EventID = review.EventID;
             return View(review);
         }
 
@@ -79,8 +94,6 @@ namespace Community.Controllers
         }
 
         // POST: Review/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,UserID,EventID,Rating,Review1,VolunteerID")] Review review)
@@ -94,32 +107,6 @@ namespace Community.Controllers
             ViewBag.EventID = new SelectList(db.Events, "ID", "HostID", review.EventID);
             ViewBag.UserID = new SelectList(db.Users, "ID", "Email", review.UserID);
             return View(review);
-        }
-
-        // GET: Review/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
-            {
-                return HttpNotFound();
-            }
-            return View(review);
-        }
-
-        // POST: Review/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Review review = db.Reviews.Find(id);
-            db.Reviews.Remove(review);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

@@ -28,6 +28,22 @@ textarea {
     border-color: #6f0;
 }*/
 
+.bg-lighter-grey {
+    background-color: #fafafa;
+}
+
+.bg-light-grey {
+    background-color: #efefef;
+}
+
+.footer-darkgrey, .footer-darkgrey a {
+    color: #7d7d7d;
+}
+
+.footer-darkgrey a:hover {
+    color: #47146a;
+}
+
 #cookieFooter {
     background-color: #47146a;
     color: #fff;
@@ -37,17 +53,21 @@ textarea {
     z-index: 1000;
 }
 
-    #cookieFooter .container {
-        padding: 10px 0;
-    }
+#cookieFooter .container {
+    padding: 10px 0;
+}
 
-    #cookieFooter button {
-        color: #47146a;
-    }
+#cookieFooter button, .text-purple {
+    color: #47146a;
+}
 
-    #cookieFooter a {
-        color: #6f0;
-    }
+.text-light-purple {
+    color: #a468d5;
+}
+
+#cookieFooter a {
+    color: #6f0;
+}
 
 .navbar-brand {
     font-family: 'Arial Rounded MT', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -63,13 +83,13 @@ textarea {
     float: left;
 }
 
-    .tag a {
-        color: #fff;
-    }
+.tag a {
+    color: #fff;
+}
 
-        .tag a:hover {
-            color: #47146a;
-        }
+.tag a:hover {
+    color: #47146a;
+}
 
 .tagList {
     display: inline;
@@ -88,9 +108,9 @@ textarea {
     border: none;
 }
 
-    #alternateDateTable th {
-        text-align: center;
-    }
+#alternateDateTable th {
+    text-align: center;
+}
 
 #volunteerInfo {
     padding-top: 10px;
@@ -144,6 +164,11 @@ textarea {
     padding-bottom: 10px;
 }
 
+.vertical-padding-2x {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 .remove-margin {
     margin: 0;
 }
@@ -157,7 +182,7 @@ textarea {
 }
 
 .panel {
-    padding-bottom: 15px;
+    padding: 15px;
 }
 
 .vertical-center {
@@ -211,4 +236,9 @@ textarea {
 
 .eventSearch h4 {
     text-align: center;
+}
+
+.map iframe {
+    width: 100%;
+    height: 250px;
 }

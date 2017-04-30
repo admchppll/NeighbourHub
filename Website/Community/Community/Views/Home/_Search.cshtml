@@ -1,32 +1,15 @@
 ﻿@using (Html.BeginForm("Search", "Event"))
 {
-<div class="row" id="eventSearch">    
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3 eventSearch">  
-        <div class="col-xs-9">
-            <input class="form-control" aria-label="" id="postcode" name="postcode" placeholder="Postcode" type="text">
-            <p class="text-warning" id="postcodeWarning">@ViewBag.PostcodeMessage</p>
-        </div>
-        <div class="col-xs-3"><button type="submit" class="btn btn-primary">Search</button></div>
-        
-        <input type="hidden" value="10" name="distance" />
-        
-    </div>
-    <div class="col-xs-12 col-sm-4 eventSearch">
-        
-        <div class="col-xs-12 input-group">
-            <!--<select name="distance" class="form-control">
-                <option value="0.5">0.5 Miles</option>
-                <option selected="selected" value="1">1 Mile</option>
-                <option value="2">2 Miles</option>
-                <option value="3">3 Miles</option>
-                <option value="4">4 Miles</option>
-                <option value="5">5 Miles</option>
-                <option value="10">10 Miles</option>
-            </select>-->
-            <div class="input-group-btn">
-                
+    <div class="row" id="eventSearch">
+        <div class="col-xs-12 eventSearch">
+            <div class="col-xs-9">
+                <input class="form-control" aria-label="" id="postcode" name="postcode" placeholder="Postcode" type="text">
+                <p class="text-warning" id="postcodeWarning">@ViewBag.PostcodeMessage</p>
             </div>
+            <div class="col-xs-3">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            <input type="hidden" value="10" name="distance" />
         </div>
     </div>
-</div>
 }

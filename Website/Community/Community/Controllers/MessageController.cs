@@ -124,6 +124,7 @@ namespace Community.Controllers
         {
             ViewBag.RecipientID = new SelectList(db.Users, "ID", "Email");
             ViewBag.Recipient = string.IsNullOrEmpty(userId) ? null : userId;
+            ViewBag.RecipientName = string.IsNullOrEmpty(userId) ? null : db.Users.Find(userId).UserName;
             return View();
         }
 

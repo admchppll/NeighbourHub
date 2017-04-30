@@ -62,8 +62,12 @@ namespace Community.Controllers
             eventTag.EventID = data.EventID;
             eventTag.TagID = data.TagID;
 
+            var exists = db.EventTags
+                .Where(et => et.TagID == eventTag.TagID 
+                    && et.EventID == eventTag.TagID)
+                .Any();
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !exists)
             {
                 db.EventTags.Add(eventTag);
                 db.SaveChanges();

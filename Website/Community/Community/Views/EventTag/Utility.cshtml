@@ -2,19 +2,18 @@
 <input type="hidden" id="eventId" value="@ViewBag.EventID" />
 <h3>Tags</h3>
 <div class="col-xs-12">
-    <div id="tagList col-xs-12">
-        @foreach (var item in Model)
-        {
-            <span class="label label-info tag" id="tag-@item.ID">@Html.DisplayFor(modelItem => item.Tag.Name) <a href="javascript:void()" data-eventtag-id="@item.ID"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></span>
-        }
-    </div>
-
-
     <div class="col-xs-12 col-sm-6 col-md-4 input-group">
         @Html.DropDownList("Name", new SelectList(ViewBag.Tags, "ID", "Name"), htmlAttributes: new { id = "tagSelect", @class = "form-control" })
         <div class="input-group-btn">
-            <button id="tagAddBtn" class="btn btn-primary">Add</button>
+            <a href="javascript:void();" id="tagAddBtn" class="btn btn-primary">Add</a>
         </div>
+    </div>
+
+    <div id="tagList col-xs-12">
+        @foreach (var item in Model)
+        {
+            <span class="label label-info tag" id="tag-@item.ID">@Html.DisplayFor(modelItem => item.Tag.Name) <a href="javascript:RemoveTag(@item.ID)" data-eventtag-id="@item.ID"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></span>
+        }
     </div>
 
     <div class="col-xs-12 alert hidden" id="eventTagMessage">
@@ -23,49 +22,3 @@
     </div>
 
 </div>
-<script type="text/javascript">
-    //add new tag to event
-    $('#tagAddBtn').on("click", function () {
-        var tagName = $('#tagSelect option:selected').text();
-
-        var success = function (data) {
-            if (data.success) {
-                var output = '<span class="tag">' + tagName + ' <a href="javascript:void()" data-eventtag-id="' + data.ID + '"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></span>';
-                $('#tagList').append(output);
-            }
-            else {
-                resultMessage("", "We couldn't add the tag to event!", false, 'eventTag')
-            }
-        };
-        var fail = function (data) {
-            resultMessage("", "We couldn't add the tag to your event!", false, 'eventTag')
-        };
-
-        var tagID = $('#tagSelect').val();
-        var eventID = $('#eventId').val();
-        var parameters = {
-            EventID: eventID,
-            TagID: tagID
-        };
-
-        ajax("/EventTag/Create", parameters, success, fail);
-    });
-
-    //Remove tag from event
-    $('.tag > a').on("click", function () {
-        var tagID = $(this).attr("data-eventtag-id");
-        var success = function (data) {
-            $('#tag-' + tagID).remove();
-            resultMessage("Success! ", "Tag Removed!", true, 'eventTag');
-        };
-        var fail = function (data) {
-            resultMessage("", "We couldn't add the tag to your event!", false, 'eventTag');
-        };
-
-        var parameters = {
-            id: tagID
-        };
-
-        ajax("/EventTag/Delete", parameters, success, fail);
-    });
-</script>

@@ -12,11 +12,38 @@
 
 <h4>Access all areas of your account</h4>
 <hr />
+@if (ProfileHelper.IsSuspended(userID))
+{
+    <div class="col-xs-12 alert alert-danger">
+        <strong>Suspended!</strong> <span>
+            Unfortunately, your account has been market as suspended. This does not prevent you from helping at any prior voluntary commitments;
+            it just means that you won't be able volunteer for, or create, any new events until your account is re-activated. You should have been contacted by an administrator as to why your account is suspended!
+        </span>
+    </div>
+}
+else if (ProfileHelper.IsActive(userID) != true)
+{
+    <div class="col-xs-12 alert alert-warning">
+        <strong>Inactive!</strong> <span>
+            Unfortunately, your account is currently deactivated. You will not be able to access a full range of features until you reactivate your account!
+        </span>
+    </div>
+}
 <div class="col-xs-12">
     <div class="col-xs-12 panel panel-default">
         @{
             Html.RenderAction("UserPartial", "Profile");
         }
+    </div>
+</div>
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-sm-6">
+            @Html.Partial("~/Views/Home/_Search.cshtml")
+        </div>
+        <div class="col-sm-6 text-center">
+            @Html.ActionLink("Create Event", "Create", new { controller = "Event" }, new { @class= "btn btn-success" })
+        </div>
     </div>
 </div>
 <div class="col-xs-12">
@@ -64,18 +91,18 @@
         <div class="panel-body">
             <div class="col-xs-12 col-sm-6">
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-5">
                         <b>Email Address: </b>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-7">
                         @Html.ActionLink("Change your email", "ChangeEmail")
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-5">
                         <b>Password: </b>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-7">
                         @if (Model.HasPassword)
                         {
                             @Html.ActionLink("Change your password", "ChangePassword")
@@ -88,13 +115,8 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <b>Deactivate: </b>
-                    </div>
-                    <div class="col-xs-8">
-                        @Html.ActionLink("Deactivate your account", "Deactivate")
-                    </div>
+                <div class="row text-right">
+                        @Html.ActionLink("Deactivate your account", "Deactivate", null, new { @class = "btn btn-danger" })
                 </div>
             </div>
             <div class="row">

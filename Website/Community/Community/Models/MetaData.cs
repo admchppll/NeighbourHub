@@ -84,14 +84,15 @@ namespace Community.Models
         [Required]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime Date { get; set; }
-        [Required(ErrorMessage = "Time is a required field in the format HH:MM (24 hour time) E.g. 14:15")]
-        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Time is a required field in the format HH:MM (24 hour time) E.g. 14:15")]  
         public System.TimeSpan Time { get; set; }
         [Required]
         [Range(1, 12, ErrorMessage = "An event needs to be between 1 and 12 hours in length.")]
         public byte Length { get; set; }
         [StringLength(200, ErrorMessage = "Date Information cannot be longer than 200 characters.")]
         public string DateInfo { get; set; }
+        [Display(Name = "Event Image")]
+        public string PictureURL { get; set; }
         [Required]
         public short VolunteerQuantity { get; set; }
         [Required]
@@ -276,6 +277,10 @@ namespace Community.Models
 
     public class TagMetaData
     {
+        [Display(Name = "Label")]
+        public string Name { get; set; }
+        [UIHint("YesNo")]
+        public bool Active { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Created { get; set; }
     }

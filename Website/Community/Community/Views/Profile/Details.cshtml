@@ -16,10 +16,10 @@
             }
         </div>
     </div>
-    <div class="row text-center">
+    <div class="row text-center vertical-padding">
         <h4>About Me</h4>
         <p>
-            @if(!String.IsNullOrEmpty(@ViewBag.CurrentInts)){ 
+            @if (!String.IsNullOrEmpty(@ViewBag.CurrentInts)) {
                 <b> I am interested in: </b> @ViewBag.CurrentInts <br/>
             }
             @if (!String.IsNullOrEmpty(@ViewBag.CurrentSkills))
@@ -31,14 +31,15 @@
             @Html.Raw(Model.Biography)
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-6 text-center">
+    <div class="row vertical-padding-2x">
+        <!-- <div class="col-sm-6 text-center">
             <h4>Reviews</h4>
             <p>This neighbour has not received any reviews yet!</p>
-        </div>
-        <div class="col-sm-6 text-center">
-            <h4>Upcoming Events</h4>
-            <p>This neighbour has no upcoming event you can help with.</p>
+        </div>-->
+        <div class="col-xs-12 text-center">
+            @{ 
+                Html.RenderAction("ProfilePartial", "Event", new { userId = Model.UserID });
+            }
         </div>
     </div>
 </div>
@@ -48,8 +49,7 @@
         @Html.ActionLink("Report User", "ReportUser", "Report", new { userId = Model.UserID }, new { @class = "btn btn-danger" })
     }
     @if (String.Equals(User.Identity.GetUserId(),Model.UserID) == true) {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID });
-        @Html.Raw(" | ");
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-warning" });
     }
-    @Html.ActionLink("Back to List", "Index")
 </p>
+@Html.ActionLink("Back to List", "Index")

@@ -10,6 +10,7 @@ using Community.Models;
 using Community.Helpers;
 using System.Net;
 using System.Configuration;
+using System.Data.Entity;
 
 namespace Community.Controllers
 {
@@ -333,13 +334,19 @@ namespace Community.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangeEmail([Bind(Include = "Email,ConfirmEmail")] ChangeEmailViewModel email)
+        public ActionResult ChangeEmail([Bind(Include = "Email,ConfirmEmail")] ChangeEmailViewModel email)
         {
+            CommunityEntities db = new CommunityEntities();
+
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
-                var user = await UserManager.FindByIdAsync(userId);
-                
+                var user = db.Users.Find(userId);
+                user.Email = email.Email;
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+
                 return RedirectToAction("Index", "Manage");
             }
             return View(email);

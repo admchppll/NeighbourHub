@@ -28,12 +28,13 @@ namespace Community.Controllers
         }
 
         // POST: Tag/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Active,Created")] Tag tag)
+        public ActionResult Create([Bind(Include = "Name")] Tag tag)
         {
+            tag.Active = true;
+            tag.Created = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 db.Tags.Add(tag);
@@ -60,8 +61,6 @@ namespace Community.Controllers
         }
 
         // POST: Tag/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Name,Active,Created")] Tag tag)

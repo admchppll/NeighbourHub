@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using Community.Models;
 using Community.Helpers;
 using reCAPTCHA.MVC;
+using System.Configuration;
 
 namespace Community.Controllers
 {
@@ -166,8 +167,9 @@ namespace Community.Controllers
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     //if user has domain email address, auto add to admin
-                    //await UserManager.AddToRoleAsync(user.Id, "Admin");
-                    //
+                    //if (model.Email.Contains(ConfigurationManager.AppSettings["Domain"])) {
+                    //    await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    //}
                     NotificationHelper.Create(user.Id, "Create Profile", "You need to create a profile to get started!", "~/Profile/Create");
 
                     return RedirectToAction("Create", "Profile");
