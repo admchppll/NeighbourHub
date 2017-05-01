@@ -9,6 +9,6 @@
         };
         var fail = function () { };
 
-        ajax("/Notification/Read", data, success, fail);
+        Ajax("/Notification/Read", data, success, fail);
     }
 });

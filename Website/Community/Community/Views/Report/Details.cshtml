@@ -80,45 +80,11 @@
     </div>
 </div>
 @Html.AntiForgeryToken()
-<script>
-    function resolve(reportID) {
-        var data = {
-            ID: reportID
-        };
-
-        ajaxSimple("/Report/Resolve", data, "report")
-    }
-
-    function suspendEvent(eventID) {
-        var data = {
-            ID: eventID
-        };
-
-        ajaxSimple("/Event/Suspend", data, "report")
-    }
-
-    function suspendUser(userID) {
-        var data = {
-            ID: userID
-        };
-
-        ajaxSimple("/Profile/Suspend", data, "report")
-    }
-
-    $('#resolveBtn').on('click', function () {
-        resolve($('#reportID').val());
-    });
-
-    $('#suspendEventBtn').on('click', function () {
-        suspendEvent($('#eventID').val());
-    });
-
-    $('#suspendUserBtn').on('click', function () {
-        suspendUser($('#userID').val());
-    });
-</script>
-
 @{
     Html.RenderAction("AuditReport", "Audit", new { reportId = Model.ID });
     Html.RenderAction("Reply", "Report", new { reportID = Model.ID });
+}
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/Report.js")
 }

@@ -218,7 +218,13 @@ namespace Community.Controllers
 
                         //Reject All volunteers when total volunteers asked for are filled
                         if (VolunteerHelper.IsEventFull(data.EventId)) {
-                            var volunteers = db.Volunteers.Where(v => v.EventID == data.EventId && v.Accepted != true && v.Confirmed != true && v.Rejected != true && v.Withdrawn != true).ToList();
+                            var volunteers = db.Volunteers
+                                .Where(v => v.EventID == data.EventId 
+                                    && v.Accepted != true 
+                                    && v.Confirmed != true 
+                                    && v.Rejected != true 
+                                    && v.Withdrawn != true)
+                                .ToList();
                             foreach (var v in volunteers)
                             {
                                 v.Rejected = true;
@@ -254,8 +260,8 @@ namespace Community.Controllers
             }
         }
 
-        //POST: Volunteer/Reject (Used in AJAX)
-        [HttpPost, ValidateHeaderAntiForgeryToken]
+        //POST: Volunteer/Reject
+        [HttpPost]
         public JsonResult Reject(VolunteerPostData data)
         {
             string userID = User.Identity.GetUserId();

@@ -1,6 +1,6 @@
 ﻿@using System.Configuration;
 @{
-    var image = ViewBag.SocialImage != "" && ViewBag.SocialImage != null ? ViewBag.SocialImage : "~/Content/Images/fb-tile-rectangle";
+    var image = ViewBag.SocialImage != "" && ViewBag.SocialImage != null ? ViewBag.SocialImage : "~/Content/Images/fb-tile-rectangle.jpg";
 }
 <!DOCTYPE html>
 <html>
@@ -10,6 +10,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="@Url.Content("~/Content/favicon-32x32.png")">
     <link rel="icon" type="image/png" sizes="16x16" href="@Url.Content("~/Content/favicon-16x16.png")">
     <title>@ViewBag.Title - NeighbourHub</title>
+    <meta property="description" content="@ViewBag.Description"/>
+    <meta property="author" content="NeighbourHub" />
     <meta property="og:site_name" content="NeighbourHub">
     <meta property="og:title" content="@ViewBag.Title - NeighbourHub">
     <meta property="og:description" content="@ViewBag.Description">
@@ -24,8 +26,6 @@
     <!--<meta name="twitter:creator" content="@ConfigurationManager.AppSettings["TwitterUser"]"> -->
     <meta name="twitter:image:src" content="@Url.Content(image)">
     @Styles.Render("~/Content/css")
-
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -36,8 +36,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img src="~/Content/Images/logo.png" style="height:60px;" />
-                <!--@Html.ActionLink("neighbourhub.online", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })-->
+                <img src="~/Content/Images/logo.png" style="" class="navbar-logo" />
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -60,39 +59,29 @@
     <hr />
     @if (Request.Cookies["CookiePermission"].Value.ToString() == "false" || Request.Cookies["CookiePermission"].Value == null)
     {
-        <!--
         <footer id="cookieFooter" class="container-fluid">
             <div class="container">
                 <p class="col-xs-12 col-md-10 col-lg-9">This website uses cookies to ensure you get the best experience on our website. By continuing to use this site you accept the use of cookies. <a href="@Url.Action("Cookies","Home")">Click here</a> to learn more about how we use cookies.</p>
                 <div class="col-xs-12 col-md-2 col-lg-3">
-                    <button type="button" class="btn btn-default center-block" href="javascript:void()" onclick="cookieAccept();">Continue</button>
+                    <button type="button" class="btn btn-default center-block" href="javascript:void()" onclick="CookieAccept();">Accept</button>
                 </div>
             </div>
         </footer>
-        <script id="cookieScript">
-            function cookieAccept() {
-                var cookieFooter = document.getElementById("cookieFooter");
-                cookieFooter.parentNode.removeChild(cookieFooter);
-                createCookie("CookiePermission", "true", 7);
-            }
-        </script>
-        -->
     }
     <footer>
         <div class="container">
-            <div class="col-sm-4">
-                <img src="@Url.Content("~/Content/Images/logo-greyscale.png")" style="max-width:200px;" />
+            <div class="col-xs-12 col-sm-4 footer-logo">
+                <img src="@Url.Content("~/Content/Images/logo-greyscale.png")" />
             </div>
-            <div class="col-sm-8">
-                <div class="col-xs-12 text-right footer-darkgrey">
+            <div class="col-xs-12 col-sm-8">
+                <div class="col-xs-12 text-right footer-center footer-darkgrey footer-social">
                     <a><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
                     <a><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>
                     <a><i class="fa fa-google-plus fa-2x" aria-hidden="true"></i></a>
                 </div>
-                <p class="col-xs-12 text-right footer-darkgrey vertical-padding">@Html.ActionLink("Terms and Conditions", "Terms", "Home") @Html.ActionLink("Cookie Policy", "Cookies", "Home")</p>
-                <p class="col-xs-12 footer-darkgrey">NeighbourHub &copy; @DateTime.Now.Year</p>
+                <p class="col-xs-12 footer-center footer-darkgrey vertical-padding">@Html.ActionLink("Terms and Conditions", "Terms", "Home") | @Html.ActionLink("Cookie Policy", "Cookies", "Home")</p>
             </div>
-
+            <p class="col-xs-12 footer-darkgrey text-center">NeighbourHub &copy; @DateTime.Now.Year</p>
         </div>
     </footer>
     @Scripts.Render("~/bundles/jquery")

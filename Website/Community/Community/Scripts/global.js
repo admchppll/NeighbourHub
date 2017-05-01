@@ -1,12 +1,12 @@
 ﻿CKEDITOR.replaceAll();
 
-function getRequestVerificationToken(data) {
+function GetRequestVerificationToken(data) {
     return $('input[name=__RequestVerificationToken]').val();
 }
 
 //Parameters: JSON object
 //successFunction/failureFunction: must be a javascript function thats passed
-function ajax(url, parameters, successFunction, failFunction) {
+function Ajax(url, parameters, successFunction, failFunction) {
     $.ajax({
         url: url,
         contentType: "application/json; charset=utf-8",
@@ -14,14 +14,14 @@ function ajax(url, parameters, successFunction, failFunction) {
         dataType: "json",
         method: "POST",
         headers: {
-            "__RequestVerificationToken": getRequestVerificationToken()
+            "__RequestVerificationToken": GetRequestVerificationToken()
         },
         success: successFunction,
         error: failFunction
     });
 }
 
-function ajaxVolunteer(url, parameters) {
+function AjaxVolunteer(url, parameters) {
     $.ajax({
         url: url,
         contentType: "application/json; charset=utf-8",
@@ -29,18 +29,18 @@ function ajaxVolunteer(url, parameters) {
         dataType: "json",
         method: "POST",
         headers: {
-            "__RequestVerificationToken": getRequestVerificationToken()
+            "__RequestVerificationToken": GetRequestVerificationToken()
         },
         success: function (data) {
-            resultMessage(data.title, data.message, data.success, "volunteer");
+            ResultMessage(data.title, data.message, data.success, "volunteer");
         },
         error: function (data) {
-            resultMessage(data.title, data.message, data.success, "volunteer");
+            ResultMessage(data.title, data.message, data.success, "volunteer");
         }
     });
 }
 
-function ajaxSimple(url, parameters, resultArea) {
+function AjaxSimple(url, parameters, resultArea) {
     $.ajax({
         url: url,
         contentType: "application/json; charset=utf-8",
@@ -48,18 +48,18 @@ function ajaxSimple(url, parameters, resultArea) {
         dataType: "json",
         method: "POST",
         headers: {
-            "__RequestVerificationToken": getRequestVerificationToken()
+            "__RequestVerificationToken": GetRequestVerificationToken()
         },
         success: function (data) {
-            resultMessage(data.title, data.message, data.success, resultArea);
+            ResultMessage(data.title, data.message, data.success, resultArea);
         },
         error: function (data) {
-            resultMessage(data.title, data.message, data.success, resultArea);
+            ResultMessage(data.title, data.message, data.success, resultArea);
         }
     });
 }
 
-function createCookie(name, value, days) {
+function CreateMessage(name, value, days) {
     var expires = "";
     if (days) {
         var date = new Date();
@@ -69,7 +69,13 @@ function createCookie(name, value, days) {
     document.cookie = name + "=" + value + expires + ";"; // domain=theneighbourhub.online;";
 }
 
-function resultMessage(title, message, success, messageLocation) {
+function CookieAccept() {
+    var cookieFooter = document.getElementById("cookieFooter");
+    cookieFooter.parentNode.removeChild(cookieFooter);
+    CreateMessage("CookiePermission", "true", 7);
+}
+
+function ResultMessage(title, message, success, messageLocation) {
 
     $("#" + messageLocation + "Message").removeClass("hidden");
     if (success) {

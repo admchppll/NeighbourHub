@@ -8,7 +8,7 @@
 <h2>My Events</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null,new { @class = "btn btn-success"})
 </p>
 <table class="table">
     <tr>
@@ -54,16 +54,14 @@
             @Html.DisplayFor(modelItem => item.Address.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }, new { @class="btn btn-warning"}) |
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }, new { @class="btn btn-warning"})
             @Html.ActionLink("View", "Details", new { id=item.ID }, new { @class="btn btn-info"})
         </td>
     </tr>
 }
 
 </table>
-<div>
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
+<div class="pagerSection">
 @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page }))
 </div>

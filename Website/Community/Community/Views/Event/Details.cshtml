@@ -27,7 +27,7 @@
                 <b>Volunteers Needed:</b> @Html.DisplayFor(model => model.VolunteerQuantity)
             </div>
             <div class="col-xs-12 col-sm-6">
-                <b>Points Per Volunteer:</b> @VolunteerHelper.GetVolunteerPointValue(Model.ID).ToString()
+                <b>Tokens Per Volunteer:</b> @VolunteerHelper.GetVolunteerPointValue(Model.ID).ToString()
             </div>
         </div>
         <p id="longDescription">
@@ -55,26 +55,23 @@
         {
             Html.RenderAction("Volunteers", "Volunteer", new { eventId = Model.ID });
         }
-        @if (User.Identity.IsAuthenticated && VolunteerHelper.IsHost(userId, Model.ID) != true)
-        {
-            @Html.ActionLink("Report Event", "Event", "Report", new { eventId = Model.ID }, new { @class = "btn btn-danger" })
-        }
+
     </div>
 </div>
 <div id="eventSidebar" class="col-xs-12 col-md-5 text-center">
     @if (VolunteerHelper.IsHost(userId, Model.ID) == false
-        && VolunteerHelper.IsVolunteer(userId, Model.ID) == false
-        && VolunteerHelper.IsWithdrawn(userId, Model.ID) == false
-        && UserHelper.IsAdmin(userId) == false
-        && User.Identity.IsAuthenticated)
+                && VolunteerHelper.IsVolunteer(userId, Model.ID) == false
+                && VolunteerHelper.IsWithdrawn(userId, Model.ID) == false
+                && UserHelper.IsAdmin(userId) == false
+                && User.Identity.IsAuthenticated)
     {
         <div class="col-xs-12">
             <div class="row">
                 @if (VolunteerHelper.IsVolunteer(userId, Model.ID) == false)
                 {
-                    <button id="volunteerBtn" href="javascript:void();" onclick="volunteer(@Model.ID)" class="btn btn-primary">Volunteer</button>
+                    <button id="volunteerBtn" href="javascript:void();" onclick="volunteer(@Model.ID)" class="btn btn-success">Volunteer</button>
                 }
-                else if (VolunteerHelper.IsWithdrawn(userId, Model.ID) == false)
+                else if (VolunteerHelper.IsWithdrawn(userId, Model.ID) == false && VolunteerHelper.IsConfirmed(userId, Model.ID) == false)
                 {
                     <button id="withdrawBtn" href="javascript:void();" onclick="withdraw(@Model.ID)" class="btn btn-danger">Withdraw</button>
                 }
@@ -142,20 +139,28 @@
             Html.RenderAction("Display", "EventTag", new { eventId = Model.ID });
         }
     </div>
+    <div class="col-xs-12 text-center">
+        @if (User.Identity.IsAuthenticated && VolunteerHelper.IsHost(userId, Model.ID) != true)
+        {
+            @Html.ActionLink("Report Event", "Event", "Report", new { eventId = Model.ID }, new { @class = "btn btn-danger" })
+        }
+    </div>
+
 </div>
-<div class="col-xs-12 col-md-8 panel panel-default">
-    @if (User.Identity.IsAuthenticated)
-    {
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="col-xs-12 panel panel-default">
+    @{ 
         Html.RenderAction("EventPartial", "Profile", new { userId = Model.HostID });
     }
-</div>
+    </div>
+        }
 <div class="col-xs-12 event-links">
     @if (VolunteerHelper.IsHost(userId, Model.ID))
     {
         Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-warning" });
     }
-    <br />
-    <a href="javascript:history.back()">Go Back</a>
+    <a href="javascript:history.back()" class="btn btn-primary">Go Back</a>
 </div>
 @section Scripts {
     @Scripts.Render("~/Scripts/Volunteer.js")

@@ -2,14 +2,14 @@
     var data = {
         EventId: eventID
     };
-    ajaxVolunteer('/Volunteer/Volunteer', data);
+    AjaxVolunteer('/Volunteer/Volunteer', data);
 }
 
 function withdraw(eventID) {
     var data = {
         EventId: eventID
     };
-    ajaxVolunteer('/Volunteer/Withdraw', data);
+    AjaxVolunteer('/Volunteer/Withdraw', data);
 }
 
 function volunteerAdminOperation(volunteerID, eventID, operation) {
@@ -20,7 +20,7 @@ function volunteerAdminOperation(volunteerID, eventID, operation) {
     };
 
     var success = function (data) {
-        resultMessage(data.title, data.message, data.success, "volunteerAdmin");
+        ResultMessage(data.title, data.message, data.success, "volunteerAdmin");
     }
 
     switch (operation) {
@@ -36,5 +36,5 @@ function volunteerAdminOperation(volunteerID, eventID, operation) {
         default: break;
     }
 
-    ajax(url, data, success, success);
+    Ajax(url, data, success, success);
 }

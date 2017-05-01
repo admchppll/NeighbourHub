@@ -257,7 +257,7 @@ namespace Community.Controllers
                     }
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("MyEvents");
             }
 
             var userID = User.Identity.GetUserId();
@@ -334,7 +334,7 @@ namespace Community.Controllers
             {
                 db.Entry(@event).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("MyEvents");
             }
             var userID = User.Identity.GetUserId();
             var addresses = db.Addresses

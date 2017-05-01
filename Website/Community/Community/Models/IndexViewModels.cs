@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Community.Models
 {
@@ -19,10 +20,11 @@ namespace Community.Models
         public string Email { get; set; }
         [Required]
         [EmailAddress]
-        [Compare("Email", ErrorMessage = "Emails do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Email", ErrorMessage = "Emails do not match.")]
         [Display(Name = "Confirm Email")]
         public string ConfirmEmail { get; set; }
         [Required]
+        [AllowHtml]
         public string Message { get; set; }
     }
 }

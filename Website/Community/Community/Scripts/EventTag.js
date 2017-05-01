@@ -8,11 +8,11 @@ $('#tagAddBtn').on("click", function () {
             $('#tagList').append(output);
         }
         else {
-            resultMessage("", "We couldn't add the tag to event!", false, 'eventTag')
+            ResultMessage("", "We couldn't add the tag to event!", false, 'eventTag')
         }
     };
     var fail = function (data) {
-        resultMessage("", "We couldn't add the tag to your event!", false, 'eventTag')
+        ResultMessage("", "We couldn't add the tag to your event!", false, 'eventTag')
     };
 
     var tagID = $('#tagSelect').val();
@@ -22,7 +22,7 @@ $('#tagAddBtn').on("click", function () {
         TagID: tagID
     };
 
-    ajax("/EventTag/Create", parameters, success, fail);
+    Ajax("/EventTag/Create", parameters, success, fail);
 });
 
 //Remove tag from event
@@ -30,15 +30,15 @@ function RemoveTag(tagID) {
     console.log(tagID);
     var success = function (data) {
         $('#tag-' + tagID).remove();
-        resultMessage("Success! ", "Tag Removed!", true, 'eventTag');
+        ResultMessage("Success! ", "Tag Removed!", true, 'eventTag');
     };
     var fail = function (data) {
-        resultMessage("", "We couldn't add the tag to your event!", false, 'eventTag');
+        ResultMessage("", "We couldn't add the tag to your event!", false, 'eventTag');
     };
 
     var parameters = {
         id: tagID
     };
 
-    ajax("/EventTag/Delete", parameters, success, fail);
+    Ajax("/EventTag/Delete", parameters, success, fail);
 };
