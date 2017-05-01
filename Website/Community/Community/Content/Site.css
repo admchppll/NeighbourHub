@@ -69,8 +69,14 @@ textarea {
     color: #6f0;
 }
 
+.navbar-logo {
+    padding-left:10px;
+    height:60px;
+}
+
 .navbar-brand {
     font-family: 'Arial Rounded MT', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
 }
 
 .alert {
@@ -169,6 +175,11 @@ textarea {
     padding-bottom: 20px;
 }
 
+.vertical-padding-3x {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
 .remove-margin {
     margin: 0;
 }
@@ -193,10 +204,34 @@ textarea {
     padding-top: 30px;
 }
 
+.footer-center {
+    text-align: center;
+}
+
+.footer-logo img {
+    max-width:200px;
+}
+
+.footer-logo {
+    text-align:center;
+}
+
+.footer-social a {
+    padding: 5px;
+}
+
 @media screen and (min-width: 768px) {
     .navbar div div ul li a {
         padding-bottom: 20px;
         padding-top: 20px;
+    }
+
+    .footer-center {
+        text-align: right;
+    }
+
+    .footer-logo {
+        text-align:left;
     }
 }
 
@@ -228,6 +263,19 @@ textarea {
     -ms-flex-align: center;
     -webkit-align-items: center;
     align-items: center;
+}
+
+@media screen and (max-width: 767px) {
+    .swiper-container {
+        height: 200px;
+        max-height: 200px;
+    }
+
+    .swiper-slide {
+        text-align: center;
+        min-height: 200px;
+        max-height: 200px;
+    }
 }
 
 #eventSearch > .eventSearch {

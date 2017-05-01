@@ -2,24 +2,23 @@
     ViewBag.Title = "Home";
     ViewBag.Description = "NeighbourHub - Help create a community that cares";
 }
+
 @Styles.Render("~/Content/Swiper")
+
 <div class="row">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide" style="background-image:url(@Url.Content("~/Content/Images/HomeSlider/image0.jpg"))">
-
             </div>
             <div class="swiper-slide" style="background-image:url(@Url.Content("~/Content/Images/HomeSlider/image01.jpg"))">
-                Slide 2
             </div>
             <div class="swiper-slide" style="background-image:url(@Url.Content("~/Content/Images/HomeSlider/image1.jpeg"))">
-                Slide 3
             </div>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="container text-center vertical-padding-2x">
+    <div class="container text-center vertical-padding-3x">
         <h1 class="text-uppercase">Volunteer Now!</h1>
         <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
             @Html.Partial("_Search", "Index")
@@ -27,18 +26,18 @@
     </div>
 </div>
 <div class="row bg-lighter-grey">
-    <div class="container text-center vertical-padding-2x">
+    <div class="container text-center vertical-padding-3x">
         <h1 class="text-uppercase">Working together to create a community that cares!</h1>
         <h4 class="vertical-padding-2x">
             Volunteer now to help create a better community in your local area. Through mutual and
-            <b>fair</b> participation with your neighbours this can be possible. From little things 
+            <b>fair</b> participation with your neighbours this can be possible. From the little things 
             to the big, every now and then you may need some help...so why not be there for someone else? 
             Who knows, you may even make new friends!
         </h4>
     </div>
 </div>
 <div class="row bg-light-grey">
-    <div class="container text-center vertical-padding-2x">
+    <div class="container text-center vertical-padding-3x">
         <h1 class="text-uppercase">HOW DO I VOLUNTEER?</h1>
         <div class="col-xs-12 col-sm-4">
             <h1 class="text-primary">
@@ -63,7 +62,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="container text-center vertical-padding-2x">
+    <div class="container text-center vertical-padding-3x">
         <div class="col-xs-12 col-sm-6">
             <h2>Want to know more about us?</h2>
             <h4>@Html.ActionLink("Find Out More", "About", null, new { @class = "btn btn-primary" })</h4>
@@ -74,16 +73,9 @@
         </div>  
     </div>
 </div>
-@Scripts.Render("~/bundles/Swiper")
-<script>
-    var swiper = new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        slidesPerView: 1,
-        loop: true,
-        autoplay: 5000,
-        autoplayDisableOnInteraction: true,
-        spaceBetween: 30
-    });
-</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/Swiper")
+    @Scripts.Render("~/Scripts/Home.js")
+}
+
 
